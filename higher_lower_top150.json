@@ -1,0 +1,1052 @@
+[
+  {
+    "id": "q001",
+    "left_label": "Kommentare je Folie bis zur echten Freigabe",
+    "left_value": 9,
+    "right_label": "Versionen eines Slides bis zum Versand",
+    "right_value": 11
+  },
+  {
+    "id": "q002",
+    "left_label": "Offene Browser-Tabs vor dem Steering",
+    "left_value": 18,
+    "right_label": "Geöffnete Excel-Dateien in der heißen Phase",
+    "right_value": 7
+  },
+  {
+    "id": "q003",
+    "left_label": "Kaffeetassen pro Berater an einem langen Projekttag",
+    "left_value": 5,
+    "right_label": "Kaffee-Nachfüllungen in einem Remote-Workshop",
+    "right_value": 4
+  },
+  {
+    "id": "q004",
+    "left_label": "Spontane Calls ohne Kalendereinladung laut Microsoft in Prozent",
+    "left_value": 57,
+    "right_label": "Meetings in Peak-Produktivitätszeiten laut Microsoft in Prozent",
+    "right_value": 50
+  },
+  {
+    "id": "q005",
+    "left_label": "Unterbrechungen pro Tag bei Heavy-Ping-Usern laut Microsoft",
+    "left_value": 275,
+    "right_label": "Projektchat-Nachrichten an einem normalen Tag",
+    "right_value": 34
+  },
+  {
+    "id": "q006",
+    "left_label": "Minuten bis jemand im Workshop 'lasst uns priorisieren' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'kommt drauf an' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q007",
+    "left_label": "PowerPoint-Edit-Spike in den letzten 10 Minuten vor Meetings laut Microsoft in Prozent",
+    "left_value": 122,
+    "right_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
+    "right_value": 30
+  },
+  {
+    "id": "q008",
+    "left_label": "Sticky Notes auf einem gut gefüllten Workshop-Board",
+    "left_value": 54,
+    "right_label": "Miro-Elemente nach einer wilden Ideation-Session",
+    "right_value": 73
+  },
+  {
+    "id": "q009",
+    "left_label": "Punkte auf der Workshop-Parkliste",
+    "left_value": 11,
+    "right_label": "Zusatzideen nach dem Satz 'wir sind eigentlich durch'",
+    "right_value": 8
+  },
+  {
+    "id": "q010",
+    "left_label": "Minuten vor Abgabe, in denen noch formatiert wird",
+    "left_value": 22,
+    "right_label": "Minuten für die finale Abstimmung eines Action Titles",
+    "right_value": 14
+  },
+  {
+    "id": "q011",
+    "left_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
+    "left_value": 9,
+    "right_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
+    "right_value": 2
+  },
+  {
+    "id": "q012",
+    "left_label": "Verlustgründe am ABUS-Engpass laut Projektseite",
+    "left_value": 10,
+    "right_label": "Kernelemente der künftigen IT-Architektur bei Pepperl+Fuchs",
+    "right_value": 4
+  },
+  {
+    "id": "q013",
+    "left_label": "Produktivitätssteigerung bei HOMAG in Prozent (mindestens)",
+    "left_value": 20,
+    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
+    "right_value": 21
+  },
+  {
+    "id": "q014",
+    "left_label": "Montagefläche im HOMAG-Projekt in hundert m²",
+    "left_value": 4,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q015",
+    "left_label": "Minuten Suche nach der aktuellsten Datei",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'Owner' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q016",
+    "left_label": "World-Class-OEE laut Vorne in Prozent",
+    "left_value": 85,
+    "right_label": "World-Class-Availability laut Vorne in Prozent",
+    "right_value": 90
+  },
+  {
+    "id": "q017",
+    "left_label": "World-Class-Performance laut Vorne in Prozent",
+    "left_value": 95,
+    "right_label": "World-Class-Quality laut Vorne in Prozent",
+    "right_value": 99
+  },
+  {
+    "id": "q018",
+    "left_label": "Unnötige Meetings vs. Arbeit an High-Priority-Themen laut Atlassian: Mehrzeit in Prozent",
+    "left_value": 50,
+    "right_label": "Abend-Meetings laut Microsoft: Wachstum YoY in Prozent",
+    "right_value": 16
+  },
+  {
+    "id": "q019",
+    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
+    "left_value": 13,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q020",
+    "left_label": "Teilnehmende beim Danfoss-Programm",
+    "left_value": 71,
+    "right_label": "Arbeitsmodule im Smart Factory Qualification Lab",
+    "right_value": 12
+  },
+  {
+    "id": "q021",
+    "left_label": "Module im Danfoss-Programm",
+    "left_value": 4,
+    "right_label": "Pillars im Smart Factory Qualification Lab",
+    "right_value": 3
+  },
+  {
+    "id": "q022",
+    "left_label": "Stunden pro Danfoss-Modul",
+    "left_value": 2,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q023",
+    "left_label": "Identifizierte Potenziale bei Pepperl+Fuchs",
+    "left_value": 109,
+    "right_label": "abgeleitete Use Cases bei Pepperl+Fuchs",
+    "right_value": 42
+  },
+  {
+    "id": "q024",
+    "left_label": "Bootcamp-Tage bei Pepperl+Fuchs",
+    "left_value": 4,
+    "right_label": "besuchte Referenzstandorte im Smart Factory Tour Teil",
+    "right_value": 2
+  },
+  {
+    "id": "q025",
+    "left_label": "Minuten bis jemand 'MECE' sagt",
+    "left_value": 8,
+    "right_label": "Minuten bis jemand 'Quick Win' sagt",
+    "right_value": 5
+  },
+  {
+    "id": "q026",
+    "left_label": "Wörter in einem zu langen Management-Titel vor dem Kürzen",
+    "left_value": 13,
+    "right_label": "Boxen in einem ersten Strukturentwurf",
+    "right_value": 10
+  },
+  {
+    "id": "q027",
+    "left_label": "Arbeitsmodule im Smart Factory Qualification Lab",
+    "left_value": 12,
+    "right_label": "Teilnehmende im Smart Factory Qualification Lab",
+    "right_value": 40
+  },
+  {
+    "id": "q028",
+    "left_label": "Gruppen im Smart Factory Qualification Lab",
+    "left_value": 4,
+    "right_label": "Themenpfeiler im Smart Factory Qualification Lab",
+    "right_value": 3
+  },
+  {
+    "id": "q029",
+    "left_label": "Anmerkungen auf einer KPI-Folie kurz vor final",
+    "left_value": 9,
+    "right_label": "kleine Korrekturen an Legenden in Diagrammen",
+    "right_value": 8
+  },
+  {
+    "id": "q030",
+    "left_label": "Minuten bis jemand 'wir müssen es greifbar machen' sagt",
+    "left_value": 4,
+    "right_label": "Minuten bis jemand 'wir brauchen Klarheit' sagt",
+    "right_value": 5
+  },
+  {
+    "id": "q031",
+    "left_label": "Unser Smart Manufacturing Roadmap Projekt bei Pepperl+Fuchs in Wochen?",
+    "left_value": 74,
+    "right_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "right_value": 22
+  },
+  {
+    "id": "q032",
+    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "left_value": 71,
+    "right_label": "Länder im Pepperl+Fuchs-Projekt",
+    "right_value": 4
+  },
+  {
+    "id": "q033",
+    "left_label": "Minuten bis in einer Diskussion 'Hypothese' fällt",
+    "left_value": 5,
+    "right_label": "Minuten bis in einer Diskussion 'Realisierbarkeit' fällt",
+    "right_value": 8
+  },
+  {
+    "id": "q034",
+    "left_label": "MES-Anbieter auf dem deutschen Markt laut KSB-Seite",
+    "left_value": 151,
+    "right_label": "Teilnehmende beim Danfoss-Programm",
+    "right_value": 71
+  },
+  {
+    "id": "q035",
+    "left_label": "Tabs im Browser bei einer Wettbewerbsanalyse",
+    "left_value": 17,
+    "right_label": "Tabs in Excel bei paralleler Zahlenprüfung",
+    "right_value": 9
+  },
+  {
+    "id": "q036",
+    "left_label": "offene Rückfragen nach einer scheinbar klaren Entscheidung",
+    "left_value": 9,
+    "right_label": "offene Punkte nach einem Weekly",
+    "right_value": 13
+  },
+  {
+    "id": "q037",
+    "left_label": "kleine Textfeld-Verschiebungen bis alles sauber sitzt",
+    "left_value": 18,
+    "right_label": "Farbkorrekturen an Diagrammen im letzten Schritt",
+    "right_value": 10
+  },
+  {
+    "id": "q038",
+    "left_label": "Leute, die im Call nicken ohne etwas zu sagen",
+    "left_value": 4,
+    "right_label": "Leute, die im Termin gleichzeitig mitschreiben",
+    "right_value": 8
+  },
+  {
+    "id": "q039",
+    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "left_value": 52,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q040",
+    "left_label": "Mitarbeitende bei Karl Mayer in Hunderten gerundet",
+    "left_value": 33,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q041",
+    "left_label": "Minuten bis jemand 'lasst uns das parken' sagt",
+    "left_value": 7,
+    "right_label": "Minuten bis jemand 'lasst uns konkret werden' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q042",
+    "left_label": "Nicht gesendete Nachrichten, die man nochmal umformuliert",
+    "left_value": 7,
+    "right_label": "kleine Formulierungsänderungen in einer Management-Mail",
+    "right_value": 11
+  },
+  {
+    "id": "q043",
+    "left_label": "Artikel am Eberspächer-Standort Herxheim in Tausend",
+    "left_value": 19,
+    "right_label": "Loss Reasons am ABUS-Engpass",
+    "right_value": 10
+  },
+  {
+    "id": "q044",
+    "left_label": "Tage Expert Workshop bei Eberspächer",
+    "left_value": 2,
+    "right_label": "Pillars im Smart Factory Qualification Lab",
+    "right_value": 3
+  },
+  {
+    "id": "q045",
+    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "left_value": 130,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q046",
+    "left_label": "Halbtage pro Gruppe im Qualification Lab",
+    "left_value": 3,
+    "right_label": "Gruppen im Qualification Lab",
+    "right_value": 4
+  },
+  {
+    "id": "q047",
+    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "left_value": 104,
+    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "right_value": 52
+  },
+  {
+    "id": "q048",
+    "left_label": "Minuten für das Schärfen einer Botschaft",
+    "left_value": 10,
+    "right_label": "Minuten für die Benennung von Arbeitspaketen",
+    "right_value": 12
+  },
+  {
+    "id": "q049",
+    "left_label": "Punkte auf einer Liste 'noch zu klären'",
+    "left_value": 12,
+    "right_label": "Punkte auf einer Liste 'für später'",
+    "right_value": 13
+  },
+  {
+    "id": "q050",
+    "left_label": "Minuten bis jemand 'wir brauchen eine Storyline' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'wir müssen runterbrechen' sagt",
+    "right_value": 7
+  },
+  {
+    "id": "q051",
+    "left_label": "Folien, die man vor einem Termin sicherheitshalber backuppt",
+    "left_value": 6,
+    "right_label": "Dateien, die vor einem Lenkungskreis sicherheitshalber geöffnet sind",
+    "right_value": 10
+  },
+  {
+    "id": "q052",
+    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "left_value": 104,
+    "right_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "right_value": 130
+  },
+  {
+    "id": "q053",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q054",
+    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
+    "right_value": 2
+  },
+  {
+    "id": "q055",
+    "left_label": "Minuten bis in einer Factory-Diskussion 'OEE' fällt",
+    "left_value": 5,
+    "right_label": "Minuten bis danach 'Datenqualität' fällt",
+    "right_value": 7
+  },
+  {
+    "id": "q056",
+    "left_label": "Pilotsites in der Pepperl+Fuchs-Potenzialanalyse",
+    "left_value": 2,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q057",
+    "left_label": "Use Cases bei Pepperl+Fuchs",
+    "left_value": 42,
+    "right_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "right_value": 71
+  },
+  {
+    "id": "q058",
+    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q059",
+    "left_label": "Leute, die im Workshop gleichzeitig reden wollen",
+    "left_value": 6,
+    "right_label": "Leute, die im Termin gleichzeitig die Kamera anhaben",
+    "right_value": 5
+  },
+  {
+    "id": "q060",
+    "left_label": "Minuten für das Finetuning einer Schlussfolie",
+    "left_value": 9,
+    "right_label": "Minuten für das Finetuning einer Titelfolie",
+    "right_value": 11
+  },
+  {
+    "id": "q061",
+    "left_label": "Subprojekte in der Pepperl+Fuchs-Roadmap",
+    "left_value": 9,
+    "right_label": "Bootcamp-Tage bei Pepperl+Fuchs",
+    "right_value": 4
+  },
+  {
+    "id": "q062",
+    "left_label": "kommentierte Zellen in einer Arbeitsdatei",
+    "left_value": 8,
+    "right_label": "Kommentare auf einer Prozessgrafik vor Versand",
+    "right_value": 10
+  },
+  {
+    "id": "q063",
+    "left_label": "Punkte auf einer internen Review-Checkliste",
+    "left_value": 13,
+    "right_label": "offene Punkte in einer Review-Liste",
+    "right_value": 11
+  },
+  {
+    "id": "q064",
+    "left_label": "Minuten bis jemand 'Operating Model' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'Governance' hinterherschiebt",
+    "right_value": 8
+  },
+  {
+    "id": "q065",
+    "left_label": "Versionen einer Priorisierungsliste bis final",
+    "left_value": 6,
+    "right_label": "Versionen eines Tabellenlayouts bis final",
+    "right_value": 5
+  },
+  {
+    "id": "q066",
+    "left_label": "Kleine Formatfehler, die kurz vor Schluss gefunden werden",
+    "left_value": 11,
+    "right_label": "kleine Textkorrekturen in einer finalen Empfehlung",
+    "right_value": 14
+  },
+  {
+    "id": "q067",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q068",
+    "left_label": "Unterpunkte in einer tiefen Ursachenanalyse",
+    "left_value": 16,
+    "right_label": "Unterpunkte in einer Maßnahmenlogik",
+    "right_value": 12
+  },
+  {
+    "id": "q069",
+    "left_label": "Antworten im Chat auf eine eigentlich einfache Frage",
+    "left_value": 12,
+    "right_label": "Zusatzideen nach einer eigentlich finalen Abstimmung",
+    "right_value": 13
+  },
+  {
+    "id": "q070",
+    "left_label": "Minuten bis jemand 'Status quo' sagt",
+    "left_value": 7,
+    "right_label": "Minuten bis jemand 'Zielzustand' sagt",
+    "right_value": 6
+  },
+  {
+    "id": "q071",
+    "left_label": "Unser VirtualXperience Programm bei Danfoss in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q072",
+    "left_label": "PowerPoint-Edit-Spike laut Microsoft in Prozent",
+    "left_value": 122,
+    "right_label": "World-Class-OEE laut Vorne in Prozent",
+    "right_value": 85
+  },
+  {
+    "id": "q073",
+    "left_label": "Meetings in Peak-Produktivitätszeiten laut Microsoft in Prozent",
+    "left_value": 50,
+    "right_label": "spontane Calls ohne Kalendereinladung laut Microsoft in Prozent",
+    "right_value": 57
+  },
+  {
+    "id": "q074",
+    "left_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
+    "left_value": 30,
+    "right_label": "Produktivitätssteigerung bei HOMAG in Prozent (mindestens)",
+    "right_value": 20
+  },
+  {
+    "id": "q075",
+    "left_label": "Minuten bis jemand 'das ziehen wir offline' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'lasst uns einen Schritt zurückgehen' sagt",
+    "right_value": 8
+  },
+  {
+    "id": "q076",
+    "left_label": "Browser-Tabs bei einer Marktanalyse",
+    "left_value": 20,
+    "right_label": "Offene Browser-Tabs vor dem Steering",
+    "right_value": 18
+  },
+  {
+    "id": "q077",
+    "left_label": "Punkte auf der Workshop-Parkliste",
+    "left_value": 11,
+    "right_label": "Cluster auf einem virtuellen Whiteboard",
+    "right_value": 14
+  },
+  {
+    "id": "q078",
+    "left_label": "Teilnehmende im Smart Factory Qualification Lab",
+    "left_value": 40,
+    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
+    "right_value": 21
+  },
+  {
+    "id": "q079",
+    "left_label": "Tage Expert Workshop bei Eberspächer",
+    "left_value": 2,
+    "right_label": "Module im Danfoss-Programm",
+    "right_value": 4
+  },
+  {
+    "id": "q080",
+    "left_label": "Minuten für die finale Abstimmung eines Key-Message-Sets",
+    "left_value": 11,
+    "right_label": "Minuten für die Abstimmung einer Kernaussage",
+    "right_value": 13
+  },
+  {
+    "id": "q081",
+    "left_label": "Formulierungsvarianten für einen Action Title",
+    "left_value": 8,
+    "right_label": "Anläufe bis ein Titel wirklich managementtauglich ist",
+    "right_value": 7
+  },
+  {
+    "id": "q082",
+    "left_label": "Stichpunkte in einer ersten Executive Summary",
+    "left_value": 10,
+    "right_label": "Absätze in einer Executive Summary vor dem Kürzen",
+    "right_value": 9
+  },
+  {
+    "id": "q083",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q084",
+    "left_label": "Verlustgründe am ABUS-Engpass",
+    "left_value": 10,
+    "right_label": "Artikelfamilien, die man in einem OEE-Workshop sauber clustert",
+    "right_value": 6
+  },
+  {
+    "id": "q085",
+    "left_label": "Anmerkungen in einer Zahlenfolie nach internem Review",
+    "left_value": 10,
+    "right_label": "Anmerkungen zu einem Prozess-Schaubild",
+    "right_value": 11
+  },
+  {
+    "id": "q086",
+    "left_label": "Minuten bis jemand 'wir brauchen Fokus' sagt",
+    "left_value": 4,
+    "right_label": "Minuten bis jemand 'wir müssen entscheiden' sagt",
+    "right_value": 6
+  },
+  {
+    "id": "q087",
+    "left_label": "Leute, die im Call versehentlich noch auf stumm sind",
+    "left_value": 5,
+    "right_label": "Leute, die im Call gleichzeitig etwas in den Chat schreiben",
+    "right_value": 4
+  },
+  {
+    "id": "q088",
+    "left_label": "Tage eines Pepperl+Fuchs-Bootcamps",
+    "left_value": 4,
+    "right_label": "Tage Referenzbesuche im Smart Factory Tour Teil",
+    "right_value": 2
+  },
+  {
+    "id": "q089",
+    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "left_value": 71,
+    "right_label": "Artikel bei Eberspächer in Tausend",
+    "right_value": 19
+  },
+  {
+    "id": "q090",
+    "left_label": "Minuten bis in einer Diskussion 'Machbarkeit' fällt",
+    "left_value": 5,
+    "right_label": "Minuten bis in einer Diskussion 'Komplexität' fällt",
+    "right_value": 7
+  },
+  {
+    "id": "q091",
+    "left_label": "Kleine Nachfragen nach einem scheinbar klaren Beschluss",
+    "left_value": 9,
+    "right_label": "offene Rückfragen nach einer Statusrunde",
+    "right_value": 10
+  },
+  {
+    "id": "q092",
+    "left_label": "Textelemente, die vor Abgabe nochmal angefasst werden",
+    "left_value": 14,
+    "right_label": "kleine Korrekturen an Legenden in Diagrammen",
+    "right_value": 8
+  },
+  {
+    "id": "q093",
+    "left_label": "Punkte in einer Liste mit Annahmen",
+    "left_value": 12,
+    "right_label": "Punkte auf einer Liste mit offenen Entscheidungen",
+    "right_value": 13
+  },
+  {
+    "id": "q094",
+    "left_label": "Minuten bis jemand 'Business Case' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'kritischer Pfad' sagt",
+    "right_value": 7
+  },
+  {
+    "id": "q095",
+    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
+    "left_value": 13,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q096",
+    "left_label": "Produktivitätssteigerung bei HOMAG in Prozent (mindestens)",
+    "left_value": 20,
+    "right_label": "Potenziale bei Pepperl+Fuchs",
+    "right_value": 109
+  },
+  {
+    "id": "q097",
+    "left_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
+    "left_value": 2,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q098",
+    "left_label": "Pfeiler im Qualification Lab",
+    "left_value": 3,
+    "right_label": "Gruppen im Qualification Lab",
+    "right_value": 4
+  },
+  {
+    "id": "q099",
+    "left_label": "Minuten bis jemand 'wir brauchen eine Logik' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'wir brauchen Klarheit' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q100",
+    "left_label": "Kleine Layoutkorrekturen fünf Minuten vor Start",
+    "left_value": 9,
+    "right_label": "kleine Textfeld-Verschiebungen bis alles sauber sitzt",
+    "right_value": 18
+  },
+  {
+    "id": "q101",
+    "left_label": "Unser Smart Manufacturing Roadmap Projekt bei Pepperl+Fuchs in Wochen?",
+    "left_value": 74,
+    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "right_value": 52
+  },
+  {
+    "id": "q102",
+    "left_label": "Länder im Pepperl+Fuchs-Projekt",
+    "left_value": 4,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q103",
+    "left_label": "Use Cases bei Pepperl+Fuchs",
+    "left_value": 42,
+    "right_label": "Loss Reasons am ABUS-Engpass",
+    "right_value": 10
+  },
+  {
+    "id": "q104",
+    "left_label": "Minuten bis jemand 'Vorgehensmodell' sagt",
+    "left_value": 7,
+    "right_label": "Minuten bis jemand 'Roadmap' sagt",
+    "right_value": 6
+  },
+  {
+    "id": "q105",
+    "left_label": "Folien, die kurz vor Schluss noch umsortiert werden",
+    "left_value": 5,
+    "right_label": "PowerPoint-Kommentare, die mit 'ggf.' anfangen",
+    "right_value": 9
+  },
+  {
+    "id": "q106",
+    "left_label": "Geöffnete Projektordner bei der Vorbereitung",
+    "left_value": 6,
+    "right_label": "geöffnete Dateien auf dem Desktop kurz vor Präsentationsstart",
+    "right_value": 12
+  },
+  {
+    "id": "q107",
+    "left_label": "MES-Anbieter auf dem deutschen Markt laut KSB-Seite",
+    "left_value": 151,
+    "right_label": "Use Cases bei Pepperl+Fuchs",
+    "right_value": 42
+  },
+  {
+    "id": "q108",
+    "left_label": "unternehmensweite Gruppen im Qualification Lab",
+    "left_value": 4,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q109",
+    "left_label": "Minuten bis jemand 'Impact' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'Hebel' sagt",
+    "right_value": 5
+  },
+  {
+    "id": "q110",
+    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "left_value": 104,
+    "right_label": "Unser Smart Manufacturing Roadmap Projekt bei Pepperl+Fuchs in Wochen?",
+    "right_value": 74
+  },
+  {
+    "id": "q111",
+    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "left_value": 130,
+    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "right_value": 52
+  },
+  {
+    "id": "q112",
+    "left_label": "Punkte, die nach einem Review sofort umpriorisiert werden",
+    "left_value": 8,
+    "right_label": "Punkte auf einer To-do-Liste nach einem Workshop-Fazit",
+    "right_value": 10
+  },
+  {
+    "id": "q113",
+    "left_label": "Teilnehmende beim Danfoss-Programm",
+    "left_value": 71,
+    "right_label": "Teilnehmende im Qualification Lab",
+    "right_value": 40
+  },
+  {
+    "id": "q114",
+    "left_label": "Module im Danfoss-Programm",
+    "left_value": 4,
+    "right_label": "Arbeitsmodule im Qualification Lab",
+    "right_value": 12
+  },
+  {
+    "id": "q115",
+    "left_label": "Minuten bis jemand 'Schnittstelle' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis danach 'Datenqualität' fällt",
+    "right_value": 7
+  },
+  {
+    "id": "q116",
+    "left_label": "Stichpunkte nach der Frage 'Was ist der Mehrwert?'",
+    "left_value": 10,
+    "right_label": "Unterpunkte nach der Frage 'Was heißt das konkret?'",
+    "right_value": 11
+  },
+  {
+    "id": "q117",
+    "left_label": "Minuten bis jemand 'Potenzial' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'Hypothese' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q118",
+    "left_label": "Anmerkungen in einer ersten Prozesslandkarte",
+    "left_value": 11,
+    "right_label": "kommentierte Bullet Points in einer Kernbotschaft",
+    "right_value": 12
+  },
+  {
+    "id": "q119",
+    "left_label": "Kaffee-Nachfüllungen in einem langen Workshop",
+    "left_value": 5,
+    "right_label": "Leute, die im Termin gleichzeitig ihren Bildschirm teilen wollen",
+    "right_value": 3
+  },
+  {
+    "id": "q120",
+    "left_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
+    "left_value": 30,
+    "right_label": "World-Class-OEE laut Vorne in Prozent",
+    "right_value": 85
+  },
+  {
+    "id": "q121",
+    "left_label": "Minuten bis jemand 'wir müssen clustern' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'wir müssen vereinfachen' sagt",
+    "right_value": 7
+  },
+  {
+    "id": "q122",
+    "left_label": "Stunden des Danfoss-Programms gesamt",
+    "left_value": 8,
+    "right_label": "Tage des Pepperl+Fuchs-Bootcamps",
+    "right_value": 4
+  },
+  {
+    "id": "q123",
+    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "left_value": 130,
+    "right_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "right_value": 104
+  },
+  {
+    "id": "q124",
+    "left_label": "Punkte auf einer Liste 'noch offen'",
+    "left_value": 14,
+    "right_label": "offene To-dos aus einem 30-Minuten-Call",
+    "right_value": 11
+  },
+  {
+    "id": "q125",
+    "left_label": "Tabs im Browser bei einer Kundenrecherche",
+    "left_value": 16,
+    "right_label": "Tabs für parallele Recherchen in der Konzeptphase",
+    "right_value": 19
+  },
+  {
+    "id": "q126",
+    "left_label": "Minuten bis jemand 'Roadblock' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'Risiko' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q127",
+    "left_label": "Unnötige Meetings vs. High-Priority-Work laut Atlassian: Mehrzeit in Prozent",
+    "left_value": 50,
+    "right_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
+    "right_value": 30
+  },
+  {
+    "id": "q128",
+    "left_label": "Leute, die im Termin gleichzeitig mitschreiben",
+    "left_value": 8,
+    "right_label": "Leute, die sich gleichzeitig Notizen machen",
+    "right_value": 5
+  },
+  {
+    "id": "q129",
+    "left_label": "Minuten für die Abstimmung eines neutralen Wordings",
+    "left_value": 10,
+    "right_label": "Minuten für die Auswahl eines finalen Wortes im Titel",
+    "right_value": 8
+  },
+  {
+    "id": "q130",
+    "left_label": "Stunden pro Danfoss-Modul",
+    "left_value": 2,
+    "right_label": "Gruppen im Qualification Lab",
+    "right_value": 4
+  },
+  {
+    "id": "q131",
+    "left_label": "kommentierte Zellen in einer Arbeitsdatei",
+    "left_value": 8,
+    "right_label": "Kommentare auf einer KPI-Folie kurz vor final",
+    "right_value": 9
+  },
+  {
+    "id": "q132",
+    "left_label": "Minuten bis jemand 'wir müssen es greifbar machen' sagt",
+    "left_value": 4,
+    "right_label": "Minuten bis jemand 'wir müssen es runterbrechen' sagt",
+    "right_value": 6
+  },
+  {
+    "id": "q133",
+    "left_label": "Kleine Umformulierungen an einem Fazit-Satz",
+    "left_value": 13,
+    "right_label": "kleine Formulierungsänderungen in einer Zusammenfassung",
+    "right_value": 8
+  },
+  {
+    "id": "q134",
+    "left_label": "Unterbrechungen pro Tag bei Heavy-Ping-Usern laut Microsoft",
+    "left_value": 275,
+    "right_label": "MES-Anbieter auf dem deutschen Markt laut KSB-Seite",
+    "right_value": 151
+  },
+  {
+    "id": "q135",
+    "left_label": "Punkte auf einer Liste 'für später'",
+    "left_value": 13,
+    "right_label": "Punkte auf einer Liste 'noch zu klären'",
+    "right_value": 12
+  },
+  {
+    "id": "q136",
+    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "left_value": 52,
+    "right_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "right_value": 22
+  },
+  {
+    "id": "q137",
+    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q138",
+    "left_label": "Arbeitsmodule im Qualification Lab",
+    "left_value": 12,
+    "right_label": "Use Cases bei Pepperl+Fuchs",
+    "right_value": 42
+  },
+  {
+    "id": "q139",
+    "left_label": "Pillars im Qualification Lab",
+    "left_value": 3,
+    "right_label": "Danfoss-Module",
+    "right_value": 4
+  },
+  {
+    "id": "q140",
+    "left_label": "Minuten bis jemand 'Ownership' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'End-to-End' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q141",
+    "left_label": "World-Class-Availability laut Vorne in Prozent",
+    "left_value": 90,
+    "right_label": "World-Class-OEE laut Vorne in Prozent",
+    "right_value": 85
+  },
+  {
+    "id": "q142",
+    "left_label": "World-Class-Performance laut Vorne in Prozent",
+    "left_value": 95,
+    "right_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
+    "right_value": 30
+  },
+  {
+    "id": "q143",
+    "left_label": "Versionen einer Mail mit sensiblem Wording",
+    "left_value": 7,
+    "right_label": "nicht versendete Mails, die nochmal überarbeitet werden",
+    "right_value": 9
+  },
+  {
+    "id": "q144",
+    "left_label": "offene Fragen nach einer scheinbar sauberen Zusammenfassung",
+    "left_value": 11,
+    "right_label": "offene Fragen nach einem Fachbereichsreview",
+    "right_value": 8
+  },
+  {
+    "id": "q145",
+    "left_label": "Minuten für die Kürzung einer zu langen Folie",
+    "left_value": 12,
+    "right_label": "Minuten für das Finale einer Ergebnisfolie",
+    "right_value": 11
+  },
+  {
+    "id": "q146",
+    "left_label": "Minuten bis jemand 'lasst uns entscheiden' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'lasst uns einen Schritt zurückgehen' sagt",
+    "right_value": 8
+  },
+  {
+    "id": "q147",
+    "left_label": "Leute, die im Call gleichzeitig kurz stumm schalten",
+    "left_value": 3,
+    "right_label": "Leute, die im Call versehentlich noch auf stumm sind",
+    "right_value": 5
+  },
+  {
+    "id": "q148",
+    "left_label": "Farbakzente auf einer hervorgehobenen Folie",
+    "left_value": 6,
+    "right_label": "farbliche Hervorhebungen auf einer Kernfolie",
+    "right_value": 9
+  },
+  {
+    "id": "q149",
+    "left_label": "Versionen eines Tabellenlayouts bis final",
+    "left_value": 5,
+    "right_label": "Versionen eines Organigramm-Slides",
+    "right_value": 6
+  },
+  {
+    "id": "q150",
+    "left_label": "Minuten bis jemand 'Bitte eine Folie draus machen' sagt",
+    "left_value": 4,
+    "right_label": "Stunden, die das Team danach realistisch investiert",
+    "right_value": 6
+  }
+]
