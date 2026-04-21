@@ -134,7 +134,7 @@ const lobbyAvatarSlots = [
 
 function planetHorizonTopForPercent(x: number): number {
   const normalizedDistance = Math.min(1, Math.abs(x - 50) / 38);
-  return 14 + normalizedDistance ** 2 * 15;
+  return 72 + normalizedDistance ** 2 * 18;
 }
 
 function escapeHtml(value: string): string {
