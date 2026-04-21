@@ -42,8 +42,6 @@ const rightValue = document.querySelector<HTMLElement>("#right-value")!;
 const revealTag = document.querySelector<HTMLElement>("#reveal-tag")!;
 const guessHigherButton = document.querySelector<HTMLButtonElement>("#guess-higher-button")!;
 const guessLowerButton = document.querySelector<HTMLButtonElement>("#guess-lower-button")!;
-const playLeaderboard = document.querySelector<HTMLElement>("#play-leaderboard")!;
-const pendingList = document.querySelector<HTMLElement>("#pending-list")!;
 const playMessage = document.querySelector<HTMLElement>("#play-message")!;
 const roundDots = document.querySelector<HTMLElement>("#round-dots")!;
 
@@ -61,7 +59,6 @@ const statUsed = document.querySelector<HTMLElement>("#stat-used")!;
 const finalList = document.querySelector<HTMLElement>("#final-list")!;
 const newGameButton = document.querySelector<HTMLButtonElement>("#new-game-button")!;
 
-const restartButton = document.querySelector<HTMLButtonElement>("#restart-button")!;
 const messageBox = document.querySelector<HTMLElement>("#message-box")!;
 const lateTrigger = document.querySelector<HTMLButtonElement>("#late-trigger")!;
 const backdrop = document.querySelector<HTMLElement>("#backdrop")!;
@@ -88,13 +85,14 @@ const screens = new Map<ScreenName, HTMLElement>(
   (["lobby", "play", "interim", "finale"] as const).map((name) => [name, document.querySelector<HTMLElement>(`#screen-${name}`)!])
 );
 
-let latestName = firstNameInput.value;
+let latestName = firstNameInput.value.trim();
 let currentState: PublicGameState | null = null;
 let countdownHandle: number | null = null;
 let toastHandle: number | null = null;
 let lastRevealAnimationKey = "";
 let lastFinalCelebrationKey = "";
-let lastScreen: ScreenName = "lobby";
+let lastRevealCelebrationKey = "";
+let pendingAutoStart = false;
 
 const confettiContext = confettiCanvas.getContext("2d")!;
 let confettiPieces: Array<{
@@ -124,10 +122,6 @@ function initials(name: string): string {
   return name.trim().slice(0, 1).toUpperCase() || "?";
 }
 
-function avatarHueClass(name: string): string {
-  return `avatar-${name.charCodeAt(0) % 5}`;
-}
-
 function setToast(message: string): void {
   messageBox.textContent = message;
   if (toastHandle !== null) {
@@ -154,7 +148,6 @@ function currentScreenForState(state: PublicGameState): ScreenName {
 }
 
 function switchScreen(nextScreen: ScreenName): void {
-  lastScreen = nextScreen;
   for (const [name, element] of screens.entries()) {
     element.classList.toggle("is-active", name === nextScreen);
   }
@@ -167,8 +160,21 @@ function setConnectionState(connected: boolean): void {
     : '<span class="live-dot"></span> Offline';
 }
 
-function titleCasePhase(phase: PublicGameState["phase"]): string {
-  return phase.replace("_", " ").replace(/\b\w/g, (character) => character.toUpperCase());
+function phaseLabel(phase: PublicGameState["phase"]): string {
+  switch (phase) {
+    case "lobby":
+      return "Lobby";
+    case "round_active":
+      return "Challenge";
+    case "reveal":
+      return "Auflösung";
+    case "leaderboard":
+      return "Zwischenstand";
+    case "final":
+      return "Finale";
+    default:
+      return phase;
+  }
 }
 
 function updateRoundDots(state: PublicGameState): void {
@@ -209,7 +215,7 @@ function renderTimer(state: PublicGameState): void {
   timerValue.textContent = remainingSeconds.toFixed(1);
   timerProgress.style.strokeDasharray = `${timerCircumference}`;
   timerProgress.style.strokeDashoffset = `${timerCircumference * (1 - ratio)}`;
-  timerProgress.style.stroke = remainingSeconds <= 2 ? "var(--bad)" : "var(--accent)";
+  timerProgress.style.stroke = remainingSeconds <= 3 ? "var(--bad)" : "var(--accent)";
 }
 
 function restartCountdown(state: PublicGameState): void {
@@ -260,43 +266,9 @@ function renderLobbyPlayers(players: PlayerView[]): void {
     const chip = document.createElement("div");
     chip.className = "player-chip";
     chip.style.animationDelay = `${index * 30}ms`;
-    chip.innerHTML = `<span class="avatar ${avatarHueClass(player.name)}">${escapeHtml(initials(player.name))}</span><span>${escapeHtml(player.name)}</span>`;
+    chip.innerHTML = `<span class="avatar">${escapeHtml(initials(player.name))}</span><span>${escapeHtml(player.name)}</span>`;
     playersGrid.appendChild(chip);
   });
-}
-
-function renderMiniLeaderboard(root: HTMLElement, players: PlayerView[], emptyMessage: string): void {
-  if (players.length === 0) {
-    root.innerHTML = `<li><span class="meta">${escapeHtml(emptyMessage)}</span></li>`;
-    return;
-  }
-
-  root.innerHTML = players
-    .map(
-      (player, index) => `
-        <li>
-          <span>${index + 1}. ${escapeHtml(player.name)}</span>
-          <span class="meta">${player.score}</span>
-        </li>`
-    )
-    .join("");
-}
-
-function renderPending(root: HTMLElement, players: PlayerView[]): void {
-  if (players.length === 0) {
-    root.innerHTML = '<li><span class="meta">Niemand wartet auf die naechste Runde.</span></li>';
-    return;
-  }
-
-  root.innerHTML = players
-    .map(
-      (player) => `
-        <li>
-          <span>${escapeHtml(player.name)}</span>
-          <span class="meta">wartet</span>
-        </li>`
-    )
-    .join("");
 }
 
 function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
@@ -307,7 +279,7 @@ function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
         <li class="rank-row${tierClass}">
           <span class="pos">${index + 1}</span>
           <div class="who">
-            <span class="avatar ${avatarHueClass(player.name)}">${escapeHtml(initials(player.name))}</span>
+            <span class="avatar">${escapeHtml(initials(player.name))}</span>
             <span>${escapeHtml(player.name)}</span>
           </div>
           <div class="score">${player.score}</div>
@@ -319,7 +291,6 @@ function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
 function renderReveal(result: RevealResult | null): void {
   revealTag.className = "reveal-tag";
   rightCard.classList.remove("is-hit", "is-miss");
-  leftCard.classList.remove("is-hit", "is-miss");
 
   if (!result) {
     revealTag.textContent = "";
@@ -342,7 +313,7 @@ function renderQuestion(state: PublicGameState): void {
   if (!question) {
     leftLabel.textContent = "Noch keine Karte";
     leftValue.textContent = "-";
-    rightLabel.textContent = "Die naechste Karte kommt gleich";
+    rightLabel.textContent = "Die nächste Karte kommt gleich";
     rightValue.textContent = "???";
     lastRevealAnimationKey = "";
     return;
@@ -374,7 +345,7 @@ function renderTurnBanner(state: PublicGameState): void {
   turnBanner.classList.toggle("spectator", !isActivePlayer);
 
   if (state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap") {
-    turnBanner.innerHTML = '<span class="who">Du Highperformer - lass auch mal andere ran!</span>';
+    turnBanner.innerHTML = '<span class="who">Du Highperformer – lass auch mal andere ran!</span>';
     return;
   }
 
@@ -385,7 +356,7 @@ function renderTurnBanner(state: PublicGameState): void {
 
   if (state.phase === "round_active") {
     turnBanner.innerHTML = isActivePlayer
-      ? `<span>Du bist am Zug — <span class="who">${escapeHtml(state.activePlayerName)}</span></span>`
+      ? `<span>Du bist am Zug – <span class="who">${escapeHtml(state.activePlayerName)}</span></span>`
       : `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> ist am Zug · Zuschauermodus</span>`;
     return;
   }
@@ -397,32 +368,32 @@ function renderTurnBanner(state: PublicGameState): void {
 
 function renderStatusCopy(state: PublicGameState): void {
   if (state.phase === "lobby") {
-    statusBanner.textContent = "Lobby offen. Erst beitreten, dann starten.";
+    statusBanner.textContent = "Gib deinen Vornamen ein und tritt bei. Danach kannst du direkt mitspielen.";
     ownershipBanner.textContent = "Noch niemand ist am Zug.";
     return;
   }
 
   if (state.phase === "round_active") {
-    statusBanner.textContent = "Wenn die Antwort richtig ist, bleibt die rechte Karte stehen und die naechste Karte fordert sie direkt heraus.";
+    statusBanner.textContent = "Ist rechts höher oder niedriger als links?";
     ownershipBanner.textContent =
       latestName.length > 0 && state.activePlayerName === latestName
-        ? "Nur du kannst jetzt klicken. Alle anderen sehen dieselbe Live-Challenge."
-        : `Nur ${state.activePlayerName} kann jetzt antworten. Fuer alle anderen bleiben die Buttons gesperrt.`;
+        ? "Nur du kannst jetzt klicken."
+        : `Nur ${state.activePlayerName} kann jetzt antworten.`;
     return;
   }
 
   if (state.phase === "reveal") {
     statusBanner.textContent = state.revealResult?.roundEnded
-      ? "Die Runde wird automatisch abgeschlossen."
-      : "Richtig geraten. Die naechste Karte wird automatisch geladen.";
+      ? "Diese Runde endet jetzt automatisch."
+      : "Richtig geraten. Die nächste Karte wird direkt geladen.";
     ownershipBanner.textContent = state.revealResult?.roundEnded
-      ? "Der Zug geht danach an die Gruppe fuer das Leaderboard."
+      ? "Danach geht es ins Leaderboard."
       : "Die gleiche Person bleibt an der Reihe.";
     return;
   }
 
   if (state.phase === "leaderboard") {
-    interimCopy.textContent = "Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die naechste Runde.";
+    interimCopy.textContent = "Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die nächste Runde.";
     return;
   }
 }
@@ -430,11 +401,10 @@ function renderStatusCopy(state: PublicGameState): void {
 function renderControls(state: PublicGameState): void {
   const isActivePlayer = latestName.length > 0 && state.activePlayerName === latestName;
   joinButton.disabled = state.phase !== "lobby";
-  startButton.disabled = !state.canStart;
+  startButton.disabled = !state.canStart && !(state.phase === "lobby" && firstNameInput.value.trim().length > 0);
   guessHigherButton.disabled = !(state.phase === "round_active" && isActivePlayer);
   guessLowerButton.disabled = !(state.phase === "round_active" && isActivePlayer);
   continueButton.disabled = state.phase !== "leaderboard";
-  restartButton.disabled = state.phase === "lobby";
   lateTrigger.disabled = !(state.phase === "round_active" || state.phase === "reveal" || state.phase === "leaderboard");
 }
 
@@ -502,11 +472,14 @@ function tickConfetti(): void {
 }
 
 function maybeCelebrate(state: PublicGameState): void {
-  const revealKey = `${state.roundNumber}:${state.revealResult?.reason ?? ""}:${state.revealResult?.playerName ?? ""}:${state.updatedAt}`;
-  if (state.revealResult?.wasCorrect && state.revealResult.reason !== "wrong") {
-    const rect = rightCard.getBoundingClientRect();
-    if (rect.width > 0) {
-      burstConfetti(34, rect.left + rect.width / 2, rect.top + 80, 0.75);
+  if (state.revealResult?.wasCorrect) {
+    const revealKey = `${state.roundNumber}:${state.revealResult.reason}:${state.updatedAt}`;
+    if (lastRevealCelebrationKey !== revealKey) {
+      lastRevealCelebrationKey = revealKey;
+      const rect = rightCard.getBoundingClientRect();
+      if (rect.width > 0) {
+        burstConfetti(34, rect.left + rect.width / 2, rect.top + 80, 0.75);
+      }
     }
   }
 
@@ -516,12 +489,6 @@ function maybeCelebrate(state: PublicGameState): void {
     burstConfetti(120, window.innerWidth * 0.3, window.innerHeight * 0.3, 1.2);
     window.setTimeout(() => burstConfetti(120, window.innerWidth * 0.7, window.innerHeight * 0.3, 1.2), 160);
     window.setTimeout(() => burstConfetti(120, window.innerWidth * 0.5, window.innerHeight * 0.25, 1.4), 340);
-  }
-
-  if (state.revealResult?.reason === "highperformer_cap" && lastFinalCelebrationKey !== revealKey) {
-    lastFinalCelebrationKey = revealKey;
-    const rect = rightCard.getBoundingClientRect();
-    burstConfetti(90, rect.left + rect.width / 2, rect.top + rect.height / 2, 1.1);
   }
 }
 
@@ -557,45 +524,18 @@ function applyTiltEffects(): void {
   });
 }
 
-function splitHeroText(): void {
-  document.querySelectorAll<HTMLElement>("[data-split]").forEach((element) => {
-    const walk = (node: ChildNode): void => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const fragment = document.createDocumentFragment();
-        [...(node.textContent ?? "")].forEach((character, index) => {
-          if (character === " ") {
-            fragment.appendChild(document.createTextNode(" "));
-            return;
-          }
-          const span = document.createElement("span");
-          span.className = "char";
-          span.textContent = character;
-          span.style.animationDelay = `${index * 35}ms`;
-          fragment.appendChild(span);
-        });
-        node.parentNode?.replaceChild(fragment, node);
-        return;
-      }
-      [...node.childNodes].forEach(walk);
-    };
-    [...element.childNodes].forEach(walk);
-  });
-}
-
 function renderState(state: PublicGameState): void {
   currentState = state;
   const nextScreen = currentScreenForState(state);
   switchScreen(nextScreen);
 
-  phaseChip.textContent = titleCasePhase(state.phase);
+  phaseChip.textContent = phaseLabel(state.phase);
   roundIndicator.textContent = `Runde ${state.roundNumber} von ${state.maxRounds}`;
   playRoundText.textContent = `${state.roundNumber} / ${state.maxRounds}`;
   activePlayerText.textContent = state.activePlayerName ?? "-";
   streakValue.textContent = `${state.currentTurnStreak} / ${state.streakCap}`;
 
   renderLobbyPlayers(state.players);
-  renderMiniLeaderboard(playLeaderboard, state.phase === "final" ? state.finalRanking : state.leaderboard, "Scores erscheinen nach der ersten Runde.");
-  renderPending(pendingList, state.pendingLateJoiners);
   renderQuestion(state);
   renderReveal(state.revealResult);
   renderTurnBanner(state);
@@ -606,7 +546,7 @@ function renderState(state: PublicGameState): void {
 
   lobbyHelper.textContent = state.canStart
     ? `${state.players.length} Person${state.players.length === 1 ? "" : "en"} bereit.`
-    : "Mindestens eine Person muss beitreten, bevor das Spiel starten kann.";
+    : "Beim Start trittst du mit dem eingetragenen Namen automatisch selbst bei.";
 
   interimRound.textContent = `${state.roundNumber}`;
   renderFullRanking(interimList, state.leaderboard);
@@ -627,6 +567,14 @@ function renderState(state: PublicGameState): void {
   statTotal.textContent = `${state.players.reduce((sum, player) => sum + player.score, 0)}`;
   statUsed.textContent = `${new Set(state.usedQuestionIds).size}`;
 
+  if (pendingAutoStart && state.phase === "lobby" && state.canStart) {
+    const joined = state.players.some((player) => player.name === latestName);
+    if (joined) {
+      pendingAutoStart = false;
+      socket.emit("start_game");
+    }
+  }
+
   maybeCelebrate(state);
 }
 
@@ -641,6 +589,10 @@ function rememberName(input: HTMLInputElement): string | null {
   return value;
 }
 
+function localPlayerJoined(state: PublicGameState | null, candidateName: string): boolean {
+  return Boolean(candidateName) && Boolean(state?.players.some((player) => player.name === candidateName));
+}
+
 joinForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const name = rememberName(firstNameInput);
@@ -650,6 +602,21 @@ joinForm.addEventListener("submit", (event) => {
 });
 
 startButton.addEventListener("click", () => {
+  const candidateName = firstNameInput.value.trim() || latestName;
+  if (!currentState || currentState.phase !== "lobby") {
+    socket.emit("start_game");
+    return;
+  }
+
+  if (candidateName && !localPlayerJoined(currentState, candidateName)) {
+    latestName = candidateName;
+    window.localStorage.setItem(playerNameKey, candidateName);
+    pendingAutoStart = true;
+    socket.emit("join_game", { firstName: candidateName });
+    return;
+  }
+
+  pendingAutoStart = false;
   socket.emit("start_game");
 });
 
@@ -665,11 +632,7 @@ guessLowerButton.addEventListener("click", () => {
   socket.emit("submit_guess", { guess: "lower" });
 });
 
-continueButton.addEventListener("click", () => {
-  socket.emit("continue_to_next_round");
-});
-
-restartButton.addEventListener("click", () => socket.emit("restart_game"));
+continueButton.addEventListener("click", () => socket.emit("continue_to_next_round"));
 newGameButton.addEventListener("click", () => socket.emit("restart_game"));
 
 lateTrigger.addEventListener("click", openDrawer);
@@ -724,7 +687,7 @@ socket.on("player_joined", ({ player }: { player: PlayerView }) => {
 });
 
 socket.on("player_added_late", ({ player }: { player: PlayerView }) => {
-  setToast(`${player.name} steigt ab der naechsten Runde ein.`);
+  setToast(`${player.name} steigt ab der nächsten Runde ein.`);
 });
 
 socket.on("game_started", ({ state }: StateEnvelope) => {
@@ -760,11 +723,11 @@ socket.on("game_finished", ({ state }: StateEnvelope) => {
 });
 
 socket.on("error_event", ({ message }: ErrorEventPayload) => {
+  pendingAutoStart = false;
   setToast(message);
 });
 
 resizeConfettiCanvas();
 window.addEventListener("resize", resizeConfettiCanvas);
-splitHeroText();
 applyTiltEffects();
 setConnectionState(false);

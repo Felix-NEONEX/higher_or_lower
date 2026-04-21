@@ -32,13 +32,16 @@
             <div class="hero">
               <div class="hero__copy">
                 <div class="eyebrow">Internes Event · Live Session</div>
-                <h1 id="lobby-title" data-split>Higher <em>or</em> Lower</h1>
+                <h1 id="lobby-title">
+                  <span class="hero-line">Higher <em>or</em></span>
+                  <span class="hero-line">Lower</span>
+                </h1>
                 <p class="subline">
-                  Fuenf Runden. Eine aktive Person pro Runde. Bei richtiger Antwort bleibt die rechte Karte stehen und die naechste Karte fordert sie heraus.
+                  Fünf Runden. Eine aktive Person pro Runde. Bei richtiger Antwort bleibt die rechte Karte stehen und die nächste Karte fordert direkt die nächste Schätzung heraus.
                 </p>
                 <div class="hero-badges" role="list">
                   <span class="hero-badge" role="listitem">5 Runden</span>
-                  <span class="hero-badge" role="listitem">7 Sekunden pro Challenge</span>
+                  <span class="hero-badge" role="listitem">15 Sekunden pro Challenge</span>
                   <span class="hero-badge" role="listitem">Shared Live State</span>
                 </div>
               </div>
@@ -59,15 +62,15 @@
                     type="text"
                     maxlength="32"
                     autocomplete="given-name"
-                    placeholder="z. B. Laura"
+                    placeholder="z. B. Felix"
                     required
                   />
                 </div>
                 <div class="stack">
                   <button type="submit" id="join-button" class="btn btn--primary btn--block btn--lg">Lobby beitreten</button>
-                  <button type="button" id="start-button" class="btn btn--ghost btn--block btn--lg">Spiel starten</button>
+                  <button type="button" id="start-button" class="btn btn--ghost btn--block btn--lg">Beitreten & starten</button>
                 </div>
-                <p id="lobby-helper" class="helper">Mindestens eine Person muss beitreten, bevor das Spiel starten kann.</p>
+                <p id="lobby-helper" class="helper">Beim Start wirst du automatisch eingetragen, falls du noch nicht in der Liste bist.</p>
               </form>
 
               <section class="card card--players">
@@ -83,8 +86,8 @@
         </section>
 
         <section class="screen" id="screen-play" aria-labelledby="play-title">
-          <div class="play">
-            <div class="playbar">
+          <div class="play play--focused">
+            <div class="playbar playbar--simple">
               <div class="playbar__group">
                 <span class="playbar__label">Runde</span>
                 <span class="playbar__value" id="play-round-text">1 / 5</span>
@@ -104,98 +107,66 @@
               <span>Die Runde startet.</span>
             </div>
 
-            <div class="play-grid">
-              <section class="stage-shell">
-                <div class="stage-header">
-                  <div>
-                    <span class="stage-header__eyebrow">Aktive Challenge</span>
-                    <h2 id="play-title">Nur eine Person kann antworten</h2>
-                  </div>
-                  <div class="timer-shell" aria-live="polite">
-                    <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
-                      <circle class="timer-ring__track" cx="60" cy="60" r="52"></circle>
-                      <circle id="timer-progress" class="timer-ring__progress" cx="60" cy="60" r="52"></circle>
-                    </svg>
-                    <div class="timer-shell__text">
-                      <strong id="timer-value">7.0</strong>
-                      <span>Sekunden</span>
-                    </div>
+            <section class="stage-shell stage-shell--focus">
+              <div class="stage-header stage-header--focus">
+                <div class="stage-copy">
+                  <span class="stage-header__eyebrow">Aktive Challenge</span>
+                  <h2 id="play-title">Ist rechts höher oder niedriger als links?</h2>
+                  <p id="status-banner" class="stage-subline">Nur die aktive Person kann antworten.</p>
+                </div>
+                <div class="timer-shell" aria-live="polite">
+                  <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="timer-ring__track" cx="60" cy="60" r="52"></circle>
+                    <circle id="timer-progress" class="timer-ring__progress" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <div class="timer-shell__text">
+                    <strong id="timer-value">15.0</strong>
+                    <span>Sekunden</span>
                   </div>
                 </div>
+              </div>
 
-                <div id="status-banner" class="status-banner">Die Runde startet.</div>
-
-                <div class="stage" id="stage">
-                  <article class="q-card is-left" id="left-card">
-                    <div class="q-head">
-                      <span class="q-role">Steht</span>
-                      <span class="q-tag">A</span>
-                    </div>
-                    <p class="q-prompt" id="left-label">Noch keine Karte</p>
-                    <div class="q-value" id="left-value">-</div>
-                  </article>
-
-                  <div class="vs" aria-hidden="true">
-                    <svg viewBox="0 0 56 56">
-                      <g class="vs-ring" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55">
-                        <circle cx="28" cy="28" r="26" stroke-dasharray="2 4"></circle>
-                        <circle cx="28" cy="28" r="20" stroke-dasharray="1 6"></circle>
-                      </g>
-                      <text x="28" y="35" text-anchor="middle" font-size="22" font-style="italic" fill="currentColor">vs</text>
-                    </svg>
+              <div class="stage stage--focus" id="stage">
+                <article class="q-card is-left" id="left-card">
+                  <div class="q-head">
+                    <span class="q-role">Links</span>
+                    <span class="q-tag">A</span>
                   </div>
+                  <p class="q-prompt" id="left-label">Noch keine Karte</p>
+                  <div class="q-value" id="left-value">-</div>
+                </article>
 
-                  <article class="q-card is-right" id="right-card">
-                    <div class="q-head">
-                      <span class="q-role">Fordert heraus</span>
-                      <span class="q-tag">B</span>
-                    </div>
-                    <span class="reveal-tag" id="reveal-tag"></span>
-                    <p class="q-prompt" id="right-label">Die naechste Karte kommt gleich</p>
-                    <div class="q-value" id="right-value">???</div>
-                  </article>
-                </div>
-
-                <div class="actions" id="actions">
-                  <button class="choice higher" id="guess-higher-button" aria-keyshortcuts="ArrowUp">
-                    <span class="choice__icon">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
-                    </span>
-                    Hoeher
-                    <span class="kbd">↑</span>
-                  </button>
-                  <button class="choice lower" id="guess-lower-button" aria-keyshortcuts="ArrowDown">
-                    <span class="choice__icon">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>
-                    </span>
-                    Niedriger
-                    <span class="kbd">↓</span>
-                  </button>
-                </div>
-
-                <div id="ownership-banner" class="ownership-banner"></div>
-                <div id="play-message" class="next-row"></div>
-              </section>
-
-              <aside class="side-panel">
-                <section class="mini-card">
-                  <h3>Live Ranking</h3>
-                  <ol id="play-leaderboard" class="rank-mini"></ol>
-                </section>
-
-                <section class="mini-card">
-                  <h3>Ab naechster Runde dabei</h3>
-                  <ul id="pending-list" class="pending-list"></ul>
-                </section>
-
-                <section class="mini-card">
-                  <h3>Steuerung</h3>
-                  <div class="side-actions">
-                    <button type="button" id="restart-button" class="btn btn--ghost btn--block">Spiel neu starten</button>
+                <article class="q-card is-right" id="right-card">
+                  <div class="q-head">
+                    <span class="q-role">Rechts</span>
+                    <span class="q-tag">B</span>
                   </div>
-                </section>
-              </aside>
-            </div>
+                  <span class="reveal-tag" id="reveal-tag"></span>
+                  <p class="q-prompt" id="right-label">Die nächste Karte kommt gleich</p>
+                  <div class="q-value" id="right-value">???</div>
+                </article>
+              </div>
+
+              <div class="actions actions--focus" id="actions">
+                <button class="choice higher" id="guess-higher-button" aria-keyshortcuts="ArrowUp">
+                  <span class="choice__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+                  </span>
+                  Höher
+                  <span class="kbd">↑</span>
+                </button>
+                <button class="choice lower" id="guess-lower-button" aria-keyshortcuts="ArrowDown">
+                  <span class="choice__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>
+                  </span>
+                  Niedriger
+                  <span class="kbd">↓</span>
+                </button>
+              </div>
+
+              <div id="ownership-banner" class="ownership-banner"></div>
+              <div id="play-message" class="next-row"></div>
+            </section>
           </div>
         </section>
 
@@ -204,11 +175,11 @@
             <div class="rank-head">
               <div class="eyebrow">Zwischenstand</div>
               <h2 id="interim-title">Nach Runde <em id="interim-round">1</em></h2>
-              <p id="interim-copy" class="rank-copy">Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die naechste Runde.</p>
+              <p id="interim-copy" class="rank-copy">Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die nächste Runde.</p>
             </div>
             <ol id="interim-list" class="rank-list"></ol>
             <div class="rank-cta">
-              <button type="button" id="continue-button" class="btn btn--primary btn--lg">Naechste Runde</button>
+              <button type="button" id="continue-button" class="btn btn--primary btn--lg">Nächste Runde</button>
             </div>
           </div>
         </section>
@@ -249,22 +220,22 @@
 
     <button class="late-trigger" id="late-trigger" aria-controls="late-drawer" aria-expanded="false" style="display: none">
       <span class="plus">+</span>
-      Spaeter beitreten
+      Später beitreten
     </button>
 
     <div class="backdrop" id="backdrop"></div>
     <aside class="drawer" id="late-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
-      <button class="close-x" id="drawer-close" aria-label="Schliessen">
+      <button class="close-x" id="drawer-close" aria-label="Schließen">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg>
       </button>
-      <h3 id="drawer-title">Spaeter beitreten</h3>
-      <p class="desc">Du steigst ab der naechsten Runde mit ein. Dein Name wird dann normal in die Rotation aufgenommen.</p>
+      <h3 id="drawer-title">Später beitreten</h3>
+      <p class="desc">Du steigst ab der nächsten Runde mit ein. Dein Name wird dann normal in die Rotation aufgenommen.</p>
       <div class="input-group">
         <label for="late-name-input">Dein Vorname</label>
         <input class="input" id="late-name-input" type="text" maxlength="32" placeholder="z. B. Felix" />
       </div>
       <button class="btn btn--primary btn--block" id="late-join-button">Warteliste beitreten</button>
-      <div class="drawer-note">Hinweis: Nur die aktive Person kann waehrend einer laufenden Challenge antworten.</div>
+      <div class="drawer-note">Hinweis: Nur die aktive Person kann während einer laufenden Challenge antworten.</div>
     </aside>
 
     <div class="toast" id="message-box" aria-live="polite"></div>

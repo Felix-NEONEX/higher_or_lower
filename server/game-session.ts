@@ -106,7 +106,7 @@ export class GameSession {
     this.questions = questions;
     this.options = {
       maxRounds: options.maxRounds ?? 5,
-      roundTimeLimitMs: options.roundTimeLimitMs ?? 7000,
+      roundTimeLimitMs: options.roundTimeLimitMs ?? 15000,
       streakCap: options.streakCap ?? 7
     };
     this.state = this.createInitialState(sessionId);
@@ -427,7 +427,7 @@ export class GameSession {
 
   public addLatePlayer(firstName: string, clientId: string, socketId: string): PlayerView {
     if (this.state.phase === "lobby" || this.state.phase === "final") {
-      throw this.error("INVALID_PHASE", "Late-Join geht nur waehrend eines laufenden Spiels.");
+      throw this.error("INVALID_PHASE", "Late-Join geht nur während eines laufenden Spiels.");
     }
 
     const cleaned = this.ensureValidName(firstName);
@@ -453,7 +453,7 @@ export class GameSession {
 
   public startGame(): PublicGameState {
     if (this.state.phase !== "lobby") {
-      throw this.error("ALREADY_STARTED", "Das Spiel laeuft bereits.");
+      throw this.error("ALREADY_STARTED", "Das Spiel läuft bereits.");
     }
 
     if (this.state.players.length === 0) {
@@ -495,7 +495,7 @@ export class GameSession {
         return this.endTurnReveal(guess, true, "deck_exhausted", "Richtig. Der Kartenstapel ist jetzt leer.");
       }
 
-      return this.endTurnReveal(guess, true, "correct", "Richtig. Die naechste Karte wird direkt geladen.");
+      return this.endTurnReveal(guess, true, "correct", "Richtig. Die nächste Karte wird direkt geladen.");
     }
 
     return this.endTurnReveal(guess, false, "wrong", "Leider falsch. Die Runde ist damit vorbei.");
@@ -511,7 +511,7 @@ export class GameSession {
 
   public continueAfterReveal(): PublicGameState {
     if (this.state.phase !== "reveal") {
-      throw this.error("INVALID_PHASE", "Nach dem Reveal gibt es gerade nichts fortzusetzen.");
+      throw this.error("INVALID_PHASE", "Nach der Auflösung gibt es gerade nichts fortzusetzen.");
     }
 
     if (this.state.revealNextAction === "next_challenge") {
@@ -530,12 +530,12 @@ export class GameSession {
       return this.getPublicState();
     }
 
-    throw this.error("INVALID_PHASE", "Es gibt keinen gueltigen Folge-Schritt.");
+    throw this.error("INVALID_PHASE", "Es gibt keinen gültigen Folge-Schritt.");
   }
 
   public continueToNextRound(): PublicGameState {
     if (this.state.phase !== "leaderboard") {
-      throw this.error("INVALID_PHASE", "Die naechste Runde kann nur vom Leaderboard aus gestartet werden.");
+      throw this.error("INVALID_PHASE", "Die nächste Runde kann nur vom Zwischenstand aus gestartet werden.");
     }
 
     return this.startNewRound();

@@ -67,7 +67,7 @@ or GitHub-connected auto-deploys from `main`.
 - Late joiners are queued and activated at the next round boundary.
 - Exactly five rounds run per game.
 - Each round belongs to one active player only.
-- The active player has 7 seconds per challenge.
+- The active player has 15 seconds per challenge.
 - If the active player is correct, the revealed right card stays on the board and the next challenger card is loaded automatically.
 - If the active player reaches 7 correct answers in a row during one turn, the turn stops immediately with `Du Highperformer - lass auch mal andere ran!`.
 - Questions are loaded from `data/higher_lower_top150.json` at boot and the service fails fast if the dataset is missing or invalid.
