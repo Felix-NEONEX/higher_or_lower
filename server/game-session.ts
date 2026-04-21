@@ -58,37 +58,6 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
-function hashSeed(seed: string): number {
-  let hash = 1779033703 ^ seed.length;
-  for (let index = 0; index < seed.length; index += 1) {
-    hash = Math.imul(hash ^ seed.charCodeAt(index), 3432918353);
-    hash = (hash << 13) | (hash >>> 19);
-  }
-  return hash >>> 0;
-}
-
-function mulberry32(seed: number): () => number {
-  let value = seed >>> 0;
-  return () => {
-    value += 0x6d2b79f5;
-    let result = Math.imul(value ^ (value >>> 15), value | 1);
-    result ^= result + Math.imul(result ^ (result >>> 7), result | 61);
-    return ((result ^ (result >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffleDeterministically<T>(items: T[], seed: string): T[] {
-  const shuffled = [...items];
-  const random = mulberry32(hashSeed(seed));
-
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const nextIndex = Math.floor(random() * (index + 1));
-    [shuffled[index], shuffled[nextIndex]] = [shuffled[nextIndex]!, shuffled[index]!];
-  }
-
-  return shuffled;
-}
-
 function toPlayerView(player: PlayerRecord): PlayerView {
   return {
     name: player.name,
@@ -103,6 +72,7 @@ export class GameSession {
   private readonly questions: QuestionEntry[];
   private readonly options: Required<GameSessionOptions>;
   private state: SessionState;
+  private nextQuestionIndex = 0;
 
   constructor(questions: QuestionEntry[], sessionId = "default-session", options: GameSessionOptions = {}) {
     this.questions = questions;
@@ -160,12 +130,11 @@ export class GameSession {
     return new GameError(code, message);
   }
 
-  private buildDeck(seed: string): QuestionCard[] {
-    const orderedQuestions = shuffleDeterministically(this.questions, seed);
-    const sideRandom = mulberry32(hashSeed(`${seed}-side`));
-
-    return orderedQuestions.map((question) => {
-      const side = sideRandom() >= 0.5 ? "right" : "left";
+  private buildDeck(): QuestionCard[] {
+    return Array.from({ length: this.questions.length }, (_unused, offset) => {
+      const questionIndex = (this.nextQuestionIndex + offset) % this.questions.length;
+      const question = this.questions[questionIndex]!;
+      const side = questionIndex % 2 === 0 ? "right" : "left";
       return side === "left"
         ? {
             id: `${question.id}:left`,
@@ -182,6 +151,14 @@ export class GameSession {
             value: question.rightValue
           };
     });
+  }
+
+  private commitConsumedQuestions(): void {
+    if (this.state.questionCursor === 0 || this.questions.length === 0) {
+      return;
+    }
+
+    this.nextQuestionIndex = (this.nextQuestionIndex + this.state.questionCursor) % this.questions.length;
   }
 
   private drawNextCard(): QuestionCard | null {
@@ -305,8 +282,7 @@ export class GameSession {
       return;
     }
 
-    const seed = `${this.state.sessionId}-${Date.now()}`;
-    this.state.questionDeck = this.buildDeck(seed);
+    this.state.questionDeck = this.buildDeck();
     this.state.questionCursor = 0;
     this.state.usedQuestionIds = [];
   }
@@ -611,6 +587,7 @@ export class GameSession {
   }
 
   public restart(): PublicGameState {
+    this.commitConsumedQuestions();
     this.state = this.createInitialState(this.state.sessionId);
     this.touch();
     return this.getPublicState();

@@ -132,9 +132,9 @@ const lobbyAvatarSlots = [
   { x: 62, scale: 0.84, z: 8 }
 ] as const;
 
-function horizonOffsetForPercent(x: number): number {
+function planetHorizonTopForPercent(x: number): number {
   const normalizedDistance = Math.min(1, Math.abs(x - 50) / 38);
-  return Math.round(4 + normalizedDistance ** 2 * 24);
+  return 14 + normalizedDistance ** 2 * 15;
 }
 
 function escapeHtml(value: string): string {
@@ -316,12 +316,12 @@ function renderLobbyScene(players: PlayerView[]): void {
     const avatar = document.createElement("div");
     avatar.className = "lobby-avatar";
     avatar.style.left = `${slot.x}%`;
-    avatar.style.top = `${horizonOffsetForPercent(slot.x)}px`;
+    avatar.style.top = `${planetHorizonTopForPercent(slot.x)}%`;
     avatar.style.zIndex = `${slot.z}`;
     avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
     avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);
     avatar.style.setProperty("--avatar-hue", `${(index * 39) % 360}deg`);
-    avatar.style.setProperty("--avatar-tilt", `${(slot.x - 50) / 8}deg`);
+    avatar.style.setProperty("--avatar-tilt", `${(slot.x - 50) / 10}deg`);
     avatar.innerHTML = `
       <span class="lobby-avatar__shadow"></span>
       <span class="lobby-avatar__figure">

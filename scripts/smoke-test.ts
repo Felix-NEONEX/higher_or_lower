@@ -220,10 +220,32 @@ function verifyHighperformerCap(): void {
   }
 }
 
+function verifyQuestionCursorCarriesAcrossGames(): void {
+  const session = new GameSession(buildSyntheticQuestions(4), "cursor-session", {
+    maxRounds: 1,
+    roundTimeLimitMs: 7000
+  });
+
+  session.joinLobby("Alice", "client-alice", "socket-alice");
+  const firstGame = session.startGame();
+  assert.deepEqual(firstGame.questionOrder.slice(0, 4), ["q001", "q002", "q003", "q004"]);
+  session.restart();
+
+  session.joinLobby("Alice", "client-alice", "socket-alice");
+  const secondGame = session.startGame();
+  assert.deepEqual(secondGame.questionOrder.slice(0, 4), ["q003", "q004", "q001", "q002"]);
+  session.restart();
+
+  session.joinLobby("Alice", "client-alice", "socket-alice");
+  const thirdGame = session.startGame();
+  assert.deepEqual(thirdGame.questionOrder.slice(0, 4), ["q001", "q002", "q003", "q004"]);
+}
+
 async function main(): Promise<void> {
   await verifyNetworkFlow();
   await verifyTimeout();
   verifyHighperformerCap();
+  verifyQuestionCursorCarriesAcrossGames();
   console.log("Smoke test passed");
 }
 

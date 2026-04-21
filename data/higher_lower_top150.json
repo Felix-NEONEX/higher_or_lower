@@ -1,562 +1,800 @@
 [
   {
-    "id": "q001",
-    "left_label": "Minuten bis jemand 'wir brauchen Fokus' sagt",
-    "left_value": 4,
-    "right_label": "Minuten bis jemand 'wir müssen entscheiden' sagt",
-    "right_value": 6
-  },
-  {
-    "id": "q002",
-    "left_label": "Teilnehmende beim Danfoss-Programm",
-    "left_value": 71,
-    "right_label": "Teilnehmende im Qualification Lab",
-    "right_value": 40
-  },
-  {
-    "id": "q003",
-    "left_label": "Jahre, über die laut Text Fußballteams mit roten Trikots analysiert wurden",
-    "left_value": 55,
-    "right_label": "Potenziell schädliche Bakterien, die man laut Text mit einem Atemzug einatmet",
-    "right_value": 50
-  },
-  {
-    "id": "q004",
-    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
-    "left_value": 71,
-    "right_label": "Artikel bei Eberspächer in Tausend",
-    "right_value": 19
-  },
-  {
-    "id": "q005",
-    "left_label": "Höhe des Gewitters 'Hector the Convector' über den Tiwi-Inseln, in km",
-    "left_value": 19,
-    "right_label": "Gesamthöhe von Mauna Kea oder Mauna Loa vom Fuß bis zur Spitze, in km",
-    "right_value": 10.2
-  },
-  {
-    "id": "q006",
-    "left_label": "Buchstaben im Wort Hippopotomonstrosesquippedaliophobia",
-    "left_value": 36,
-    "right_label": "Alter der ältesten je dokumentierten Katze, in Jahren",
-    "right_value": 38
-  },
-  {
-    "id": "q007",
-    "left_label": "World-Class-Performance laut Vorne in Prozent",
-    "left_value": 95,
-    "right_label": "World-Class-Quality laut Vorne in Prozent",
-    "right_value": 99
-  },
-  {
-    "id": "q008",
-    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
-    "left_value": 22,
-    "right_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
-    "right_value": 9
-  },
-  {
-    "id": "q009",
-    "left_label": "Länder im Pepperl+Fuchs-Projekt",
-    "left_value": 4,
-    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
-    "right_value": 3
-  },
-  {
-    "id": "q010",
-    "left_label": "Unser VirtualXperience Programm bei Danfoss in Wochen?",
-    "left_value": 4,
-    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
-    "right_value": 9
-  },
-  {
-    "id": "q011",
-    "left_label": "Minuten bis jemand 'MECE' sagt",
-    "left_value": 8,
-    "right_label": "Minuten bis jemand 'Quick Win' sagt",
-    "right_value": 5
-  },
-  {
-    "id": "q012",
-    "left_label": "Länge der Python, in der eine Frau gefunden wurde, in Metern",
-    "left_value": 5,
-    "right_label": "Söhne auf dem Familienfoto, das Charles Duke auf dem Mond zurückließ",
-    "right_value": 2
-  },
-  {
-    "id": "q013",
-    "left_label": "Strecke, um die sich der Mond jedes Jahr von der Erde entfernt, in cm",
-    "left_value": 3,
-    "right_label": "Höhe, in der alpine Hummeln gefunden wurden, in km über Meeresspiegel",
-    "right_value": 3.25
-  },
-  {
-    "id": "q014",
-    "left_label": "Minuten bis jemand 'Status quo' sagt",
-    "left_value": 7,
-    "right_label": "Minuten bis jemand 'Zielzustand' sagt",
-    "right_value": 0.0001
-  },
-  {
-    "id": "q015",
-    "left_label": "Minuten bis jemand 'das ziehen wir offline' sagt",
-    "left_value": 5,
-    "right_label": "Minuten bis jemand 'lasst uns einen Schritt zurückgehen' sagt",
-    "right_value": 8
-  },
-  {
-    "id": "q016",
-    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
-    "left_value": 130,
-    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
-    "right_value": 52
-  },
-  {
-    "id": "q017",
-    "left_label": "Gewicht einer typischen Wolke, in Tonnen",
-    "left_value": 1000000,
-    "right_label": "Kosten der Rohzutaten eines menschlichen Körpers, in Pfund",
-    "right_value": 116000
-  },
-  {
-    "id": "q018",
-    "left_label": "Alter des ältesten je dokumentierten Hundes, in Jahren",
-    "left_value": 29.5,
-    "right_label": "Maximale Pferdestärke eines Pferdes laut 1993er-Studie",
-    "right_value": 24
-  },
-  {
-    "id": "q019",
-    "left_label": "Tage, die eine Frau laut Fallbericht verstopft war",
-    "left_value": 45,
-    "right_label": "Schrumpfung des Mondradius über hunderte Millionen Jahre, in Metern",
-    "right_value": 50
-  },
-  {
-    "id": "q020",
-    "left_label": "Unterbrechungen pro Tag bei Heavy-Ping-Usern laut Microsoft",
-    "left_value": 275,
-    "right_label": "Projektchat-Nachrichten an einem normalen Tag",
-    "right_value": 34
-  },
-  {
-    "id": "q021",
-    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
-    "left_value": 52,
-    "right_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
-    "right_value": 22
-  },
-  {
-    "id": "q022",
-    "left_label": "Jahr der Studie, in der die Durchschnittsfarbe des Universums als 'Cosmic Latte' bezeichnet wurde",
-    "left_value": 2002,
-    "right_label": "Jahr, in dem Duft-Postkarten mit Kometengeruch erwähnt werden",
-    "right_value": 2016
-  },
-  {
-    "id": "q023",
-    "left_label": "Chemikalien, die im typischen 'New Car Smell' stecken",
-    "left_value": 200,
-    "right_label": "Andere LEGO-Steine, die ein einzelner LEGO-Stein theoretisch tragen kann",
-    "right_value": 375000
-  },
-  {
-    "id": "q024",
-    "left_label": "Lautstärke in Microsofts schalltoter Kammer, in Dezibel",
-    "left_value": -20.6,
-    "right_label": "Männliche Ginger-Katzen pro weiblicher Ginger-Katze",
-    "right_value": 3
-  },
-  {
-    "id": "q025",
-    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
-    "left_value": 71,
-    "right_label": "Länder im Pepperl+Fuchs-Projekt",
-    "right_value": 4
-  },
-  {
-    "id": "q026",
-    "left_label": "Minuten bis in einer Diskussion 'Hypothese' fällt",
-    "left_value": 5,
-    "right_label": "Minuten bis in einer Diskussion 'Realisierbarkeit' fällt",
-    "right_value": 8
-  },
-  {
-    "id": "q027",
-    "left_label": "Punkte auf der Workshop-Parkliste",
-    "left_value": 11,
-    "right_label": "Cluster auf einem virtuellen Whiteboard",
-    "right_value": 14
-  },
-  {
-    "id": "q028",
-    "left_label": "Verlustgründe am ABUS-Engpass",
-    "left_value": 10,
-    "right_label": "Artikelfamilien, die man in einem OEE-Workshop sauber clustert",
-    "right_value": 6
-  },
-  {
-    "id": "q029",
-    "left_label": "Länge des größten gefundenen fossilen Dinosaurier-Kots, in cm",
-    "left_value": 30,
-    "right_label": "Spannweite des größten Schmetterlings der Welt, in cm",
-    "right_value": 31
-  },
-  {
-    "id": "q030",
-    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
-    "left_value": 104,
-    "right_label": "Unser Smart Manufacturing Roadmap Projekt bei Pepperl+Fuchs in Wochen?",
-    "right_value": 74
-  },
-  {
-    "id": "q031",
-    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
-    "left_value": 4,
-    "right_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
-    "right_value": 2
-  },
-  {
-    "id": "q032",
-    "left_label": "Wahrscheinlichkeit, dass in einer Gruppe von 23 Personen zwei am selben Tag Geburtstag haben, in Prozent",
-    "left_value": 50.7,
-    "right_label": "Wasseranteil des menschlichen Körpers, in Prozent",
-    "right_value": 60
-  },
-  {
-    "id": "q033",
-    "left_label": "Verlängerung eines Tages pro Jahrhundert, weil die Erdrotation langsamer wird, in Sekunden",
-    "left_value": 1.8,
-    "right_label": "Durchschnittliche Entfernung von Merkur zur Erde, in astronomischen Einheiten",
-    "right_value": 1.04
-  },
-  {
-    "id": "q034",
-    "left_label": "Minuten bis jemand im Workshop 'lasst uns priorisieren' sagt",
-    "left_value": 6,
-    "right_label": "Minuten bis jemand 'kommt drauf an' sagt",
-    "right_value": 4
-  },
-  {
-    "id": "q035",
-    "left_label": "Wörter in einem zu langen Management-Titel vor dem Kürzen",
-    "left_value": 13,
-    "right_label": "Boxen in einem ersten Strukturentwurf",
-    "right_value": 10
-  },
-  {
-    "id": "q036",
-    "left_label": "Minuten bis jemand 'Operating Model' sagt",
-    "left_value": 6,
-    "right_label": "Minuten bis jemand 'Governance' hinterherschiebt",
-    "right_value": 8
-  },
-  {
-    "id": "q037",
-    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
-    "left_value": 52,
-    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
-    "right_value": 9
-  },
-  {
-    "id": "q038",
-    "left_label": "PowerPoint-Edit-Spike in den letzten 10 Minuten vor Meetings laut Microsoft in Prozent",
-    "left_value": 122,
-    "right_label": "World-Class-OEE laut Vorne in Prozent",
-    "right_value": 85
-  },
-  {
-    "id": "q039",
-    "left_label": "Papier-Faltungen im Weltrekord mit einem 1,2 km langen Tissue-Papier",
-    "left_value": 12,
-    "right_label": "Höchstgeschwindigkeit der NASA X-43, in km/h",
-    "right_value": 11854
-  },
-  {
-    "id": "q040",
-    "left_label": "Produktivitätssteigerung bei HOMAG in Prozent (mindestens)",
-    "left_value": 20,
-    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
-    "right_value": 21
-  },
-  {
-    "id": "q041",
-    "left_label": "Anstieg der Mordrate in den USA im Sommer, in Prozent",
-    "left_value": 2.7,
-    "right_label": "Reduktion von Vogelschlägen, wenn ein Rotorblatt einer Windkraftanlage schwarz gestrichen wird, in Prozent",
-    "right_value": 70
-  },
-  {
-    "id": "q042",
-    "left_label": "Magnetische Polumkehrungen der Erde in den letzten 71 Millionen Jahren",
-    "left_value": 171,
-    "right_label": "Entfernung des Planeten 55 Cancri e von der Erde, in Lichtjahren",
-    "right_value": 40
-  },
-  {
-    "id": "q043",
-    "left_label": "Jahr, in dem Charles Duke ein Familienfoto auf dem Mond zurückließ",
-    "left_value": 1972,
-    "right_label": "Maximale Entfernung sichtbarer Sterne mit bloßem Auge, in Lichtjahren",
-    "right_value": 4000
-  },
-  {
-    "id": "q044",
-    "left_label": "Jahre in Folge, in denen Finnland laut Text das glücklichste Land der Welt war",
-    "left_value": 6,
-    "right_label": "Faktor, um den Grönland auf einer Mercator-Weltkarte größer wirken kann als in Wirklichkeit",
-    "right_value": 14
-  },
-  {
-    "id": "q045",
-    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
-    "left_value": 13,
-    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
-    "right_value": 9
-  },
-  {
-    "id": "q046",
-    "left_label": "MES-Anbieter auf dem deutschen Markt laut KSB-Seite",
-    "left_value": 151,
-    "right_label": "Teilnehmende beim Danfoss-Programm",
-    "right_value": 71
-  },
-  {
-    "id": "q047",
-    "left_label": "Jahrhundert, in dem die erste Kettensäge für Geburtshilfe entwickelt wurde",
-    "left_value": 18,
-    "right_label": "Weltrekord im Luftanhalten unter Wasser, in Minuten",
-    "right_value": 24.62
-  },
-  {
-    "id": "q048",
-    "left_label": "Fläche des Ozeanbodens, über den im Text gesprochen wird, in km²",
-    "left_value": 335000000,
-    "right_label": "Jahre, die laut Fossilbericht zwischen frühen Pflanzen und Samen lagen",
-    "right_value": 150000000
-  },
-  {
-    "id": "q049",
-    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
-    "left_value": 13,
-    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
-    "right_value": 4
-  },
-  {
-    "id": "q050",
-    "left_label": "Anmerkungen in einer Zahlenfolie nach internem Review",
-    "left_value": 10,
-    "right_label": "Anmerkungen zu einem Prozess-Schaubild",
-    "right_value": 11
-  },
-  {
-    "id": "q051",
-    "left_label": "Blutfluss zum Gehirn, den eine enge Krawatte laut 2018er-Studie reduzieren kann, in Prozent",
-    "left_value": 7.5,
-    "right_label": "Menschen, die nachts mit den Zähnen knirschen, in Prozent",
-    "right_value": 8
-  },
-  {
-    "id": "q052",
-    "left_label": "Minuten bis jemand 'Business Case' sagt",
-    "left_value": 6,
-    "right_label": "Minuten bis jemand 'kritischer Pfad' sagt",
-    "right_value": 7
-  },
-  {
-    "id": "q053",
-    "left_label": "Schwangerschaften, die bis mindestens zur Hälfte unerkannt bleiben: 1 von X",
-    "left_value": 500,
-    "right_label": "Tiefster dokumentierter Pinguin-Tauchgang, in Metern",
-    "right_value": 550
-  },
-  {
-    "id": "q054",
-    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
-    "left_value": 22,
-    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
-    "right_value": 4
-  },
-  {
-    "id": "q055",
-    "left_label": "World-Class-Performance laut Vorne in Prozent",
-    "left_value": 95,
-    "right_label": "Anteil erfolgreicher digitaler Transformationen laut BCG in Prozent",
-    "right_value": 30
-  },
-  {
-    "id": "q056",
-    "left_label": "Alter der Erde, in Milliarden Jahren",
-    "left_value": 4.54,
-    "right_label": "Mindestlebensdauer eines Elektrons, in Yottajahren",
-    "right_value": 66000
-  },
-  {
-    "id": "q057",
-    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
-    "left_value": 130,
-    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
-    "right_value": 4
-  },
-  {
-    "id": "q058",
-    "left_label": "Use Cases bei Pepperl+Fuchs",
-    "left_value": 42,
-    "right_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
-    "right_value": 71
-  },
-  {
-    "id": "q059",
-    "left_label": "Teilnehmende im Smart Factory Qualification Lab",
-    "left_value": 40,
-    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
-    "right_value": 21
-  },
-  {
-    "id": "q060",
-    "left_label": "Achsen, entlang derer Mars laut Text unterschiedlich groß ist",
-    "left_value": 3,
-    "right_label": "Menschen, die laut Text in einem luziden Traum miteinander kommunizieren könnten",
-    "right_value": 2
-  },
-  {
-    "id": "q061",
-    "left_label": "Tage Expert Workshop bei Eberspächer",
-    "left_value": 2,
-    "right_label": "Module im Danfoss-Programm",
-    "right_value": 4
-  },
-  {
-    "id": "q062",
-    "left_label": "Module im Danfoss-Programm",
-    "left_value": 4,
-    "right_label": "Pillars im Smart Factory Qualification Lab",
-    "right_value": 3
-  },
-  {
-    "id": "q063",
-    "left_label": "Bakterienanteil des menschlichen Körpers nach Zellzahl, in Prozent",
-    "left_value": 56,
-    "right_label": "Frühere Schätzung des Bakterienanteils des menschlichen Körpers nach Zellzahl, in Prozent",
-    "right_value": 90
-  },
-  {
-    "id": "q064",
-    "left_label": "Jahr, in dem Franz Reichelt mit seinem Fluganzug vom Eiffelturm sprang",
-    "left_value": 1912,
-    "right_label": "Jahr, in dem auf der ISS ein Yo-Yo in Schwerelosigkeit demonstriert wurde",
-    "right_value": 2012
-  },
-  {
-    "id": "q065",
-    "left_label": "Module im Danfoss-Programm",
-    "left_value": 4,
-    "right_label": "Arbeitsmodule im Qualification Lab",
-    "right_value": 12
-  },
-  {
-    "id": "q066",
-    "left_label": "Minuten für das Schärfen einer Message",
-    "left_value": 10,
-    "right_label": "Minuten für die Benennung von Arbeitspaketen",
-    "right_value": 12
-  },
-  {
-    "id": "q067",
-    "left_label": "Länge aller Bakterien der Erde übereinandergestapelt, in Lichtjahren",
-    "left_value": 10000000000,
-    "right_label": "Strecke, die die Erde pro Tag um die Sonne zurücklegt, in km",
-    "right_value": 2500000
-  },
-  {
-    "id": "q068",
-    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
-    "left_value": 4,
-    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
-    "right_value": 9
-  },
-  {
-    "id": "q069",
-    "left_label": "Temperatur eines Blitzes, in °C",
-    "left_value": 30000,
-    "right_label": "Maximales Alter von Glasschwämmen, in Jahren",
-    "right_value": 15000
-  },
-  {
-    "id": "q070",
-    "left_label": "Verlustgründe am ABUS-Engpass laut Projektseite",
-    "left_value": 10,
-    "right_label": "Kernelemente der künftigen IT-Architektur bei Pepperl+Fuchs",
-    "right_value": 4
-  },
-  {
-    "id": "q071",
-    "left_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
-    "left_value": 2,
-    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
-    "right_value": 4
-  },
-  {
-    "id": "q072",
-    "left_label": "Teilnehmende beim Danfoss-Programm",
-    "left_value": 71,
-    "right_label": "Arbeitsmodule im Smart Factory Qualification Lab",
-    "right_value": 12
-  },
-  {
-    "id": "q073",
-    "left_label": "Alter des gehörlosen Mannes aus der Fallstudie, der im Schlaf Gebärdensprache nutzte",
-    "left_value": 71,
-    "right_label": "Maximal genanntes Alter großer Dinosaurier, in Jahren",
-    "right_value": 70
-  },
-  {
-    "id": "q074",
+    "id": "q0001",
     "left_label": "Identifizierte Potenziale bei Pepperl+Fuchs",
     "left_value": 109,
     "right_label": "abgeleitete Use Cases bei Pepperl+Fuchs",
     "right_value": 42
   },
   {
-    "id": "q075",
-    "left_label": "Arbeitsmodule im Smart Factory Qualification Lab",
-    "left_value": 12,
-    "right_label": "Teilnehmende im Smart Factory Qualification Lab",
+    "id": "q0002",
+    "left_label": "Zentimeter pro Pixel für die Kartierung der Landoberfläche der Erde laut Artikel",
+    "left_value": 30,
+    "right_label": "Minuten, die ein Faultier die Luft anhalten kann",
     "right_value": 40
   },
   {
-    "id": "q076",
-    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
-    "left_value": 104,
-    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
-    "right_value": 52
-  },
-  {
-    "id": "q077",
-    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
-    "left_value": 22,
+    "id": "q0003",
+    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "left_value": 52,
     "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
     "right_value": 9
   },
   {
-    "id": "q078",
+    "id": "q0004",
+    "left_label": "Städte mit McKinsey-Büros weltweit",
+    "left_value": 130,
+    "right_label": "Städte mit BCG-Büros weltweit",
+    "right_value": 100
+  },
+  {
+    "id": "q0005",
+    "left_label": "Länge des größten gefundenen fossilen Dinosaurier-Kots, in cm",
+    "left_value": 30,
+    "right_label": "Spannweite des größten Schmetterlings der Welt, in cm",
+    "right_value": 31
+  },
+  {
+    "id": "q0006",
+    "left_label": "Länge aller Bakterien der Erde übereinandergestapelt, in Lichtjahren",
+    "left_value": 10000000000,
+    "right_label": "Strecke, die die Erde pro Tag um die Sonne zurücklegt, in km",
+    "right_value": 2500000
+  },
+  {
+    "id": "q0007",
+    "left_label": "Jahre in Folge, in denen Finnland laut Text das glücklichste Land der Welt war",
+    "left_value": 6,
+    "right_label": "Faktor, um den Grönland auf einer Mercator-Weltkarte größer wirken kann als in Wirklichkeit",
+    "right_value": 14
+  },
+  {
+    "id": "q0008",
+    "left_label": "Lautstärke in Microsofts schalltoter Kammer, in Dezibel",
+    "left_value": -20.6,
+    "right_label": "Männliche Ginger-Katzen pro weiblicher Ginger-Katze",
+    "right_value": 3
+  },
+  {
+    "id": "q0009",
+    "left_label": "Städte mit Bain-Büros weltweit",
+    "left_value": 67,
+    "right_label": "Städte mit Accenture-Büros bzw. -Standorten weltweit",
+    "right_value": 200
+  },
+  {
+    "id": "q0010",
     "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
     "left_value": 4,
     "right_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
     "right_value": 9
   },
   {
-    "id": "q079",
+    "id": "q0011",
+    "left_label": "Länge der Python, in der eine Frau gefunden wurde, in Metern",
+    "left_value": 5,
+    "right_label": "Söhne auf dem Familienfoto, das Charles Duke auf dem Mond zurückließ",
+    "right_value": 2
+  },
+  {
+    "id": "q0012",
+    "left_label": "Mitarbeitende bei McKinsey weltweit",
+    "left_value": 45000,
+    "right_label": "Mitarbeitende bei BCG weltweit",
+    "right_value": 33000
+  },
+  {
+    "id": "q0013",
+    "left_label": "Tage, die eine Frau laut Fallbericht verstopft war",
+    "left_value": 45,
+    "right_label": "Schrumpfung des Mondradius über hunderte Millionen Jahre, in Metern",
+    "right_value": 50
+  },
+  {
+    "id": "q0014",
+    "left_label": "Wörter in einem zu langen Management-Titel vor dem Kürzen",
+    "left_value": 13,
+    "right_label": "Boxen in einem ersten Strukturentwurf",
+    "right_value": 10
+  },
+  {
+    "id": "q0015",
+    "left_label": "Anmerkungen in einer Zahlenfolie nach internem Review",
+    "left_value": 10,
+    "right_label": "Anmerkungen zu einem Prozess-Schaubild",
+    "right_value": 11
+  },
+  {
+    "id": "q0016",
+    "left_label": "Anzahl der Knochen, mit denen Menschen geboren werden",
+    "left_value": 270,
+    "right_label": "Ungefähres Alter der ersten Bäume, in Millionen Jahren",
+    "right_value": 350
+  },
+  {
+    "id": "q0017",
+    "left_label": "Schwangerschaften, die bis mindestens zur Hälfte unerkannt bleiben: 1 von X",
+    "left_value": 500,
+    "right_label": "Tiefster dokumentierter Pinguin-Tauchgang, in Metern",
+    "right_value": 550
+  },
+  {
+    "id": "q0018",
+    "left_label": "Jahre zwischen der Novelle „Futility“ von 1898 und dem Untergang der Titanic",
+    "left_value": 14,
+    "right_label": "Verstärkung des Schalldrucks durch die Gehörknöchelchen, in Mal",
+    "right_value": 20
+  },
+  {
+    "id": "q0019",
+    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "left_value": 71,
+    "right_label": "Artikel bei Eberspächer in Tausend",
+    "right_value": 19
+  },
+  {
+    "id": "q0020",
+    "left_label": "Obere Vorderzähne bei Kühen",
+    "left_value": 0,
+    "right_label": "Jahr, ab dem Weihnachten in allen US-Bundesstaaten offizieller Feiertag war",
+    "right_value": 1907
+  },
+  {
+    "id": "q0021",
+    "left_label": "Tiefe im Ozean, ab der es laut Artikel vollkommen dunkel ist, in Metern",
+    "left_value": 1000,
+    "right_label": "Entfernung von Point Nemo zur nächsten Landmasse, in Kilometern",
+    "right_value": 2688
+  },
+  {
+    "id": "q0022",
+    "left_label": "Verlängerung eines Tages pro Jahrhundert, weil die Erdrotation langsamer wird, in Sekunden",
+    "left_value": 1.8,
+    "right_label": "Durchschnittliche Entfernung von Merkur zur Erde, in astronomischen Einheiten",
+    "right_value": 1.04
+  },
+  {
+    "id": "q0023",
+    "left_label": "Gründungsjahr von Accenture",
+    "left_value": 1989,
+    "right_label": "Gründungsjahr von Bain & Company",
+    "right_value": 1973
+  },
+  {
+    "id": "q0024",
+    "left_label": "Kilometer pro Pixel für die Kartierung großer Teile des Ozeanbodens laut Artikel",
+    "left_value": 1.5,
+    "right_label": "Oberes Ende der üblichen Luftanhaltezeit von Delfinen laut Artikel, in Minuten",
+    "right_value": 15
+  },
+  {
+    "id": "q0025",
+    "left_label": "Minuten bis jemand 'MECE' sagt",
+    "left_value": 8,
+    "right_label": "Minuten bis jemand 'Quick Win' sagt",
+    "right_value": 5
+  },
+  {
+    "id": "q0026",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q0027",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q0028",
+    "left_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
+    "left_value": 2,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q0029",
+    "left_label": "Unser VirtualXperience Programm bei Danfoss in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q0030",
+    "left_label": "Alter der Erde, in Milliarden Jahren",
+    "left_value": 4.54,
+    "right_label": "Mindestlebensdauer eines Elektrons, in Yottajahren",
+    "right_value": 66000
+  },
+  {
+    "id": "q0031",
+    "left_label": "Verlustgründe am ABUS-Engpass laut Projektseite",
+    "left_value": 10,
+    "right_label": "Kernelemente der künftigen IT-Architektur bei Pepperl+Fuchs",
+    "right_value": 4
+  },
+  {
+    "id": "q0032",
+    "left_label": "Produktivitätssteigerung bei HOMAG in Prozent (mindestens)",
+    "left_value": 20,
+    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
+    "right_value": 21
+  },
+  {
+    "id": "q0033",
+    "left_label": "Minuten bis jemand 'Business Case' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'kritischer Pfad' sagt",
+    "right_value": 7
+  },
+  {
+    "id": "q0034",
+    "left_label": "Teilnehmende im Smart Factory Qualification Lab",
+    "left_value": 40,
+    "right_label": "Teilnehmende im Pepperl+Fuchs-Bootcamp",
+    "right_value": 21
+  },
+  {
+    "id": "q0035",
+    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "left_value": 104,
+    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "right_value": 52
+  },
+  {
+    "id": "q0036",
+    "left_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "left_value": 71,
+    "right_label": "Länder im Pepperl+Fuchs-Projekt",
+    "right_value": 4
+  },
+  {
+    "id": "q0037",
+    "left_label": "Anstieg der Mordrate in den USA im Sommer, in Prozent",
+    "left_value": 2.7,
+    "right_label": "Reduktion von Vogelschlägen, wenn ein Rotorblatt einer Windkraftanlage schwarz gestrichen wird, in Prozent",
+    "right_value": 70
+  },
+  {
+    "id": "q0038",
+    "left_label": "Strecke, um die sich der Mond jedes Jahr von der Erde entfernt, in cm",
+    "left_value": 3,
+    "right_label": "Höhe, in der alpine Hummeln gefunden wurden, in km über Meeresspiegel",
+    "right_value": 3.25
+  },
+  {
+    "id": "q0039",
+    "left_label": "Achsen, entlang derer Mars laut Text unterschiedlich groß ist",
+    "left_value": 3,
+    "right_label": "Menschen, die laut Text in einem luziden Traum miteinander kommunizieren könnten",
+    "right_value": 2
+  },
+  {
+    "id": "q0040",
+    "left_label": "Städte mit Bain-Büros weltweit",
+    "left_value": 67,
+    "right_label": "Städte mit McKinsey-Büros weltweit",
+    "right_value": 130
+  },
+  {
+    "id": "q0041",
+    "left_label": "Kalorien, die ein Blauwal in einem einzigen Maul voll aufnehmen kann",
+    "left_value": 500000,
+    "right_label": "Gewicht des norwegischen Lebkuchenmanns, in Pfund",
+    "right_value": 1435
+  },
+  {
+    "id": "q0042",
+    "left_label": "Jahr, in dem Franz Reichelt mit seinem Fluganzug vom Eiffelturm sprang",
+    "left_value": 1912,
+    "right_label": "Jahr, in dem auf der ISS ein Yo-Yo in Schwerelosigkeit demonstriert wurde",
+    "right_value": 2012
+  },
+  {
+    "id": "q0043",
+    "left_label": "Länder im Pepperl+Fuchs-Projekt",
+    "left_value": 4,
+    "right_label": "Supplier im Pepperl+Fuchs-MES-Shortlist",
+    "right_value": 3
+  },
+  {
+    "id": "q0044",
+    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
+    "left_value": 13,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q0045",
+    "left_label": "Module im Danfoss-Programm",
+    "left_value": 4,
+    "right_label": "Arbeitsmodule im Qualification Lab",
+    "right_value": 12
+  },
+  {
+    "id": "q0046",
+    "left_label": "Gründungsjahr von Bain & Company",
+    "left_value": 1973,
+    "right_label": "Gründungsjahr von Deloitte",
+    "right_value": 1845
+  },
+  {
+    "id": "q0047",
+    "left_label": "US-Bundesstaaten-Hauptstädte ohne McDonald's",
+    "left_value": 1,
+    "right_label": "Dollar, die der Mikrowellen-Erfinder für seine Entdeckung bekam",
+    "right_value": 2
+  },
+  {
+    "id": "q0048",
+    "left_label": "Unser Datengetriebene Montageoptimierung Projekt bei HOMAG in Wochen?",
+    "left_value": 13,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q0049",
+    "left_label": "Höhe des Gewitters 'Hector the Convector' über den Tiwi-Inseln, in km",
+    "left_value": 19,
+    "right_label": "Gesamthöhe von Mauna Kea oder Mauna Loa vom Fuß bis zur Spitze, in km",
+    "right_value": 10.2
+  },
+  {
+    "id": "q0050",
+    "left_label": "Gründungsjahr von Deloitte",
+    "left_value": 1845,
+    "right_label": "Gründungsjahr von Accenture",
+    "right_value": 1989
+  },
+  {
+    "id": "q0051",
+    "left_label": "Teilnehmende beim Danfoss-Programm",
+    "left_value": 71,
+    "right_label": "Arbeitsmodule im Smart Factory Qualification Lab",
+    "right_value": 12
+  },
+  {
+    "id": "q0052",
+    "left_label": "US-Bundesstaaten, in denen Beefalo-Fleisch verkauft wird",
+    "left_value": 21,
+    "right_label": "Wörter für Schnee in Schottland",
+    "right_value": 421
+  },
+  {
+    "id": "q0053",
+    "left_label": "Papier-Faltungen im Weltrekord mit einem 1,2 km langen Tissue-Papier",
+    "left_value": 12,
+    "right_label": "Höchstgeschwindigkeit der NASA X-43, in km/h",
+    "right_value": 11854
+  },
+  {
+    "id": "q0054",
+    "left_label": "Minuten bis in einer Diskussion 'Hypothese' fällt",
+    "left_value": 5,
+    "right_label": "Minuten bis in einer Diskussion 'Realisierbarkeit' fällt",
+    "right_value": 8
+  },
+  {
+    "id": "q0055",
+    "left_label": "Magnetische Polumkehrungen der Erde in den letzten 71 Millionen Jahren",
+    "left_value": 171,
+    "right_label": "Entfernung des Planeten 55 Cancri e von der Erde, in Lichtjahren",
+    "right_value": 40
+  },
+  {
+    "id": "q0056",
+    "left_label": "Jahr, in dem Charles Duke ein Familienfoto auf dem Mond zurückließ",
+    "left_value": 1972,
+    "right_label": "Maximale Entfernung sichtbarer Sterne mit bloßem Auge, in Lichtjahren",
+    "right_value": 4000
+  },
+  {
+    "id": "q0057",
+    "left_label": "Tiefe, in der die Titanic liegt, in Metern",
+    "left_value": 3840,
+    "right_label": "Tiefe des Challenger Deep, in Metern",
+    "right_value": 10935
+  },
+  {
+    "id": "q0058",
+    "left_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "left_value": 52,
+    "right_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "right_value": 22
+  },
+  {
+    "id": "q0059",
+    "left_label": "Bootcamp-Tage bei Pepperl+Fuchs",
+    "left_value": 4,
+    "right_label": "besuchte Referenzstandorte im Smart Factory Tour Teil",
+    "right_value": 2
+  },
+  {
+    "id": "q0060",
+    "left_label": "Temperatur eines Blitzes, in °C",
+    "left_value": 30000,
+    "right_label": "Maximales Alter von Glasschwämmen, in Jahren",
+    "right_value": 15000
+  },
+  {
+    "id": "q0061",
+    "left_label": "Punkte auf der Workshop-Parkliste",
+    "left_value": 11,
+    "right_label": "Cluster auf einem virtuellen Whiteboard",
+    "right_value": 14
+  },
+  {
+    "id": "q0062",
+    "left_label": "Bakterienanteil des menschlichen Körpers nach Zellzahl, in Prozent",
+    "left_value": 56,
+    "right_label": "Frühere Schätzung des Bakterienanteils des menschlichen Körpers nach Zellzahl, in Prozent",
+    "right_value": 90
+  },
+  {
+    "id": "q0063",
+    "left_label": "Minuten für das Schärfen einer Message",
+    "left_value": 10,
+    "right_label": "Minuten für die Benennung von Arbeitspaketen",
+    "right_value": 12
+  },
+  {
+    "id": "q0064",
+    "left_label": "Alter des ältesten je dokumentierten Hundes, in Jahren",
+    "left_value": 29.5,
+    "right_label": "Maximale Pferdestärke eines Pferdes laut 1993er-Studie",
+    "right_value": 24
+  },
+  {
+    "id": "q0065",
+    "left_label": "Module im Danfoss-Programm",
+    "left_value": 4,
+    "right_label": "Pillars im Smart Factory Qualification Lab",
+    "right_value": 3
+  },
+  {
+    "id": "q0066",
+    "left_label": "Unser IT Architektur 4.0 Projekt in Deutschland in Wochen?",
+    "left_value": 22,
+    "right_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q0067",
+    "left_label": "Minuten bis jemand 'Operating Model' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'Governance' hinterherschiebt",
+    "right_value": 8
+  },
+  {
+    "id": "q0068",
+    "left_label": "Jahrhundert, in dem die erste Kettensäge für Geburtshilfe entwickelt wurde",
+    "left_value": 18,
+    "right_label": "Weltrekord im Luftanhalten unter Wasser, in Minuten",
+    "right_value": 24.62
+  },
+  {
+    "id": "q0069",
+    "left_label": "Fläche des Ozeanbodens, über den im Text gesprochen wird, in km²",
+    "left_value": 335000000,
+    "right_label": "Jahre, die laut Fossilbericht zwischen frühen Pflanzen und Samen lagen",
+    "right_value": 150000000
+  },
+  {
+    "id": "q0070",
+    "left_label": "Minuten bis jemand 'das ziehen wir offline' sagt",
+    "left_value": 5,
+    "right_label": "Minuten bis jemand 'lasst uns einen Schritt zurückgehen' sagt",
+    "right_value": 8
+  },
+  {
+    "id": "q0071",
+    "left_label": "Blutfluss zum Gehirn, den eine enge Krawatte laut 2018er-Studie reduzieren kann, in Prozent",
+    "left_value": 7.5,
+    "right_label": "Menschen, die nachts mit den Zähnen knirschen, in Prozent",
+    "right_value": 8
+  },
+  {
+    "id": "q0072",
+    "left_label": "Mitarbeitende bei BCG weltweit",
+    "left_value": 33000,
+    "right_label": "Mitarbeitende bei Deloitte weltweit",
+    "right_value": 470000
+  },
+  {
+    "id": "q0073",
+    "left_label": "Zeitraum, in dem eine nicht existierende Insel auf Karten stand, in Jahren",
+    "left_value": 104,
+    "right_label": "Dauer des Verbots des Wortes \"mate\" in Australien, in Tagen",
+    "right_value": 1
+  },
+  {
+    "id": "q0074",
+    "left_label": "Mitarbeitende bei Deloitte weltweit",
+    "left_value": 470000,
+    "right_label": "Mitarbeitende bei Accenture weltweit",
+    "right_value": 786000
+  },
+  {
+    "id": "q0075",
+    "left_label": "Entdeckungsjahr des kleinsten bekannten Reptils",
+    "left_value": 2021,
+    "right_label": "Anteil aller englischen Wörter mit dem Buchstaben E, in Prozent",
+    "right_value": 11
+  },
+  {
+    "id": "q0076",
+    "left_label": "Jahr der Studie, in der die Durchschnittsfarbe des Universums als 'Cosmic Latte' bezeichnet wurde",
+    "left_value": 2002,
+    "right_label": "Jahr, in dem Duft-Postkarten mit Kometengeruch erwähnt werden",
+    "right_value": 2016
+  },
+  {
+    "id": "q0077",
+    "left_label": "Wachstum des Eiffelturms im Sommer, in Zoll",
+    "left_value": 6,
+    "right_label": "Dollar, für die das Terminator-Drehbuch verkauft wurde",
+    "right_value": 1
+  },
+  {
+    "id": "q0078",
+    "left_label": "MES-Anbieter auf dem deutschen Markt laut KSB-Seite",
+    "left_value": 151,
+    "right_label": "Teilnehmende beim Danfoss-Programm",
+    "right_value": 71
+  },
+  {
+    "id": "q0079",
+    "left_label": "Alter von Darwins Galápagos-Schildkröte bei ihrem Tod, in Jahren",
+    "left_value": 176,
+    "right_label": "Zeit, die ein Mensch durchschnittlich an roten Ampeln wartet, in Monaten",
+    "right_value": 6
+  },
+  {
+    "id": "q0080",
+    "left_label": "Chemikalien, die im typischen 'New Car Smell' stecken",
+    "left_value": 200,
+    "right_label": "Andere LEGO-Steine, die ein einzelner LEGO-Stein theoretisch tragen kann",
+    "right_value": 375000
+  },
+  {
+    "id": "q0081",
+    "left_label": "Jahre, über die laut Text Fußballteams mit roten Trikots analysiert wurden",
+    "left_value": 55,
+    "right_label": "Potenziell schädliche Bakterien, die man laut Text mit einem Atemzug einatmet",
+    "right_value": 50
+  },
+  {
+    "id": "q0082",
+    "left_label": "Anteil der Sahara, der sandig ist, in Prozent",
+    "left_value": 25,
+    "right_label": "Zeitzonen in der Antarktis",
+    "right_value": 9
+  },
+  {
+    "id": "q0083",
+    "left_label": "Toastscheiben, die ein Blitz theoretisch rösten könnte",
+    "left_value": 100000,
+    "right_label": "Jahr, in dem der Frisbee-Erfinder starb",
+    "right_value": 2002
+  },
+  {
+    "id": "q0084",
+    "left_label": "Tage Expert Workshop bei Eberspächer",
+    "left_value": 2,
+    "right_label": "Module im Danfoss-Programm",
+    "right_value": 4
+  },
+  {
+    "id": "q0085",
+    "left_label": "Wassermoleküle in einer einzelnen Schneeflocke",
+    "left_value": 180000000000,
+    "right_label": "Die Antwort auf das Leben, das Universum und den Rest",
+    "right_value": 42
+  },
+  {
+    "id": "q0086",
+    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "left_value": 130,
+    "right_label": "Unser Smart Starter Programm bei Danfoss in Wochen?",
+    "right_value": 4
+  },
+  {
+    "id": "q0087",
+    "left_label": "Gummienten, die 1992 auf See verloren gingen",
+    "left_value": 28000,
+    "right_label": "Tag im Februar, nach dem Weihnachtsdeko in San Diego entfernt sein muss",
+    "right_value": 2
+  },
+  {
+    "id": "q0088",
+    "left_label": "Ungefähres Alter von Haien, in Millionen Jahren",
+    "left_value": 400,
+    "right_label": "Länge des längsten Freundschaftsarmbands der Welt, in Metern",
+    "right_value": 852.19
+  },
+  {
+    "id": "q0089",
+    "left_label": "Verlustgründe am ABUS-Engpass",
+    "left_value": 10,
+    "right_label": "Artikelfamilien, die man in einem OEE-Workshop sauber clustert",
+    "right_value": 6
+  },
+  {
+    "id": "q0090",
+    "left_label": "Arbeitsmodule im Smart Factory Qualification Lab",
+    "left_value": 12,
+    "right_label": "Teilnehmende im Smart Factory Qualification Lab",
+    "right_value": 40
+  },
+  {
+    "id": "q0091",
+    "left_label": "Mitarbeitende bei McKinsey weltweit",
+    "left_value": 45000,
+    "right_label": "Mitarbeitende bei Accenture weltweit",
+    "right_value": 786000
+  },
+  {
+    "id": "q0092",
+    "left_label": "Anzahl der Herzen eines Oktopus",
+    "left_value": 3,
+    "right_label": "Meter pro Pixel für die Mars-Kartierung laut Artikel",
+    "right_value": 5
+  },
+  {
+    "id": "q0093",
+    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
+    "left_value": 4,
+    "right_label": "Unser Meet KM digitally Projekt bei Karl Mayer in Wochen?",
+    "right_value": 9
+  },
+  {
+    "id": "q0094",
+    "left_label": "Wahrscheinlichkeit, dass in einer Gruppe von 23 Personen zwei am selben Tag Geburtstag haben, in Prozent",
+    "left_value": 50.7,
+    "right_label": "Wasseranteil des menschlichen Körpers, in Prozent",
+    "right_value": 60
+  },
+  {
+    "id": "q0095",
+    "left_label": "Unser Industrialisierungsprojekt bei RIMAC Technology in Kroatien in Wochen?",
+    "left_value": 104,
+    "right_label": "Unser Smart Manufacturing Roadmap Projekt bei Pepperl+Fuchs in Wochen?",
+    "right_value": 74
+  },
+  {
+    "id": "q0096",
+    "left_label": "Länge eines zu kurzen Subway-Footlongs, in Zoll",
+    "left_value": 11,
+    "right_label": "Entfernung, aus der man den Herzschlag eines Blauwals hören kann, in Meilen",
+    "right_value": 2
+  },
+  {
+    "id": "q0097",
+    "left_label": "Standard-Stapelgröße für viele Items in Minecraft",
+    "left_value": 64,
+    "right_label": "Länge einer Giraffenzunge, in Zoll",
+    "right_value": 20
+  },
+  {
+    "id": "q0098",
+    "left_label": "World-Class-Performance laut Vorne in Prozent",
+    "left_value": 95,
+    "right_label": "World-Class-Quality laut Vorne in Prozent",
+    "right_value": 99
+  },
+  {
+    "id": "q0099",
+    "left_label": "Use Cases bei Pepperl+Fuchs",
+    "left_value": 42,
+    "right_label": "Mitarbeitende bei Pepperl+Fuchs in Hunderten gerundet",
+    "right_value": 71
+  },
+  {
+    "id": "q0100",
     "left_label": "Unser Smart OEE Optimierung Projekt bei ABUS in Wochen?",
     "left_value": 9,
     "right_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
     "right_value": 2
   },
   {
-    "id": "q080",
-    "left_label": "Bootcamp-Tage bei Pepperl+Fuchs",
+    "id": "q0101",
+    "left_label": "Minuten bis jemand 'Status quo' sagt",
+    "left_value": 7,
+    "right_label": "Minuten bis jemand 'Zielzustand' sagt",
+    "right_value": 0.0001
+  },
+  {
+    "id": "q0102",
+    "left_label": "Alter des gehörlosen Mannes aus der Fallstudie, der im Schlaf Gebärdensprache nutzte",
+    "left_value": 71,
+    "right_label": "Maximal genanntes Alter großer Dinosaurier, in Jahren",
+    "right_value": 70
+  },
+  {
+    "id": "q0103",
+    "left_label": "Einwohner der spanischen Stadt unter dem Felsen, grob geschätzt",
+    "left_value": 3000,
+    "right_label": "Länge des längsten englischen Wortes, in Buchstaben",
+    "right_value": 189819
+  },
+  {
+    "id": "q0104",
+    "left_label": "Gründungsjahr von McKinsey",
+    "left_value": 1926,
+    "right_label": "Gründungsjahr von BCG",
+    "right_value": 1963
+  },
+  {
+    "id": "q0105",
+    "left_label": "Unser Greenfield Planning bei Saurer in China in Wochen?",
+    "left_value": 130,
+    "right_label": "Unser MES Assessment & Implementierung Projekt in Europa in Wochen?",
+    "right_value": 52
+  },
+  {
+    "id": "q0106",
+    "left_label": "Größte Zahl unter 1000 ohne den Buchstaben A in der englischen Schreibweise",
+    "left_value": 999,
+    "right_label": "Jahre, über die die US-Regierung alle Tweets archivierte",
+    "right_value": 11
+  },
+  {
+    "id": "q0107",
+    "left_label": "Unterbrechungen pro Tag bei Heavy-Ping-Usern laut Microsoft",
+    "left_value": 275,
+    "right_label": "Projektchat-Nachrichten an einem normalen Tag",
+    "right_value": 34
+  },
+  {
+    "id": "q0108",
+    "left_label": "Unser Smart Factory Qualification Lab in Wochen?",
     "left_value": 4,
-    "right_label": "besuchte Referenzstandorte im Smart Factory Tour Teil",
+    "right_label": "Unser Ad hoc Bestandsoptimierung Projekt bei Eberspächer in Wochen?",
     "right_value": 2
+  },
+  {
+    "id": "q0109",
+    "left_label": "Minuten bis jemand im Workshop 'lasst uns priorisieren' sagt",
+    "left_value": 6,
+    "right_label": "Minuten bis jemand 'kommt drauf an' sagt",
+    "right_value": 4
+  },
+  {
+    "id": "q0110",
+    "left_label": "PowerPoint-Edit-Spike in den letzten 10 Minuten vor Meetings laut Microsoft in Prozent",
+    "left_value": 122,
+    "right_label": "World-Class-OEE laut Vorne in Prozent",
+    "right_value": 85
+  },
+  {
+    "id": "q0111",
+    "left_label": "Städte mit BCG-Büros weltweit",
+    "left_value": 100,
+    "right_label": "Städte mit Accenture-Büros bzw. -Standorten weltweit",
+    "right_value": 200
+  },
+  {
+    "id": "q0112",
+    "left_label": "Buchstaben im Wort Hippopotomonstrosesquippedaliophobia",
+    "left_value": 36,
+    "right_label": "Alter der ältesten je dokumentierten Katze, in Jahren",
+    "right_value": 38
+  },
+  {
+    "id": "q0113",
+    "left_label": "Gewicht einer typischen Wolke, in Tonnen",
+    "left_value": 1000000,
+    "right_label": "Kosten der Rohzutaten eines menschlichen Körpers, in Pfund",
+    "right_value": 116000
+  },
+  {
+    "id": "q0114",
+    "left_label": "Anteil der Leber, der entfernt werden kann und trotzdem vollständig nachwächst, in Prozent",
+    "left_value": 75,
+    "right_label": "Anzahl der Knochen eines erwachsenen Menschen",
+    "right_value": 206
   }
 ]
