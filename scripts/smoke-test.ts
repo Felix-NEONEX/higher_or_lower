@@ -143,6 +143,13 @@ async function verifyNetworkFlow(): Promise<void> {
   assert(nextRound.state.players.some((player) => player.name === "Charlie"));
   assert.equal(nextRound.state.pendingLateJoiners.length, 0);
 
+  alice.emit("restart_game");
+  const resetState = await once<{ state: PublicGameState }>(alice, "state_synced");
+  assert.equal(resetState.state.phase, "lobby");
+  assert.equal(resetState.state.roundNumber, 0);
+  assert.equal(resetState.state.players.length, 0);
+  assert.equal(resetState.state.pendingLateJoiners.length, 0);
+
   alice.disconnect();
   bob.disconnect();
   charlie.disconnect();

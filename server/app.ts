@@ -280,9 +280,8 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
         const state = session.restart();
         clearRoundTimer();
         clearRevealTimer();
-        logEvent("Game restarted");
+        logEvent("Session reset to lobby");
         emitState();
-        io.emit("state_synced", { state });
       } catch (error) {
         emitError(socket.id, error);
       }

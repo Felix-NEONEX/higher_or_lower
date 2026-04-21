@@ -611,18 +611,7 @@ export class GameSession {
   }
 
   public restart(): PublicGameState {
-    const retainedPlayers = this.state.players.map<PlayerRecord>((player) => ({
-      ...player,
-      score: 0,
-      status: "active",
-      socketId: player.socketId,
-      connected: player.connected
-    }));
-
-    this.state = {
-      ...this.createInitialState(this.state.sessionId),
-      players: retainedPlayers
-    };
+    this.state = this.createInitialState(this.state.sessionId);
     this.touch();
     return this.getPublicState();
   }

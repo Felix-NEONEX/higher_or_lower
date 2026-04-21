@@ -20,10 +20,13 @@ const firstNameInput = document.querySelector<HTMLInputElement>("#first-name-inp
 const joinForm = document.querySelector<HTMLFormElement>("#join-form")!;
 const joinButton = document.querySelector<HTMLButtonElement>("#join-button")!;
 const startButton = document.querySelector<HTMLButtonElement>("#start-button")!;
+const hardResetButton = document.querySelector<HTMLButtonElement>("#hard-reset-button")!;
 const lobbyHelper = document.querySelector<HTMLElement>("#lobby-helper")!;
 const playerCountPill = document.querySelector<HTMLElement>("#player-count-pill")!;
 const playersGrid = document.querySelector<HTMLElement>("#players-grid")!;
 const playersEmpty = document.querySelector<HTMLElement>("#players-empty")!;
+const lobbyAvatars = document.querySelector<HTMLElement>("#lobby-avatars")!;
+const lobbyVisualCount = document.querySelector<HTMLElement>("#lobby-visual-count")!;
 
 const playRoundText = document.querySelector<HTMLElement>("#play-round-text")!;
 const turnProgressText = document.querySelector<HTMLElement>("#turn-progress-text")!;
@@ -114,6 +117,22 @@ let confettiPieces: Array<{
   life: number;
 }> = [];
 let confettiFrame: number | null = null;
+
+const lobbyAvatarSlots = [
+  { x: 50, y: 8, scale: 1, z: 12 },
+  { x: 34, y: 16, scale: 0.94, z: 11 },
+  { x: 66, y: 16, scale: 0.94, z: 11 },
+  { x: 22, y: 28, scale: 0.88, z: 10 },
+  { x: 50, y: 26, scale: 0.92, z: 12 },
+  { x: 78, y: 28, scale: 0.88, z: 10 },
+  { x: 16, y: 42, scale: 0.8, z: 9 },
+  { x: 36, y: 40, scale: 0.84, z: 10 },
+  { x: 64, y: 40, scale: 0.84, z: 10 },
+  { x: 84, y: 42, scale: 0.8, z: 9 },
+  { x: 24, y: 56, scale: 0.74, z: 8 },
+  { x: 50, y: 54, scale: 0.78, z: 9 },
+  { x: 76, y: 56, scale: 0.74, z: 8 }
+] as const;
 
 function escapeHtml(value: string): string {
   return value
@@ -285,6 +304,35 @@ function renderLobbyPlayers(players: PlayerView[]): void {
   });
 }
 
+function renderLobbyScene(players: PlayerView[]): void {
+  lobbyAvatars.innerHTML = "";
+  lobbyVisualCount.textContent = `${players.length} Avatar${players.length === 1 ? "" : "e"}`;
+
+  players.forEach((player, index) => {
+    const slot = lobbyAvatarSlots[index % lobbyAvatarSlots.length]!;
+    const avatar = document.createElement("div");
+    avatar.className = "lobby-avatar";
+    avatar.style.left = `${slot.x}%`;
+    avatar.style.top = `${slot.y}%`;
+    avatar.style.zIndex = `${slot.z}`;
+    avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
+    avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);
+    avatar.style.setProperty("--avatar-hue", `${(index * 39) % 360}deg`);
+    avatar.innerHTML = `
+      <span class="lobby-avatar__shadow"></span>
+      <span class="lobby-avatar__figure">
+        <span class="lobby-avatar__head"></span>
+        <span class="lobby-avatar__torso"></span>
+        <span class="lobby-avatar__arm lobby-avatar__arm--left"></span>
+        <span class="lobby-avatar__arm lobby-avatar__arm--right"></span>
+        <span class="lobby-avatar__leg lobby-avatar__leg--left"></span>
+        <span class="lobby-avatar__leg lobby-avatar__leg--right"></span>
+      </span>
+      <span class="sr-only">${escapeHtml(player.name)} in der Lobby-Visualisierung</span>`;
+    lobbyAvatars.appendChild(avatar);
+  });
+}
+
 function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
   root.innerHTML = players
     .map((player, index) => {
@@ -400,6 +448,7 @@ function renderTurnBanner(state: PublicGameState): void {
 
 function hideTurnSpotlight(): void {
   turnSpotlight.classList.remove("is-visible");
+  lastTurnSpotlightKey = "";
   if (spotlightHandle !== null) {
     window.clearTimeout(spotlightHandle);
     spotlightHandle = null;
@@ -608,6 +657,7 @@ function renderState(state: PublicGameState): void {
   streakValue.textContent = `${state.currentTurnStreak} / ${state.streakCap}`;
 
   renderLobbyPlayers(state.players);
+  renderLobbyScene(state.players);
   renderQuestion(state);
   renderReveal(state.revealResult);
   renderTurnBanner(state);
@@ -667,6 +717,15 @@ function localPlayerJoined(state: PublicGameState | null, candidateName: string)
   return Boolean(candidateName) && Boolean(state?.players.some((player) => player.name === candidateName));
 }
 
+function requestHardReset(): void {
+  const confirmed = window.confirm("Wirklich alles zurücksetzen und zur leeren Lobby zurückkehren?");
+  if (!confirmed) {
+    return;
+  }
+  pendingAutoStart = false;
+  socket.emit("restart_game");
+}
+
 joinForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const name = rememberName(firstNameInput);
@@ -707,7 +766,8 @@ guessLowerButton.addEventListener("click", () => {
 });
 
 continueButton.addEventListener("click", () => socket.emit("continue_to_next_round"));
-newGameButton.addEventListener("click", () => socket.emit("restart_game"));
+newGameButton.addEventListener("click", requestHardReset);
+hardResetButton.addEventListener("click", requestHardReset);
 
 lateTrigger.addEventListener("click", openDrawer);
 drawerClose.addEventListener("click", closeDrawer);

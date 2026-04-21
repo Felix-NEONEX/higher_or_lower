@@ -28,6 +28,7 @@
         </div>
         <div class="topbar__right">
           <span id="phase-chip" class="phase-chip">Lobby</span>
+          <button type="button" id="hard-reset-button" class="reset-button">Zum Anfang</button>
           <span id="connection-pill" class="status-pill"><span class="live-dot"></span> Verbindet</span>
           <span id="round-indicator" class="sr-only">Runde 0 von 5</span>
         </div>
@@ -54,7 +55,20 @@
                 </div>
               </div>
               <div class="hero__visual">
-                <div class="hero__image"></div>
+                <div class="hero__scene" aria-hidden="true">
+                  <div class="hero__scene-copy">
+                    <span class="hero__scene-label">Lobby live</span>
+                    <strong id="lobby-visual-count">0 Avatare</strong>
+                  </div>
+                  <div class="hero__glow"></div>
+                  <div class="hero__planet">
+                    <div class="hero__planet-core"></div>
+                    <div class="hero__planet-ring hero__planet-ring--a"></div>
+                    <div class="hero__planet-ring hero__planet-ring--b"></div>
+                    <div id="lobby-avatars" class="hero__avatars"></div>
+                  </div>
+                  <div class="hero__floor"></div>
+                </div>
               </div>
             </div>
 
@@ -219,7 +233,7 @@
             </div>
             <ol id="final-list" class="rank-list"></ol>
             <div class="rank-cta">
-              <button type="button" id="new-game-button" class="btn btn--primary btn--lg">Neues Spiel</button>
+              <button type="button" id="new-game-button" class="btn btn--primary btn--lg">Zum Anfang</button>
             </div>
           </div>
         </section>
