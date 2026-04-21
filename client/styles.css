@@ -458,7 +458,7 @@ button:disabled {
 .hero__glow {
   position: absolute;
   left: 50%;
-  bottom: 126px;
+  bottom: 136px;
   width: 320px;
   height: 110px;
   transform: translateX(-50%);
@@ -472,8 +472,8 @@ button:disabled {
   position: absolute;
   left: 8%;
   right: 8%;
-  bottom: 118px;
-  height: 72px;
+  bottom: 96px;
+  height: 42px;
   z-index: 4;
   pointer-events: none;
 }
@@ -482,21 +482,21 @@ button:disabled {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 40px;
+  top: 0;
+  height: 100%;
   border-top: 2px solid rgba(255, 255, 255, 0.34);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   box-shadow:
-    0 -10px 24px rgba(255, 255, 255, 0.1),
+    0 -8px 18px rgba(255, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .hero__planet {
   position: absolute;
   left: 50%;
-  bottom: -68%;
-  width: 148%;
-  max-width: 760px;
+  bottom: -116%;
+  width: 118%;
+  max-width: 620px;
   aspect-ratio: 1 / 1;
   transform: translateX(-50%);
   z-index: 2;
@@ -543,27 +543,7 @@ button:disabled {
 }
 
 .hero__planet-ring {
-  position: absolute;
-  left: 50%;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.hero__planet-ring--a {
-  top: 6%;
-  width: 78%;
-  height: 8%;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  opacity: 0.56;
-}
-
-.hero__planet-ring--b {
-  top: 10%;
-  width: 94%;
-  height: 10%;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  opacity: 0.38;
+  display: none;
 }
 
 .hero__avatars {
@@ -586,7 +566,7 @@ button:disabled {
 
 .lobby-avatar {
   position: absolute;
-  transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+  transform: translate(-50%, -100%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   transform-origin: center bottom;
   animation:
     lobby-avatar-pop 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
@@ -598,7 +578,7 @@ button:disabled {
 .lobby-avatar__shadow {
   position: absolute;
   left: 50%;
-  bottom: -1px;
+  bottom: 1px;
   width: 24px;
   height: 6px;
   transform: translateX(-50%);
@@ -691,21 +671,21 @@ button:disabled {
 @keyframes lobby-avatar-pop {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(10px) scale(calc(var(--avatar-scale) * 0.72)) rotateZ(var(--avatar-tilt));
+    transform: translate(-50%, -88%) scale(calc(var(--avatar-scale) * 0.72)) rotateZ(var(--avatar-tilt));
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+    transform: translate(-50%, -100%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   }
 }
 
 @keyframes lobby-avatar-bob {
   0%,
   100% {
-    transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+    transform: translate(-50%, -100%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   }
   50% {
-    transform: translateX(calc(-50% + 1px)) translateY(-3px) scale(var(--avatar-scale)) rotateZ(calc(var(--avatar-tilt) + 1deg));
+    transform: translate(calc(-50% + 1px), calc(-100% - 3px)) scale(var(--avatar-scale)) rotateZ(calc(var(--avatar-tilt) + 1deg));
   }
 }
 

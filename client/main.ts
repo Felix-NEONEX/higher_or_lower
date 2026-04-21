@@ -119,25 +119,22 @@ let confettiPieces: Array<{
 let confettiFrame: number | null = null;
 
 const lobbyAvatarSlots = [
-  { x: 12, scale: 0.74, z: 6 },
-  { x: 22, scale: 0.8, z: 7 },
-  { x: 32, scale: 0.87, z: 8 },
-  { x: 42, scale: 0.94, z: 9 },
   { x: 50, scale: 1, z: 10 },
+  { x: 42, scale: 0.94, z: 9 },
   { x: 58, scale: 0.94, z: 9 },
+  { x: 32, scale: 0.87, z: 8 },
   { x: 68, scale: 0.87, z: 8 },
+  { x: 22, scale: 0.8, z: 7 },
   { x: 78, scale: 0.8, z: 7 },
+  { x: 12, scale: 0.74, z: 6 },
   { x: 88, scale: 0.74, z: 6 },
-  { x: 27, scale: 0.76, z: 7 },
-  { x: 73, scale: 0.76, z: 7 },
   { x: 38, scale: 0.84, z: 8 },
   { x: 62, scale: 0.84, z: 8 }
 ] as const;
 
-function horizonLiftForPercent(x: number): number {
+function horizonOffsetForPercent(x: number): number {
   const normalizedDistance = Math.min(1, Math.abs(x - 50) / 38);
-  const curve = 1 - normalizedDistance ** 2;
-  return Math.round(4 + curve * 28);
+  return Math.round(4 + normalizedDistance ** 2 * 24);
 }
 
 function escapeHtml(value: string): string {
@@ -319,7 +316,7 @@ function renderLobbyScene(players: PlayerView[]): void {
     const avatar = document.createElement("div");
     avatar.className = "lobby-avatar";
     avatar.style.left = `${slot.x}%`;
-    avatar.style.bottom = `${horizonLiftForPercent(slot.x)}px`;
+    avatar.style.top = `${horizonOffsetForPercent(slot.x)}px`;
     avatar.style.zIndex = `${slot.z}`;
     avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
     avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);
