@@ -7,156 +7,267 @@
     <link rel="stylesheet" href="/assets/styles.css" />
   </head>
   <body>
-    <div class="ambient-blob blob-a"></div>
-    <div class="ambient-blob blob-b"></div>
+    <div class="ambient-blob ambient-blob--a" aria-hidden="true"></div>
+    <div class="ambient-blob ambient-blob--b" aria-hidden="true"></div>
+    <canvas id="confetti" aria-hidden="true"></canvas>
 
-    <div class="app-shell">
-      <header class="topbar">
+    <div class="app">
+      <header class="topbar" role="banner">
         <div class="brand">
-          <div class="brand__mark">
-            <img src="/assets/neonex-logo.jpeg" alt="" />
-          </div>
-          <div class="brand__copy">
-            <span class="brand__eyebrow">Live Event Game</span>
-            <strong>Higher or Lower</strong>
-          </div>
+          <span class="brand__mark" aria-hidden="true"><img src="/assets/neonex-logo.jpeg" alt="" /></span>
+          <span class="brand__title">Higher or Lower</span>
+          <span class="brand__divider"></span>
+          <small class="brand__meta">Event Game</small>
         </div>
-        <div class="topbar__status">
-          <div id="connection-pill" class="status-pill">Verbinde</div>
+        <div class="topbar__right">
+          <span id="phase-chip" class="phase-chip">Lobby</span>
+          <span id="connection-pill" class="status-pill"><span class="live-dot"></span> Verbindet</span>
+          <span id="round-indicator" class="sr-only">Runde 0 von 5</span>
         </div>
       </header>
 
-      <main class="content-shell">
-        <section class="hero-card">
-          <div class="hero-card__copy">
-            <span class="hero-card__eyebrow">Shared multiplayer round</span>
-            <h1>Higher <em>or</em> Lower</h1>
-            <p>Der Server fuehrt das Spiel. Bei einer richtigen Antwort bleibt die rechte Karte stehen und die naechste Karte fordert sie heraus.</p>
-          </div>
-          <div class="hero-card__meta">
-            <div class="meta-chip">
-              <span>Phase</span>
-              <strong id="phase-value">Lobby</strong>
+      <main class="main">
+        <section class="screen is-active" id="screen-lobby" aria-labelledby="lobby-title">
+          <div class="lobby">
+            <div class="hero">
+              <div class="hero__copy">
+                <div class="eyebrow">Internes Event · Live Session</div>
+                <h1 id="lobby-title" data-split>Higher <em>or</em> Lower</h1>
+                <p class="subline">
+                  Fuenf Runden. Eine aktive Person pro Runde. Bei richtiger Antwort bleibt die rechte Karte stehen und die naechste Karte fordert sie heraus.
+                </p>
+                <div class="hero-badges" role="list">
+                  <span class="hero-badge" role="listitem">5 Runden</span>
+                  <span class="hero-badge" role="listitem">7 Sekunden pro Challenge</span>
+                  <span class="hero-badge" role="listitem">Shared Live State</span>
+                </div>
+              </div>
+              <div class="hero__visual">
+                <div class="hero__image"></div>
+              </div>
             </div>
-            <div class="meta-chip">
-              <span>Runde</span>
-              <strong id="round-value">0 / 5</strong>
-            </div>
-            <div class="meta-chip">
-              <span>Aktiv</span>
-              <strong id="active-player-value">Warten</strong>
-            </div>
-            <div class="meta-chip">
-              <span>Streak</span>
-              <strong id="streak-value">0 / 7</strong>
+
+            <div class="lobby-grid">
+              <form id="join-form" class="card card--join" novalidate>
+                <h2 class="card-title">Beitreten</h2>
+                <div class="input-group">
+                  <label for="first-name-input">Dein Vorname</label>
+                  <input
+                    id="first-name-input"
+                    class="input"
+                    name="firstName"
+                    type="text"
+                    maxlength="32"
+                    autocomplete="given-name"
+                    placeholder="z. B. Laura"
+                    required
+                  />
+                </div>
+                <div class="stack">
+                  <button type="submit" id="join-button" class="btn btn--primary btn--block btn--lg">Lobby beitreten</button>
+                  <button type="button" id="start-button" class="btn btn--ghost btn--block btn--lg">Spiel starten</button>
+                </div>
+                <p id="lobby-helper" class="helper">Mindestens eine Person muss beitreten, bevor das Spiel starten kann.</p>
+              </form>
+
+              <section class="card card--players">
+                <div class="card-head">
+                  <h2 class="card-title">Teilnehmende</h2>
+                  <span id="player-count-pill" class="count-pill">0</span>
+                </div>
+                <div id="players-grid" class="player-grid" role="list" aria-live="polite"></div>
+                <div id="players-empty" class="empty-state">Noch niemand im Raum. Tretet zuerst bei.</div>
+              </section>
             </div>
           </div>
         </section>
 
-        <div class="dashboard">
-          <section class="panel panel--stage">
-            <div class="panel__header">
-              <div>
-                <span class="panel__eyebrow">Aktive Challenge</span>
-                <h2>Nur eine Person kann antworten</h2>
+        <section class="screen" id="screen-play" aria-labelledby="play-title">
+          <div class="play">
+            <div class="playbar">
+              <div class="playbar__group">
+                <span class="playbar__label">Runde</span>
+                <span class="playbar__value" id="play-round-text">1 / 5</span>
+                <span class="round-dots" id="round-dots" aria-hidden="true"></span>
               </div>
-              <div class="timer-shell" aria-live="polite">
-                <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
-                  <circle class="timer-ring__track" cx="60" cy="60" r="52"></circle>
-                  <circle id="timer-progress" class="timer-ring__progress" cx="60" cy="60" r="52"></circle>
-                </svg>
-                <div class="timer-shell__text">
-                  <strong id="timer-value">7.0</strong>
-                  <span>Sekunden</span>
-                </div>
+              <div class="playbar__group playbar__group--center">
+                <span class="playbar__label">Am Zug</span>
+                <span class="playbar__value" id="active-player-text">-</span>
+              </div>
+              <div class="playbar__group playbar__group--right">
+                <span class="playbar__label">Streak</span>
+                <span class="playbar__value" id="streak-value">0 / 7</span>
               </div>
             </div>
 
-            <div id="status-banner" class="status-banner">Lobby offen. Namen eintragen und starten.</div>
-            <div id="ownership-banner" class="ownership-banner">Noch niemand ist dran.</div>
-
-            <div class="question-arena" aria-live="polite">
-              <article class="comparison-card comparison-card--left">
-                <span class="comparison-card__eyebrow">Steht</span>
-                <h3 id="left-label">Noch keine Karte</h3>
-                <strong id="left-value">-</strong>
-              </article>
-
-              <div class="guess-column">
-                <div class="guess-column__badge">Was kommt jetzt?</div>
-                <div class="guess-column__helper">Nur die aktive Person kann klicken. Alle anderen sehen dieselbe Live-Situation.</div>
-                <div class="guess-buttons">
-                  <button type="button" id="guess-higher-button" class="action-button action-button--accent">Higher</button>
-                  <button type="button" id="guess-lower-button" class="action-button action-button--ghost">Lower</button>
-                </div>
-              </div>
-
-              <article class="comparison-card comparison-card--right">
-                <span class="comparison-card__eyebrow">Fordert heraus</span>
-                <h3 id="right-label">Die naechste Karte kommt gleich</h3>
-                <strong id="right-value">?</strong>
-              </article>
+            <div class="turn-banner" id="turn-banner" role="status" aria-live="polite">
+              <span>Die Runde startet.</span>
             </div>
 
-            <div id="reveal-banner" class="reveal-banner reveal-banner--hidden" aria-live="polite"></div>
-          </section>
-
-          <aside class="sidebar">
-            <section class="panel">
-              <div class="panel__header">
-                <div>
-                  <span class="panel__eyebrow">Beitreten</span>
-                  <h2>Spielsteuerung</h2>
+            <div class="play-grid">
+              <section class="stage-shell">
+                <div class="stage-header">
+                  <div>
+                    <span class="stage-header__eyebrow">Aktive Challenge</span>
+                    <h2 id="play-title">Nur eine Person kann antworten</h2>
+                  </div>
+                  <div class="timer-shell" aria-live="polite">
+                    <svg class="timer-ring" viewBox="0 0 120 120" aria-hidden="true">
+                      <circle class="timer-ring__track" cx="60" cy="60" r="52"></circle>
+                      <circle id="timer-progress" class="timer-ring__progress" cx="60" cy="60" r="52"></circle>
+                    </svg>
+                    <div class="timer-shell__text">
+                      <strong id="timer-value">7.0</strong>
+                      <span>Sekunden</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <form id="join-form" class="control-stack">
-                <label class="field-label" for="first-name-input">Vorname</label>
-                <input id="first-name-input" class="text-input" name="firstName" type="text" maxlength="32" autocomplete="given-name" required />
-                <div class="button-pair">
-                  <button type="submit" id="join-button" class="action-button action-button--accent">Lobby beitreten</button>
-                  <button type="button" id="late-join-button" class="action-button action-button--ghost">Late Join</button>
+                <div id="status-banner" class="status-banner">Die Runde startet.</div>
+
+                <div class="stage" id="stage">
+                  <article class="q-card is-left" id="left-card">
+                    <div class="q-head">
+                      <span class="q-role">Steht</span>
+                      <span class="q-tag">A</span>
+                    </div>
+                    <p class="q-prompt" id="left-label">Noch keine Karte</p>
+                    <div class="q-value" id="left-value">-</div>
+                  </article>
+
+                  <div class="vs" aria-hidden="true">
+                    <svg viewBox="0 0 56 56">
+                      <g class="vs-ring" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55">
+                        <circle cx="28" cy="28" r="26" stroke-dasharray="2 4"></circle>
+                        <circle cx="28" cy="28" r="20" stroke-dasharray="1 6"></circle>
+                      </g>
+                      <text x="28" y="35" text-anchor="middle" font-size="22" font-style="italic" fill="currentColor">vs</text>
+                    </svg>
+                  </div>
+
+                  <article class="q-card is-right" id="right-card">
+                    <div class="q-head">
+                      <span class="q-role">Fordert heraus</span>
+                      <span class="q-tag">B</span>
+                    </div>
+                    <span class="reveal-tag" id="reveal-tag"></span>
+                    <p class="q-prompt" id="right-label">Die naechste Karte kommt gleich</p>
+                    <div class="q-value" id="right-value">???</div>
+                  </article>
                 </div>
-              </form>
 
-              <div class="control-stack">
-                <div class="button-pair">
-                  <button type="button" id="start-button" class="action-button action-button--accent">Spiel starten</button>
-                  <button type="button" id="continue-button" class="action-button action-button--ghost">Naechste Runde</button>
+                <div class="actions" id="actions">
+                  <button class="choice higher" id="guess-higher-button" aria-keyshortcuts="ArrowUp">
+                    <span class="choice__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+                    </span>
+                    Hoeher
+                    <span class="kbd">↑</span>
+                  </button>
+                  <button class="choice lower" id="guess-lower-button" aria-keyshortcuts="ArrowDown">
+                    <span class="choice__icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>
+                    </span>
+                    Niedriger
+                    <span class="kbd">↓</span>
+                  </button>
                 </div>
-                <button type="button" id="restart-button" class="action-button action-button--subtle">Neu starten</button>
-              </div>
 
-              <div id="message-box" class="message-box" aria-live="polite"></div>
-            </section>
+                <div id="ownership-banner" class="ownership-banner"></div>
+                <div id="play-message" class="next-row"></div>
+              </section>
 
-            <section class="panel">
-              <div class="panel__header">
-                <div>
-                  <span class="panel__eyebrow">Mitspielende</span>
-                  <h2>Aktive Namen</h2>
-                </div>
-              </div>
-              <ul id="players-list" class="list-block"></ul>
-              <div class="subsection">
-                <h3>Ab naechster Runde dabei</h3>
-                <ul id="pending-list" class="list-block list-block--pending"></ul>
-              </div>
-            </section>
+              <aside class="side-panel">
+                <section class="mini-card">
+                  <h3>Live Ranking</h3>
+                  <ol id="play-leaderboard" class="rank-mini"></ol>
+                </section>
 
-            <section class="panel">
-              <div class="panel__header">
-                <div>
-                  <span class="panel__eyebrow">Zwischenstand</span>
-                  <h2>Leaderboard</h2>
-                </div>
+                <section class="mini-card">
+                  <h3>Ab naechster Runde dabei</h3>
+                  <ul id="pending-list" class="pending-list"></ul>
+                </section>
+
+                <section class="mini-card">
+                  <h3>Steuerung</h3>
+                  <div class="side-actions">
+                    <button type="button" id="restart-button" class="btn btn--ghost btn--block">Spiel neu starten</button>
+                  </div>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-interim" aria-labelledby="interim-title">
+          <div class="rank-wrap">
+            <div class="rank-head">
+              <div class="eyebrow">Zwischenstand</div>
+              <h2 id="interim-title">Nach Runde <em id="interim-round">1</em></h2>
+              <p id="interim-copy" class="rank-copy">Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die naechste Runde.</p>
+            </div>
+            <ol id="interim-list" class="rank-list"></ol>
+            <div class="rank-cta">
+              <button type="button" id="continue-button" class="btn btn--primary btn--lg">Naechste Runde</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-finale" aria-labelledby="finale-title">
+          <div class="rank-wrap rank-wrap--finale">
+            <div class="finale-hero">
+              <div class="eyebrow">Finale Platzierung</div>
+            </div>
+            <div class="winner-card">
+              <div class="halo" aria-hidden="true"></div>
+              <div class="big-avatar" id="winner-avatar">W</div>
+              <h2 id="finale-title"><span id="winner-name">Winner</span> gewinnt.</h2>
+              <p class="tag"><span id="winner-score">0</span> Punkte nach 5 Runden</p>
+            </div>
+            <div class="winner-stats">
+              <div class="stat-tile">
+                <div class="l">Gesamt Teilnehmende</div>
+                <div class="v" id="stat-players">-</div>
               </div>
-              <ol id="leaderboard-list" class="leaderboard-list"></ol>
-            </section>
-          </aside>
-        </div>
+              <div class="stat-tile">
+                <div class="l">Vergebene Punkte</div>
+                <div class="v" id="stat-total">-</div>
+              </div>
+              <div class="stat-tile">
+                <div class="l">Verbrauchte Fragen</div>
+                <div class="v" id="stat-used">-</div>
+              </div>
+            </div>
+            <ol id="final-list" class="rank-list"></ol>
+            <div class="rank-cta">
+              <button type="button" id="new-game-button" class="btn btn--primary btn--lg">Neues Spiel</button>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
+
+    <button class="late-trigger" id="late-trigger" aria-controls="late-drawer" aria-expanded="false" style="display: none">
+      <span class="plus">+</span>
+      Spaeter beitreten
+    </button>
+
+    <div class="backdrop" id="backdrop"></div>
+    <aside class="drawer" id="late-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+      <button class="close-x" id="drawer-close" aria-label="Schliessen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+      <h3 id="drawer-title">Spaeter beitreten</h3>
+      <p class="desc">Du steigst ab der naechsten Runde mit ein. Dein Name wird dann normal in die Rotation aufgenommen.</p>
+      <div class="input-group">
+        <label for="late-name-input">Dein Vorname</label>
+        <input class="input" id="late-name-input" type="text" maxlength="32" placeholder="z. B. Felix" />
+      </div>
+      <button class="btn btn--primary btn--block" id="late-join-button">Warteliste beitreten</button>
+      <div class="drawer-note">Hinweis: Nur die aktive Person kann waehrend einer laufenden Challenge antworten.</div>
+    </aside>
+
+    <div class="toast" id="message-box" aria-live="polite"></div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script type="module" src="/assets/app.js"></script>

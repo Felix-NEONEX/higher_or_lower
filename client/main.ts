@@ -1,11 +1,4 @@
-import type {
-  ErrorEventPayload,
-  PlayerView,
-  PublicGameState,
-  RevealResult,
-  ServerToClientEvents,
-  StateEnvelope
-} from "../shared/contracts.js";
+import type { ErrorEventPayload, PlayerView, PublicGameState, RevealResult, StateEnvelope } from "../shared/contracts.js";
 
 declare global {
   interface Window {
@@ -18,37 +11,69 @@ interface SocketClient {
   emit(event: string, payload?: unknown): void;
 }
 
+type ScreenName = "lobby" | "play" | "interim" | "finale";
+
 const connectionPill = document.querySelector<HTMLElement>("#connection-pill")!;
-const phaseValue = document.querySelector<HTMLElement>("#phase-value")!;
-const roundValue = document.querySelector<HTMLElement>("#round-value")!;
-const activePlayerValue = document.querySelector<HTMLElement>("#active-player-value")!;
+const phaseChip = document.querySelector<HTMLElement>("#phase-chip")!;
+const roundIndicator = document.querySelector<HTMLElement>("#round-indicator")!;
+const firstNameInput = document.querySelector<HTMLInputElement>("#first-name-input")!;
+const joinForm = document.querySelector<HTMLFormElement>("#join-form")!;
+const joinButton = document.querySelector<HTMLButtonElement>("#join-button")!;
+const startButton = document.querySelector<HTMLButtonElement>("#start-button")!;
+const lobbyHelper = document.querySelector<HTMLElement>("#lobby-helper")!;
+const playerCountPill = document.querySelector<HTMLElement>("#player-count-pill")!;
+const playersGrid = document.querySelector<HTMLElement>("#players-grid")!;
+const playersEmpty = document.querySelector<HTMLElement>("#players-empty")!;
+
+const playRoundText = document.querySelector<HTMLElement>("#play-round-text")!;
+const activePlayerText = document.querySelector<HTMLElement>("#active-player-text")!;
 const streakValue = document.querySelector<HTMLElement>("#streak-value")!;
+const turnBanner = document.querySelector<HTMLElement>("#turn-banner")!;
 const timerValue = document.querySelector<HTMLElement>("#timer-value")!;
 const timerProgress = document.querySelector<SVGCircleElement>("#timer-progress")!;
 const statusBanner = document.querySelector<HTMLElement>("#status-banner")!;
 const ownershipBanner = document.querySelector<HTMLElement>("#ownership-banner")!;
-const revealBanner = document.querySelector<HTMLElement>("#reveal-banner")!;
+const leftCard = document.querySelector<HTMLElement>("#left-card")!;
+const rightCard = document.querySelector<HTMLElement>("#right-card")!;
 const leftLabel = document.querySelector<HTMLElement>("#left-label")!;
 const leftValue = document.querySelector<HTMLElement>("#left-value")!;
 const rightLabel = document.querySelector<HTMLElement>("#right-label")!;
 const rightValue = document.querySelector<HTMLElement>("#right-value")!;
-const playersList = document.querySelector<HTMLElement>("#players-list")!;
-const pendingList = document.querySelector<HTMLElement>("#pending-list")!;
-const leaderboardList = document.querySelector<HTMLElement>("#leaderboard-list")!;
-const messageBox = document.querySelector<HTMLElement>("#message-box")!;
-const joinForm = document.querySelector<HTMLFormElement>("#join-form")!;
-const firstNameInput = document.querySelector<HTMLInputElement>("#first-name-input")!;
-const joinButton = document.querySelector<HTMLButtonElement>("#join-button")!;
-const lateJoinButton = document.querySelector<HTMLButtonElement>("#late-join-button")!;
-const startButton = document.querySelector<HTMLButtonElement>("#start-button")!;
+const revealTag = document.querySelector<HTMLElement>("#reveal-tag")!;
 const guessHigherButton = document.querySelector<HTMLButtonElement>("#guess-higher-button")!;
 const guessLowerButton = document.querySelector<HTMLButtonElement>("#guess-lower-button")!;
-const continueButton = document.querySelector<HTMLButtonElement>("#continue-button")!;
-const restartButton = document.querySelector<HTMLButtonElement>("#restart-button")!;
+const playLeaderboard = document.querySelector<HTMLElement>("#play-leaderboard")!;
+const pendingList = document.querySelector<HTMLElement>("#pending-list")!;
+const playMessage = document.querySelector<HTMLElement>("#play-message")!;
+const roundDots = document.querySelector<HTMLElement>("#round-dots")!;
 
+const interimRound = document.querySelector<HTMLElement>("#interim-round")!;
+const interimCopy = document.querySelector<HTMLElement>("#interim-copy")!;
+const interimList = document.querySelector<HTMLElement>("#interim-list")!;
+const continueButton = document.querySelector<HTMLButtonElement>("#continue-button")!;
+
+const winnerAvatar = document.querySelector<HTMLElement>("#winner-avatar")!;
+const winnerName = document.querySelector<HTMLElement>("#winner-name")!;
+const winnerScore = document.querySelector<HTMLElement>("#winner-score")!;
+const statPlayers = document.querySelector<HTMLElement>("#stat-players")!;
+const statTotal = document.querySelector<HTMLElement>("#stat-total")!;
+const statUsed = document.querySelector<HTMLElement>("#stat-used")!;
+const finalList = document.querySelector<HTMLElement>("#final-list")!;
+const newGameButton = document.querySelector<HTMLButtonElement>("#new-game-button")!;
+
+const restartButton = document.querySelector<HTMLButtonElement>("#restart-button")!;
+const messageBox = document.querySelector<HTMLElement>("#message-box")!;
+const lateTrigger = document.querySelector<HTMLButtonElement>("#late-trigger")!;
+const backdrop = document.querySelector<HTMLElement>("#backdrop")!;
+const lateDrawer = document.querySelector<HTMLElement>("#late-drawer")!;
+const drawerClose = document.querySelector<HTMLButtonElement>("#drawer-close")!;
+const lateNameInput = document.querySelector<HTMLInputElement>("#late-name-input")!;
+const lateJoinButton = document.querySelector<HTMLButtonElement>("#late-join-button")!;
+const confettiCanvas = document.querySelector<HTMLCanvasElement>("#confetti")!;
+
+const timerCircumference = 2 * Math.PI * 52;
 const clientIdKey = "higher-lower-client-id";
 const playerNameKey = "higher-lower-player-name";
-const timerCircumference = 2 * Math.PI * 52;
 
 const clientId =
   window.localStorage.getItem(clientIdKey) ??
@@ -56,16 +81,35 @@ const clientId =
   `client-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 window.localStorage.setItem(clientIdKey, clientId);
-timerProgress.style.strokeDasharray = `${timerCircumference}`;
-timerProgress.style.strokeDashoffset = "0";
-
-let latestName = window.localStorage.getItem(playerNameKey) ?? "";
-let currentState: PublicGameState | null = null;
-let countdownHandle: number | null = null;
-
-firstNameInput.value = latestName;
+firstNameInput.value = window.localStorage.getItem(playerNameKey) ?? "";
 
 const socket = window.io({ auth: { clientId } });
+const screens = new Map<ScreenName, HTMLElement>(
+  (["lobby", "play", "interim", "finale"] as const).map((name) => [name, document.querySelector<HTMLElement>(`#screen-${name}`)!])
+);
+
+let latestName = firstNameInput.value;
+let currentState: PublicGameState | null = null;
+let countdownHandle: number | null = null;
+let toastHandle: number | null = null;
+let lastRevealAnimationKey = "";
+let lastFinalCelebrationKey = "";
+let lastScreen: ScreenName = "lobby";
+
+const confettiContext = confettiCanvas.getContext("2d")!;
+let confettiPieces: Array<{
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  g: number;
+  size: number;
+  rot: number;
+  vr: number;
+  color: string;
+  life: number;
+}> = [];
+let confettiFrame: number | null = null;
 
 function escapeHtml(value: string): string {
   return value
@@ -76,25 +120,82 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-function setMessage(message: string): void {
+function initials(name: string): string {
+  return name.trim().slice(0, 1).toUpperCase() || "?";
+}
+
+function avatarHueClass(name: string): string {
+  return `avatar-${name.charCodeAt(0) % 5}`;
+}
+
+function setToast(message: string): void {
   messageBox.textContent = message;
+  if (toastHandle !== null) {
+    window.clearTimeout(toastHandle);
+  }
+  toastHandle = window.setTimeout(() => {
+    if (messageBox.textContent === message) {
+      messageBox.textContent = "";
+    }
+  }, 2800);
+}
+
+function currentScreenForState(state: PublicGameState): ScreenName {
+  if (state.phase === "lobby") {
+    return "lobby";
+  }
+  if (state.phase === "leaderboard") {
+    return "interim";
+  }
+  if (state.phase === "final") {
+    return "finale";
+  }
+  return "play";
+}
+
+function switchScreen(nextScreen: ScreenName): void {
+  lastScreen = nextScreen;
+  for (const [name, element] of screens.entries()) {
+    element.classList.toggle("is-active", name === nextScreen);
+  }
+  lateTrigger.style.display = nextScreen === "play" || nextScreen === "interim" ? "inline-flex" : "none";
+}
+
+function setConnectionState(connected: boolean): void {
+  connectionPill.innerHTML = connected
+    ? '<span class="live-dot"></span> Live verbunden'
+    : '<span class="live-dot"></span> Offline';
 }
 
 function titleCasePhase(phase: PublicGameState["phase"]): string {
   return phase.replace("_", " ").replace(/\b\w/g, (character) => character.toUpperCase());
 }
 
-function stopCountdown(): void {
-  if (countdownHandle === null) {
-    return;
+function updateRoundDots(state: PublicGameState): void {
+  roundDots.innerHTML = "";
+  for (let index = 1; index <= state.maxRounds; index += 1) {
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    if (index < state.roundNumber) {
+      dot.classList.add("is-done");
+    } else if (index === state.roundNumber) {
+      dot.classList.add("is-active");
+    }
+    roundDots.appendChild(dot);
   }
-  window.clearInterval(countdownHandle);
-  countdownHandle = null;
+}
+
+function stopCountdown(): void {
+  if (countdownHandle !== null) {
+    window.clearInterval(countdownHandle);
+    countdownHandle = null;
+  }
 }
 
 function renderTimer(state: PublicGameState): void {
   if (state.phase !== "round_active" || !state.roundDeadlineAt) {
     timerValue.textContent = `${state.roundTimeLimitSeconds.toFixed(1)}`;
+    timerProgress.style.strokeDasharray = `${timerCircumference}`;
     timerProgress.style.strokeDashoffset = `${timerCircumference}`;
     timerProgress.style.stroke = "var(--accent)";
     return;
@@ -104,7 +205,9 @@ function renderTimer(state: PublicGameState): void {
   const remainingMs = Math.max(new Date(state.roundDeadlineAt).getTime() - Date.now(), 0);
   const remainingSeconds = remainingMs / 1000;
   const ratio = totalMs === 0 ? 0 : remainingMs / totalMs;
+
   timerValue.textContent = remainingSeconds.toFixed(1);
+  timerProgress.style.strokeDasharray = `${timerCircumference}`;
   timerProgress.style.strokeDashoffset = `${timerCircumference * (1 - ratio)}`;
   timerProgress.style.stroke = remainingSeconds <= 2 ? "var(--bad)" : "var(--accent)";
 }
@@ -118,182 +221,421 @@ function restartCountdown(state: PublicGameState): void {
   }
 
   countdownHandle = window.setInterval(() => {
-    if (!currentState) {
-      return;
+    if (currentState) {
+      renderTimer(currentState);
     }
-    renderTimer(currentState);
   }, 100);
 }
 
-function renderPlayerList(root: HTMLElement, players: PlayerView[], emptyMessage: string): void {
+function countUp(el: HTMLElement, target: number, duration = 800): void {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) {
+    el.textContent = `${target}`;
+    return;
+  }
+
+  const startValue = 0;
+  const startTime = performance.now();
+
+  function frame(now: number): void {
+    const t = Math.min(1, (now - startTime) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const current = startValue + (target - startValue) * eased;
+    const rounded = Number.isInteger(target) ? Math.round(current) : Math.round(current * 10) / 10;
+    el.textContent = `${rounded}`;
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+function renderLobbyPlayers(players: PlayerView[]): void {
+  playerCountPill.textContent = `${players.length}`;
+  playersGrid.innerHTML = "";
+  playersEmpty.style.display = players.length === 0 ? "" : "none";
+
+  players.forEach((player, index) => {
+    const chip = document.createElement("div");
+    chip.className = "player-chip";
+    chip.style.animationDelay = `${index * 30}ms`;
+    chip.innerHTML = `<span class="avatar ${avatarHueClass(player.name)}">${escapeHtml(initials(player.name))}</span><span>${escapeHtml(player.name)}</span>`;
+    playersGrid.appendChild(chip);
+  });
+}
+
+function renderMiniLeaderboard(root: HTMLElement, players: PlayerView[], emptyMessage: string): void {
   if (players.length === 0) {
-    root.innerHTML = `<li class="list-row"><div>${escapeHtml(emptyMessage)}</div></li>`;
+    root.innerHTML = `<li><span class="meta">${escapeHtml(emptyMessage)}</span></li>`;
     return;
   }
 
   root.innerHTML = players
-    .map((player) => {
-      const isActive = currentState?.activePlayerName === player.name && player.status === "active";
-      const rowClass = isActive ? "list-row list-row--active" : "list-row";
-      const statusParts = [player.status];
-      if (!player.connected) {
-        statusParts.push("offline");
-      }
-
-      const badge = isActive
-        ? '<span class="pill-tag pill-tag--accent">dran</span>'
-        : player.status === "pending"
-          ? '<span class="pill-tag pill-tag--pending">wartet</span>'
-          : "";
-
-      return `<li class="${rowClass}">
-          <div>
-            <div class="list-row__title">
-              <span>${escapeHtml(player.name)}</span>
-              ${badge}
-            </div>
-            <div class="list-row__meta">${escapeHtml(statusParts.join(" · "))}</div>
-          </div>
-          <div class="list-row__score">${player.score}</div>
-        </li>`;
-    })
+    .map(
+      (player, index) => `
+        <li>
+          <span>${index + 1}. ${escapeHtml(player.name)}</span>
+          <span class="meta">${player.score}</span>
+        </li>`
+    )
     .join("");
 }
 
-function renderLeaderboard(players: PlayerView[]): void {
+function renderPending(root: HTMLElement, players: PlayerView[]): void {
   if (players.length === 0) {
-    leaderboardList.innerHTML = '<li class="leaderboard-row"><div>Scores erscheinen nach der ersten Runde.</div></li>';
+    root.innerHTML = '<li><span class="meta">Niemand wartet auf die naechste Runde.</span></li>';
     return;
   }
 
-  leaderboardList.innerHTML = players
-    .map((player, index) => {
-      const rowClass = index === 0 ? "leaderboard-row leaderboard-row--first" : "leaderboard-row";
-      return `<li class="${rowClass}">
-          <div>
-            <div class="leaderboard-row__title">${index + 1}. ${escapeHtml(player.name)}</div>
-            <div class="leaderboard-row__meta">${escapeHtml(player.status)}</div>
-          </div>
-          <div class="leaderboard-row__score">${player.score}</div>
-        </li>`;
-    })
+  root.innerHTML = players
+    .map(
+      (player) => `
+        <li>
+          <span>${escapeHtml(player.name)}</span>
+          <span class="meta">wartet</span>
+        </li>`
+    )
     .join("");
 }
 
-function renderQuestion(state: PublicGameState): void {
-  if (!state.activeQuestion) {
-    leftLabel.textContent = "Noch keine Karte";
-    leftValue.textContent = "-";
-    rightLabel.textContent = "Die naechste Karte kommt gleich";
-    rightValue.textContent = "?";
-    return;
-  }
-
-  leftLabel.textContent = state.activeQuestion.leftLabel;
-  leftValue.textContent = String(state.activeQuestion.leftValue);
-  rightLabel.textContent = state.activeQuestion.rightLabel;
-  rightValue.textContent = state.activeQuestion.rightValue === null ? "?" : String(state.activeQuestion.rightValue);
+function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
+  root.innerHTML = players
+    .map((player, index) => {
+      const tierClass = index === 0 ? " gold" : "";
+      return `
+        <li class="rank-row${tierClass}">
+          <span class="pos">${index + 1}</span>
+          <div class="who">
+            <span class="avatar ${avatarHueClass(player.name)}">${escapeHtml(initials(player.name))}</span>
+            <span>${escapeHtml(player.name)}</span>
+          </div>
+          <div class="score">${player.score}</div>
+        </li>`;
+    })
+    .join("");
 }
 
 function renderReveal(result: RevealResult | null): void {
+  revealTag.className = "reveal-tag";
+  rightCard.classList.remove("is-hit", "is-miss");
+  leftCard.classList.remove("is-hit", "is-miss");
+
   if (!result) {
-    revealBanner.className = "reveal-banner reveal-banner--hidden";
-    revealBanner.textContent = "";
+    revealTag.textContent = "";
+    playMessage.textContent = "";
     return;
   }
 
-  const baseClass =
-    result.reason === "highperformer_cap"
-      ? "reveal-banner reveal-banner--spotlight"
-      : result.wasCorrect
-        ? "reveal-banner reveal-banner--positive"
-        : "reveal-banner reveal-banner--negative";
+  const icon = result.wasCorrect
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-9"></path></svg>'
+    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
 
-  const guessLabel = result.guess ? result.guess : "keine Antwort";
-  revealBanner.className = baseClass;
-  revealBanner.textContent = `${result.playerName} tippte ${guessLabel}. ${result.message}`;
+  revealTag.classList.add(result.wasCorrect ? "is-hit" : "is-miss");
+  revealTag.innerHTML = `${icon}${result.wasCorrect ? "Richtig" : "Daneben"}`;
+  rightCard.classList.add(result.wasCorrect ? "is-hit" : "is-miss");
+  playMessage.textContent = result.message;
 }
 
-function renderStatus(state: PublicGameState): void {
-  phaseValue.textContent = titleCasePhase(state.phase);
-  roundValue.textContent = `${state.roundNumber} / ${state.maxRounds}`;
-  activePlayerValue.textContent = state.activePlayerName ?? "Warten";
-  streakValue.textContent = `${state.currentTurnStreak} / ${state.streakCap}`;
+function renderQuestion(state: PublicGameState): void {
+  const question = state.activeQuestion;
+  if (!question) {
+    leftLabel.textContent = "Noch keine Karte";
+    leftValue.textContent = "-";
+    rightLabel.textContent = "Die naechste Karte kommt gleich";
+    rightValue.textContent = "???";
+    lastRevealAnimationKey = "";
+    return;
+  }
 
-  if (state.phase === "lobby") {
-    statusBanner.textContent = "Lobby offen. Namen eintragen und starten, wenn alle bereit sind.";
-  } else if (state.phase === "round_active") {
-    statusBanner.textContent = `Richtige Antwort? Dann bleibt die rechte Karte stehen und die naechste Karte fordert sie heraus.`;
-  } else if (state.phase === "reveal") {
-    statusBanner.textContent = state.revealResult?.roundEnded
-      ? "Die Runde wird gleich abgeschlossen."
-      : "Richtig geraten. Die naechste Karte kommt sofort.";
-  } else if (state.phase === "leaderboard") {
-    statusBanner.textContent = "Leaderboard sichtbar. Jede Person kann die naechste Runde starten.";
+  leftLabel.textContent = question.leftLabel;
+  leftValue.textContent = `${question.leftValue}`;
+  rightLabel.textContent = question.rightLabel;
+
+  if (question.rightValue === null) {
+    rightValue.textContent = "???";
+    rightValue.classList.remove("pop");
+    lastRevealAnimationKey = "";
+    return;
+  }
+
+  const nextRevealKey = `${state.roundNumber}:${question.leftLabel}:${question.rightLabel}:${question.rightValue}:${state.revealResult?.reason ?? ""}`;
+  if (lastRevealAnimationKey !== nextRevealKey) {
+    rightValue.classList.add("pop");
+    countUp(rightValue, question.rightValue);
+    lastRevealAnimationKey = nextRevealKey;
   } else {
-    statusBanner.textContent = "Fuenf Runden gespielt. Das Finale ist entschieden.";
+    rightValue.textContent = `${question.rightValue}`;
   }
 }
 
-function renderOwnership(state: PublicGameState): void {
-  const isActivePlayer = Boolean(latestName) && state.activePlayerName === latestName;
-  if (state.phase === "round_active" && state.activePlayerName) {
-    ownershipBanner.textContent = isActivePlayer
-      ? `Du bist dran. Nur du kannst in diesem Zeitfenster antworten.`
-      : `Nur ${state.activePlayerName} kann jetzt antworten. Fuer alle anderen bleiben die Buttons gesperrt.`;
+function renderTurnBanner(state: PublicGameState): void {
+  const isActivePlayer = latestName.length > 0 && state.activePlayerName === latestName;
+  turnBanner.classList.toggle("spectator", !isActivePlayer);
+
+  if (state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap") {
+    turnBanner.innerHTML = '<span class="who">Du Highperformer - lass auch mal andere ran!</span>';
     return;
   }
 
-  if (state.phase === "leaderboard") {
-    ownershipBanner.textContent = "Die Runde ist vorbei. Von hier aus startet die Gruppe die naechste Runde.";
+  if (!state.activePlayerName) {
+    turnBanner.innerHTML = "<span>Die Runde startet.</span>";
+    return;
+  }
+
+  if (state.phase === "round_active") {
+    turnBanner.innerHTML = isActivePlayer
+      ? `<span>Du bist am Zug — <span class="who">${escapeHtml(state.activePlayerName)}</span></span>`
+      : `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> ist am Zug · Zuschauermodus</span>`;
+    return;
+  }
+
+  turnBanner.innerHTML = state.revealResult?.roundEnded
+    ? `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> beendet diese Runde.</span>`
+    : `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> bleibt dran.</span>`;
+}
+
+function renderStatusCopy(state: PublicGameState): void {
+  if (state.phase === "lobby") {
+    statusBanner.textContent = "Lobby offen. Erst beitreten, dann starten.";
+    ownershipBanner.textContent = "Noch niemand ist am Zug.";
+    return;
+  }
+
+  if (state.phase === "round_active") {
+    statusBanner.textContent = "Wenn die Antwort richtig ist, bleibt die rechte Karte stehen und die naechste Karte fordert sie direkt heraus.";
+    ownershipBanner.textContent =
+      latestName.length > 0 && state.activePlayerName === latestName
+        ? "Nur du kannst jetzt klicken. Alle anderen sehen dieselbe Live-Challenge."
+        : `Nur ${state.activePlayerName} kann jetzt antworten. Fuer alle anderen bleiben die Buttons gesperrt.`;
     return;
   }
 
   if (state.phase === "reveal") {
+    statusBanner.textContent = state.revealResult?.roundEnded
+      ? "Die Runde wird automatisch abgeschlossen."
+      : "Richtig geraten. Die naechste Karte wird automatisch geladen.";
     ownershipBanner.textContent = state.revealResult?.roundEnded
-      ? "Diese Runde endet jetzt."
-      : "Die gleiche Person bleibt dran, weil die Antwort richtig war.";
+      ? "Der Zug geht danach an die Gruppe fuer das Leaderboard."
+      : "Die gleiche Person bleibt an der Reihe.";
     return;
   }
 
-  ownershipBanner.textContent = "Noch niemand ist dran.";
+  if (state.phase === "leaderboard") {
+    interimCopy.textContent = "Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die naechste Runde.";
+    return;
+  }
 }
 
 function renderControls(state: PublicGameState): void {
-  const isActivePlayer = Boolean(latestName) && state.activePlayerName === latestName;
-  const isLobby = state.phase === "lobby";
-  const canLateJoin = state.phase !== "lobby" && state.phase !== "final";
-  const canGuess = state.phase === "round_active" && isActivePlayer;
-
-  joinButton.disabled = !isLobby;
-  lateJoinButton.disabled = !canLateJoin;
+  const isActivePlayer = latestName.length > 0 && state.activePlayerName === latestName;
+  joinButton.disabled = state.phase !== "lobby";
   startButton.disabled = !state.canStart;
-  guessHigherButton.disabled = !canGuess;
-  guessLowerButton.disabled = !canGuess;
+  guessHigherButton.disabled = !(state.phase === "round_active" && isActivePlayer);
+  guessLowerButton.disabled = !(state.phase === "round_active" && isActivePlayer);
   continueButton.disabled = state.phase !== "leaderboard";
   restartButton.disabled = state.phase === "lobby";
+  lateTrigger.disabled = !(state.phase === "round_active" || state.phase === "reveal" || state.phase === "leaderboard");
+}
+
+function resizeConfettiCanvas(): void {
+  const ratio = window.devicePixelRatio || 1;
+  confettiCanvas.width = window.innerWidth * ratio;
+  confettiCanvas.height = window.innerHeight * ratio;
+  confettiCanvas.style.width = `${window.innerWidth}px`;
+  confettiCanvas.style.height = `${window.innerHeight}px`;
+  confettiContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+}
+
+function burstConfetti(count: number, x: number, y: number, spread = 1): void {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
+  const colors = ["#ff5f50", "#ffb199", "#ffffff", "#ffd166", "#a8d7f7"];
+  for (let index = 0; index < count; index += 1) {
+    confettiPieces.push({
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 12 * spread,
+      vy: (Math.random() * -1 - 4) * spread,
+      g: 0.25,
+      size: 4 + Math.random() * 6,
+      rot: Math.random() * Math.PI * 2,
+      vr: (Math.random() - 0.5) * 0.3,
+      color: colors[Math.floor(Math.random() * colors.length)]!,
+      life: 120 + Math.random() * 80
+    });
+  }
+
+  if (confettiFrame === null) {
+    tickConfetti();
+  }
+}
+
+function tickConfetti(): void {
+  confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+  confettiPieces.forEach((piece) => {
+    piece.vy += piece.g;
+    piece.x += piece.vx;
+    piece.y += piece.vy;
+    piece.rot += piece.vr;
+    piece.life -= 1;
+
+    confettiContext.save();
+    confettiContext.translate(piece.x, piece.y);
+    confettiContext.rotate(piece.rot);
+    confettiContext.fillStyle = piece.color;
+    confettiContext.globalAlpha = Math.max(0, Math.min(1, piece.life / 40));
+    confettiContext.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size * 0.4);
+    confettiContext.restore();
+  });
+
+  confettiPieces = confettiPieces.filter((piece) => piece.life > 0 && piece.y < window.innerHeight + 40);
+  if (confettiPieces.length > 0) {
+    confettiFrame = window.requestAnimationFrame(tickConfetti);
+  } else {
+    confettiFrame = null;
+    confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  }
+}
+
+function maybeCelebrate(state: PublicGameState): void {
+  const revealKey = `${state.roundNumber}:${state.revealResult?.reason ?? ""}:${state.revealResult?.playerName ?? ""}:${state.updatedAt}`;
+  if (state.revealResult?.wasCorrect && state.revealResult.reason !== "wrong") {
+    const rect = rightCard.getBoundingClientRect();
+    if (rect.width > 0) {
+      burstConfetti(34, rect.left + rect.width / 2, rect.top + 80, 0.75);
+    }
+  }
+
+  const finalKey = `${state.phase}:${state.updatedAt}`;
+  if (state.phase === "final" && lastFinalCelebrationKey !== finalKey) {
+    lastFinalCelebrationKey = finalKey;
+    burstConfetti(120, window.innerWidth * 0.3, window.innerHeight * 0.3, 1.2);
+    window.setTimeout(() => burstConfetti(120, window.innerWidth * 0.7, window.innerHeight * 0.3, 1.2), 160);
+    window.setTimeout(() => burstConfetti(120, window.innerWidth * 0.5, window.innerHeight * 0.25, 1.4), 340);
+  }
+
+  if (state.revealResult?.reason === "highperformer_cap" && lastFinalCelebrationKey !== revealKey) {
+    lastFinalCelebrationKey = revealKey;
+    const rect = rightCard.getBoundingClientRect();
+    burstConfetti(90, rect.left + rect.width / 2, rect.top + rect.height / 2, 1.1);
+  }
+}
+
+function openDrawer(): void {
+  lateDrawer.classList.add("is-open");
+  backdrop.classList.add("is-open");
+  lateDrawer.setAttribute("aria-hidden", "false");
+  lateTrigger.setAttribute("aria-expanded", "true");
+  window.setTimeout(() => lateNameInput.focus(), 120);
+}
+
+function closeDrawer(): void {
+  lateDrawer.classList.remove("is-open");
+  backdrop.classList.remove("is-open");
+  lateDrawer.setAttribute("aria-hidden", "true");
+  lateTrigger.setAttribute("aria-expanded", "false");
+}
+
+function applyTiltEffects(): void {
+  document.querySelectorAll<HTMLElement>(".q-card").forEach((card) => {
+    card.addEventListener("mousemove", (event) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+      const bounds = card.getBoundingClientRect();
+      const px = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const py = (event.clientY - bounds.top) / bounds.height - 0.5;
+      card.style.transform = `translateY(-2px) rotateX(${-py * 3}deg) rotateY(${px * 3}deg)`;
+    });
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+function splitHeroText(): void {
+  document.querySelectorAll<HTMLElement>("[data-split]").forEach((element) => {
+    const walk = (node: ChildNode): void => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const fragment = document.createDocumentFragment();
+        [...(node.textContent ?? "")].forEach((character, index) => {
+          if (character === " ") {
+            fragment.appendChild(document.createTextNode(" "));
+            return;
+          }
+          const span = document.createElement("span");
+          span.className = "char";
+          span.textContent = character;
+          span.style.animationDelay = `${index * 35}ms`;
+          fragment.appendChild(span);
+        });
+        node.parentNode?.replaceChild(fragment, node);
+        return;
+      }
+      [...node.childNodes].forEach(walk);
+    };
+    [...element.childNodes].forEach(walk);
+  });
 }
 
 function renderState(state: PublicGameState): void {
   currentState = state;
-  renderStatus(state);
-  renderOwnership(state);
+  const nextScreen = currentScreenForState(state);
+  switchScreen(nextScreen);
+
+  phaseChip.textContent = titleCasePhase(state.phase);
+  roundIndicator.textContent = `Runde ${state.roundNumber} von ${state.maxRounds}`;
+  playRoundText.textContent = `${state.roundNumber} / ${state.maxRounds}`;
+  activePlayerText.textContent = state.activePlayerName ?? "-";
+  streakValue.textContent = `${state.currentTurnStreak} / ${state.streakCap}`;
+
+  renderLobbyPlayers(state.players);
+  renderMiniLeaderboard(playLeaderboard, state.phase === "final" ? state.finalRanking : state.leaderboard, "Scores erscheinen nach der ersten Runde.");
+  renderPending(pendingList, state.pendingLateJoiners);
   renderQuestion(state);
   renderReveal(state.revealResult);
-  renderPlayerList(playersList, state.players, "Noch keine Namen in der Lobby.");
-  renderPlayerList(pendingList, state.pendingLateJoiners, "Niemand wartet auf die naechste Runde.");
-  renderLeaderboard(state.phase === "final" ? state.finalRanking : state.leaderboard);
+  renderTurnBanner(state);
+  renderStatusCopy(state);
   renderControls(state);
+  updateRoundDots(state);
   restartCountdown(state);
-}
 
-function rememberName(): string | null {
-  const value = firstNameInput.value.trim();
-  if (!value) {
-    setMessage("Bitte zuerst einen Vornamen eintragen.");
-    return null;
+  lobbyHelper.textContent = state.canStart
+    ? `${state.players.length} Person${state.players.length === 1 ? "" : "en"} bereit.`
+    : "Mindestens eine Person muss beitreten, bevor das Spiel starten kann.";
+
+  interimRound.textContent = `${state.roundNumber}`;
+  renderFullRanking(interimList, state.leaderboard);
+  renderFullRanking(finalList, state.finalRanking.length > 0 ? state.finalRanking : state.leaderboard);
+
+  const winner = (state.finalRanking.length > 0 ? state.finalRanking : state.leaderboard)[0];
+  if (winner) {
+    winnerAvatar.textContent = initials(winner.name);
+    winnerName.textContent = winner.name;
+    winnerScore.textContent = `${winner.score}`;
+  } else {
+    winnerAvatar.textContent = "-";
+    winnerName.textContent = "Niemand";
+    winnerScore.textContent = "0";
   }
 
+  statPlayers.textContent = `${state.players.length}`;
+  statTotal.textContent = `${state.players.reduce((sum, player) => sum + player.score, 0)}`;
+  statUsed.textContent = `${new Set(state.usedQuestionIds).size}`;
+
+  maybeCelebrate(state);
+}
+
+function rememberName(input: HTMLInputElement): string | null {
+  const value = input.value.trim();
+  if (!value) {
+    setToast("Bitte zuerst einen Vornamen eintragen.");
+    return null;
+  }
   latestName = value;
   window.localStorage.setItem(playerNameKey, value);
   return value;
@@ -301,80 +643,128 @@ function rememberName(): string | null {
 
 joinForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const name = rememberName();
-  if (!name) {
-    return;
+  const name = rememberName(firstNameInput);
+  if (name) {
+    socket.emit("join_game", { firstName: name });
   }
-  socket.emit("join_game", { firstName: name });
 });
+
+startButton.addEventListener("click", () => {
+  socket.emit("start_game");
+});
+
+guessHigherButton.addEventListener("click", () => {
+  guessHigherButton.classList.add("is-pressed");
+  window.setTimeout(() => guessHigherButton.classList.remove("is-pressed"), 220);
+  socket.emit("submit_guess", { guess: "higher" });
+});
+
+guessLowerButton.addEventListener("click", () => {
+  guessLowerButton.classList.add("is-pressed");
+  window.setTimeout(() => guessLowerButton.classList.remove("is-pressed"), 220);
+  socket.emit("submit_guess", { guess: "lower" });
+});
+
+continueButton.addEventListener("click", () => {
+  socket.emit("continue_to_next_round");
+});
+
+restartButton.addEventListener("click", () => socket.emit("restart_game"));
+newGameButton.addEventListener("click", () => socket.emit("restart_game"));
+
+lateTrigger.addEventListener("click", openDrawer);
+drawerClose.addEventListener("click", closeDrawer);
+backdrop.addEventListener("click", closeDrawer);
 
 lateJoinButton.addEventListener("click", () => {
-  const name = rememberName();
-  if (!name) {
-    return;
+  const name = rememberName(lateNameInput);
+  if (name) {
+    socket.emit("add_late_player", { firstName: name });
+    lateNameInput.value = "";
+    closeDrawer();
   }
-  socket.emit("add_late_player", { firstName: name });
 });
 
-startButton.addEventListener("click", () => socket.emit("start_game"));
-guessHigherButton.addEventListener("click", () => socket.emit("submit_guess", { guess: "higher" }));
-guessLowerButton.addEventListener("click", () => socket.emit("submit_guess", { guess: "lower" }));
-continueButton.addEventListener("click", () => socket.emit("continue_to_next_round"));
-restartButton.addEventListener("click", () => socket.emit("restart_game"));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && lateDrawer.classList.contains("is-open")) {
+    closeDrawer();
+  }
+
+  if (!currentState || currentScreenForState(currentState) !== "play") {
+    return;
+  }
+  if (document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+    return;
+  }
+  if (event.key === "ArrowUp" || event.key.toLowerCase() === "h") {
+    event.preventDefault();
+    guessHigherButton.click();
+  }
+  if (event.key === "ArrowDown" || event.key.toLowerCase() === "n") {
+    event.preventDefault();
+    guessLowerButton.click();
+  }
+});
 
 socket.on("connect", () => {
-  connectionPill.textContent = "Live";
+  setConnectionState(true);
 });
 
 socket.on("disconnect", () => {
-  connectionPill.textContent = "Offline";
+  setConnectionState(false);
 });
 
 socket.on("state_synced", ({ state }: StateEnvelope) => {
-  connectionPill.textContent = "Live";
+  setConnectionState(true);
   renderState(state);
 });
 
-socket.on("player_joined", ({ player }) => {
-  setMessage(`${player.name} ist der Lobby beigetreten.`);
+socket.on("player_joined", ({ player }: { player: PlayerView }) => {
+  setToast(`${player.name} ist der Lobby beigetreten.`);
 });
 
-socket.on("player_added_late", ({ player }) => {
-  setMessage(`${player.name} wird ab der naechsten Runde mitspielen.`);
+socket.on("player_added_late", ({ player }: { player: PlayerView }) => {
+  setToast(`${player.name} steigt ab der naechsten Runde ein.`);
 });
 
-socket.on("game_started", ({ state }) => {
+socket.on("game_started", ({ state }: StateEnvelope) => {
   renderState(state);
-  setMessage(`Runde ${state.roundNumber} gestartet.`);
+  setToast(`Runde ${state.roundNumber} gestartet.`);
 });
 
-socket.on("round_started", ({ state }) => {
+socket.on("round_started", ({ state }: StateEnvelope) => {
   renderState(state);
   if (state.currentTurnStreak > 0) {
-    setMessage(`Richtig. ${state.activePlayerName} bleibt dran.`);
+    setToast(`${state.activePlayerName} bleibt dran.`);
   } else {
-    setMessage(`Runde ${state.roundNumber} gestartet.`);
+    setToast(`Runde ${state.roundNumber} gestartet.`);
   }
 });
 
-socket.on("guess_accepted", ({ playerName }) => {
-  setMessage(`${playerName} hat eine Antwort abgegeben.`);
+socket.on("guess_accepted", ({ playerName }: { playerName: string }) => {
+  setToast(`${playerName} hat eine Antwort abgegeben.`);
 });
 
-socket.on("answer_revealed", ({ state }) => {
+socket.on("answer_revealed", ({ state }: StateEnvelope) => {
   renderState(state);
 });
 
-socket.on("leaderboard_shown", ({ state }) => {
+socket.on("leaderboard_shown", ({ state }: StateEnvelope) => {
   renderState(state);
-  setMessage("Leaderboard aktualisiert.");
+  setToast("Zwischenstand aktualisiert.");
 });
 
-socket.on("game_finished", ({ state }) => {
+socket.on("game_finished", ({ state }: StateEnvelope) => {
   renderState(state);
-  setMessage("Spiel beendet.");
+  setToast("Spiel beendet.");
 });
 
 socket.on("error_event", ({ message }: ErrorEventPayload) => {
-  setMessage(message);
+  setToast(message);
 });
+
+resizeConfettiCanvas();
+window.addEventListener("resize", resizeConfettiCanvas);
+splitHeroText();
+applyTiltEffects();
+setConnectionState(false);
