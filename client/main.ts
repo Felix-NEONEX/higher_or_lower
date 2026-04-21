@@ -119,19 +119,19 @@ let confettiPieces: Array<{
 let confettiFrame: number | null = null;
 
 const lobbyAvatarSlots = [
-  { x: 50, y: 8, scale: 1, z: 12 },
-  { x: 34, y: 16, scale: 0.94, z: 11 },
-  { x: 66, y: 16, scale: 0.94, z: 11 },
-  { x: 22, y: 28, scale: 0.88, z: 10 },
-  { x: 50, y: 26, scale: 0.92, z: 12 },
-  { x: 78, y: 28, scale: 0.88, z: 10 },
-  { x: 16, y: 42, scale: 0.8, z: 9 },
-  { x: 36, y: 40, scale: 0.84, z: 10 },
-  { x: 64, y: 40, scale: 0.84, z: 10 },
-  { x: 84, y: 42, scale: 0.8, z: 9 },
-  { x: 24, y: 56, scale: 0.74, z: 8 },
-  { x: 50, y: 54, scale: 0.78, z: 9 },
-  { x: 76, y: 56, scale: 0.74, z: 8 }
+  { x: 14, y: 38, scale: 0.7, z: 7 },
+  { x: 24, y: 31, scale: 0.76, z: 8 },
+  { x: 34, y: 25, scale: 0.84, z: 9 },
+  { x: 44, y: 21, scale: 0.92, z: 10 },
+  { x: 56, y: 21, scale: 0.92, z: 10 },
+  { x: 66, y: 25, scale: 0.84, z: 9 },
+  { x: 76, y: 31, scale: 0.76, z: 8 },
+  { x: 86, y: 38, scale: 0.7, z: 7 },
+  { x: 30, y: 42, scale: 0.68, z: 6 },
+  { x: 50, y: 36, scale: 0.8, z: 8 },
+  { x: 70, y: 42, scale: 0.68, z: 6 },
+  { x: 20, y: 47, scale: 0.62, z: 5 },
+  { x: 80, y: 47, scale: 0.62, z: 5 }
 ] as const;
 
 function escapeHtml(value: string): string {
@@ -318,6 +318,7 @@ function renderLobbyScene(players: PlayerView[]): void {
     avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
     avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);
     avatar.style.setProperty("--avatar-hue", `${(index * 39) % 360}deg`);
+    avatar.style.setProperty("--avatar-tilt", `${(slot.x - 50) / 5}deg`);
     avatar.innerHTML = `
       <span class="lobby-avatar__shadow"></span>
       <span class="lobby-avatar__figure">
