@@ -119,19 +119,19 @@ let confettiPieces: Array<{
 let confettiFrame: number | null = null;
 
 const lobbyAvatarSlots = [
-  { x: 14, y: 38, scale: 0.7, z: 7 },
-  { x: 24, y: 31, scale: 0.76, z: 8 },
-  { x: 34, y: 25, scale: 0.84, z: 9 },
-  { x: 44, y: 21, scale: 0.92, z: 10 },
-  { x: 56, y: 21, scale: 0.92, z: 10 },
-  { x: 66, y: 25, scale: 0.84, z: 9 },
-  { x: 76, y: 31, scale: 0.76, z: 8 },
-  { x: 86, y: 38, scale: 0.7, z: 7 },
-  { x: 30, y: 42, scale: 0.68, z: 6 },
-  { x: 50, y: 36, scale: 0.8, z: 8 },
-  { x: 70, y: 42, scale: 0.68, z: 6 },
-  { x: 20, y: 47, scale: 0.62, z: 5 },
-  { x: 80, y: 47, scale: 0.62, z: 5 }
+  { x: 12, lift: 6, scale: 0.76, z: 6 },
+  { x: 22, lift: 12, scale: 0.82, z: 7 },
+  { x: 32, lift: 18, scale: 0.88, z: 8 },
+  { x: 42, lift: 22, scale: 0.94, z: 9 },
+  { x: 50, lift: 24, scale: 1, z: 10 },
+  { x: 58, lift: 22, scale: 0.94, z: 9 },
+  { x: 68, lift: 18, scale: 0.88, z: 8 },
+  { x: 78, lift: 12, scale: 0.82, z: 7 },
+  { x: 88, lift: 6, scale: 0.76, z: 6 },
+  { x: 27, lift: 8, scale: 0.72, z: 6 },
+  { x: 73, lift: 8, scale: 0.72, z: 6 },
+  { x: 38, lift: 5, scale: 0.68, z: 5 },
+  { x: 62, lift: 5, scale: 0.68, z: 5 }
 ] as const;
 
 function escapeHtml(value: string): string {
@@ -313,12 +313,12 @@ function renderLobbyScene(players: PlayerView[]): void {
     const avatar = document.createElement("div");
     avatar.className = "lobby-avatar";
     avatar.style.left = `${slot.x}%`;
-    avatar.style.top = `${slot.y}%`;
+    avatar.style.bottom = `${slot.lift}px`;
     avatar.style.zIndex = `${slot.z}`;
     avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
     avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);
     avatar.style.setProperty("--avatar-hue", `${(index * 39) % 360}deg`);
-    avatar.style.setProperty("--avatar-tilt", `${(slot.x - 50) / 5}deg`);
+    avatar.style.setProperty("--avatar-tilt", `${(slot.x - 50) / 8}deg`);
     avatar.innerHTML = `
       <span class="lobby-avatar__shadow"></span>
       <span class="lobby-avatar__figure">

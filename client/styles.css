@@ -412,7 +412,6 @@ button:disabled {
   min-height: 280px;
   position: relative;
   overflow: hidden;
-  perspective: 1200px;
 }
 
 .hero__scene {
@@ -459,25 +458,47 @@ button:disabled {
 .hero__glow {
   position: absolute;
   left: 50%;
-  bottom: 118px;
-  width: 300px;
-  height: 140px;
+  bottom: 112px;
+  width: 340px;
+  height: 120px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 95, 80, 0.24), rgba(255, 95, 80, 0.06) 44%, transparent 74%);
-  filter: blur(18px);
+  background: radial-gradient(circle, rgba(255, 95, 80, 0.18), rgba(255, 95, 80, 0.04) 46%, transparent 74%);
+  filter: blur(20px);
   z-index: 1;
+}
+
+.hero__horizon {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 92px;
+  height: 96px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.hero__horizon-line {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 0;
+  height: 28px;
+  border-top: 2px solid rgba(255, 255, 255, 0.34);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow:
+    0 -8px 18px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .hero__planet {
   position: absolute;
   left: 50%;
-  bottom: -56%;
-  width: 128%;
+  bottom: -44%;
+  width: 126%;
   max-width: 620px;
   aspect-ratio: 1 / 1;
-  transform: translateX(-50%) rotateX(69deg) rotateZ(-6deg);
-  transform-style: preserve-3d;
+  transform: translateX(-50%);
   z-index: 2;
 }
 
@@ -486,13 +507,13 @@ button:disabled {
   inset: 0;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.26), transparent 14%),
-    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.06), transparent 34%),
-    linear-gradient(180deg, #6cc3ff 0%, #287fca 32%, #0f4f88 58%, #062b53 100%);
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35), transparent 18%),
+    radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.12), transparent 28%),
+    linear-gradient(180deg, #85c9ff 0%, #3b8cdd 30%, #165e9f 58%, #0b3b6d 78%, #07284f 100%);
   box-shadow:
-    inset 0 34px 72px rgba(255, 255, 255, 0.12),
-    inset 0 -60px 100px rgba(0, 0, 0, 0.34),
-    0 32px 90px rgba(0, 0, 0, 0.34);
+    inset 0 28px 50px rgba(255, 255, 255, 0.18),
+    inset 0 -80px 140px rgba(0, 0, 0, 0.32),
+    0 36px 90px rgba(0, 0, 0, 0.24);
 }
 
 .hero__planet-core::before,
@@ -504,12 +525,12 @@ button:disabled {
 }
 
 .hero__planet-core::before {
-  inset: 8%;
+  inset: 10%;
   background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 28px),
-    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 24px);
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 26px),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 22px);
   border-radius: 50%;
-  opacity: 0.18;
+  opacity: 0.14;
   mix-blend-mode: screen;
 }
 
@@ -517,58 +538,55 @@ button:disabled {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 14%, transparent 0 42%, rgba(0, 0, 0, 0.28) 72%, rgba(0, 0, 0, 0.74) 100%);
-  opacity: 0.8;
+    radial-gradient(circle at 50% -18%, transparent 0 56%, rgba(0, 0, 0, 0.2) 77%, rgba(0, 0, 0, 0.58) 100%);
+  opacity: 0.78;
 }
 
 .hero__planet-ring {
   position: absolute;
   left: 50%;
   border-radius: 50%;
-  transform: translateX(-50%) translateZ(10px);
+  transform: translateX(-50%);
   pointer-events: none;
 }
 
 .hero__planet-ring--a {
-  top: 18%;
-  width: 86%;
-  height: 18%;
-  border-top: 2px solid rgba(255, 255, 255, 0.34);
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
-  opacity: 0.94;
+  top: 8%;
+  width: 82%;
+  height: 11%;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  opacity: 0.65;
 }
 
 .hero__planet-ring--b {
-  top: 24%;
-  width: 108%;
-  height: 24%;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  opacity: 0.72;
+  top: 14%;
+  width: 102%;
+  height: 16%;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0.5;
 }
 
 .hero__avatars {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
 }
 
 .hero__floor {
   position: absolute;
   left: 50%;
-  bottom: 18px;
-  width: 72%;
-  height: 24px;
+  bottom: 10px;
+  width: 76%;
+  height: 20px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 70%);
+  filter: blur(12px);
   z-index: 1;
 }
 
 .lobby-avatar {
   position: absolute;
-  transform: translate(-50%, -50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+  transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   transform-origin: center bottom;
   animation:
     lobby-avatar-pop 500ms cubic-bezier(0.2, 0.8, 0.2, 1) both,
@@ -580,13 +598,13 @@ button:disabled {
 .lobby-avatar__shadow {
   position: absolute;
   left: 50%;
-  bottom: -4px;
-  width: 32px;
-  height: 12px;
+  bottom: 2px;
+  width: 28px;
+  height: 8px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.22);
-  filter: blur(2px);
+  background: rgba(0, 0, 0, 0.18);
+  filter: blur(1.5px);
   animation: lobby-shadow-bob 3.2s ease-in-out infinite;
   animation-delay: calc(var(--avatar-delay) + 0.42s);
 }
@@ -594,10 +612,9 @@ button:disabled {
 .lobby-avatar__figure {
   position: relative;
   display: block;
-  width: 38px;
-  height: 58px;
+  width: 34px;
+  height: 52px;
   filter: hue-rotate(var(--avatar-hue));
-  transform-style: preserve-3d;
   animation: lobby-figure-wobble 860ms ease-in-out infinite alternate;
 }
 
@@ -612,31 +629,29 @@ button:disabled {
 .lobby-avatar__head {
   left: 50%;
   top: 0;
-  width: 18px;
-  height: 18px;
-  margin-left: -9px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
   border-radius: 50%;
-  background: linear-gradient(180deg, #ffffff, #d9ecff 76%, #98c3eb);
+  background: linear-gradient(180deg, #ffffff, #d9ecff 76%, #9bc7ee);
   box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.12);
-  transform: translateZ(10px);
 }
 
 .lobby-avatar__torso {
   left: 50%;
-  top: 17px;
-  width: 20px;
-  height: 20px;
-  margin-left: -10px;
+  top: 15px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
   border-radius: 8px 8px 6px 6px;
   background: linear-gradient(180deg, #ffd8d2, #ff7a6c 26%, #ff5f50 72%, #c84235);
   box-shadow: inset -4px 0 6px rgba(0, 0, 0, 0.14);
-  transform: translateZ(8px);
 }
 
 .lobby-avatar__arm {
-  top: 20px;
-  width: 7px;
-  height: 20px;
+  top: 18px;
+  width: 6px;
+  height: 18px;
   border-radius: 999px;
   background: linear-gradient(180deg, #f6fbff, #98c3eb);
   transform-origin: top center;
@@ -654,9 +669,9 @@ button:disabled {
 }
 
 .lobby-avatar__leg {
-  top: 34px;
-  width: 8px;
-  height: 20px;
+  top: 30px;
+  width: 7px;
+  height: 18px;
   border-radius: 999px;
   background: linear-gradient(180deg, #ffffff, #9fd1f3 76%, #5e96c2);
   transform-origin: top center;
@@ -676,21 +691,21 @@ button:disabled {
 @keyframes lobby-avatar-pop {
   from {
     opacity: 0;
-    transform: translate(-50%, -40%) scale(calc(var(--avatar-scale) * 0.72)) rotateZ(var(--avatar-tilt));
+    transform: translateX(-50%) translateY(10px) scale(calc(var(--avatar-scale) * 0.72)) rotateZ(var(--avatar-tilt));
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+    transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   }
 }
 
 @keyframes lobby-avatar-bob {
   0%,
   100% {
-    transform: translate(-50%, -50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
+    transform: translateX(-50%) scale(var(--avatar-scale)) rotateZ(var(--avatar-tilt));
   }
   50% {
-    transform: translate(calc(-50% + 2px), calc(-50% - 5px)) scale(var(--avatar-scale)) rotateZ(calc(var(--avatar-tilt) + 1deg));
+    transform: translateX(calc(-50% + 1px)) translateY(-3px) scale(var(--avatar-scale)) rotateZ(calc(var(--avatar-tilt) + 1deg));
   }
 }
 
