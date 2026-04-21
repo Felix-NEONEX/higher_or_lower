@@ -1,0 +1,32 @@
+{
+  "name": "higher-or-lower-neonex-edition",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "node --import tsx server/index.ts",
+    "build": "rm -rf dist && npm run build:server && npm run build:client && npm run copy:static",
+    "build:server": "tsc --project tsconfig.server.json",
+    "build:client": "esbuild client/main.ts --bundle --format=esm --minify --sourcemap --outfile=dist/public/assets/app.js",
+    "copy:static": "mkdir -p dist/public/assets && cp client/index.html dist/public/index.html && cp client/styles.css dist/public/assets/styles.css && cp -R client/assets/. dist/public/assets/",
+    "start": "node dist/server/server/index.js",
+    "typecheck": "tsc --project tsconfig.server.json --noEmit",
+    "verify": "node --import tsx scripts/smoke-test.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.7.2",
+    "esbuild": "^0.25.11",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
