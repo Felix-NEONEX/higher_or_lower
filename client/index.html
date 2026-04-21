@@ -10,6 +10,13 @@
     <div class="ambient-blob ambient-blob--a" aria-hidden="true"></div>
     <div class="ambient-blob ambient-blob--b" aria-hidden="true"></div>
     <canvas id="confetti" aria-hidden="true"></canvas>
+    <div id="turn-spotlight" class="turn-spotlight" aria-live="assertive" aria-atomic="true">
+      <div class="turn-spotlight__panel">
+        <span class="turn-spotlight__eyebrow">Jetzt dran</span>
+        <strong id="turn-spotlight-name">Felix</strong>
+        <p id="turn-spotlight-copy">Nur Felix kann jetzt antworten.</p>
+      </div>
+    </div>
 
     <div class="app">
       <header class="topbar" role="banner">
@@ -37,12 +44,13 @@
                   <span class="hero-line">Lower</span>
                 </h1>
                 <p class="subline">
-                  Fünf Runden. Eine aktive Person pro Runde. Bei richtiger Antwort bleibt die rechte Karte stehen und die nächste Karte fordert direkt die nächste Schätzung heraus.
+                  Fünf Runden. Eine Runde endet erst, wenn jede aktive Person einmal dran war. Gewonnen hat am Ende, wer über alle Runden die meisten Punkte gesammelt hat.
                 </p>
                 <div class="hero-badges" role="list">
                   <span class="hero-badge" role="listitem">5 Runden</span>
+                  <span class="hero-badge" role="listitem">Alle kommen pro Runde einmal dran</span>
                   <span class="hero-badge" role="listitem">15 Sekunden pro Challenge</span>
-                  <span class="hero-badge" role="listitem">Shared Live State</span>
+                  <span class="hero-badge" role="listitem">Gesamtsieger nach Punkten</span>
                 </div>
               </div>
               <div class="hero__visual">
@@ -94,8 +102,8 @@
                 <span class="round-dots" id="round-dots" aria-hidden="true"></span>
               </div>
               <div class="playbar__group playbar__group--center">
-                <span class="playbar__label">Am Zug</span>
-                <span class="playbar__value" id="active-player-text">-</span>
+                <span class="playbar__label">Zug in Runde</span>
+                <span class="playbar__value" id="turn-progress-text">1 / 4</span>
               </div>
               <div class="playbar__group playbar__group--right">
                 <span class="playbar__label">Streak</span>
@@ -175,7 +183,7 @@
             <div class="rank-head">
               <div class="eyebrow">Zwischenstand</div>
               <h2 id="interim-title">Nach Runde <em id="interim-round">1</em></h2>
-              <p id="interim-copy" class="rank-copy">Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die nächste Runde.</p>
+              <p id="interim-copy" class="rank-copy">Die Runde ist abgeschlossen. Alle aktiven Personen waren einmal dran. Die Wertung summiert alle Punkte über alle Runden.</p>
             </div>
             <ol id="interim-list" class="rank-list"></ol>
             <div class="rank-cta">
@@ -193,7 +201,7 @@
               <div class="halo" aria-hidden="true"></div>
               <div class="big-avatar" id="winner-avatar">W</div>
               <h2 id="finale-title"><span id="winner-name">Winner</span> gewinnt.</h2>
-              <p class="tag"><span id="winner-score">0</span> Punkte nach 5 Runden</p>
+              <p class="tag"><span id="winner-score">0</span> Punkte über alle <span id="played-rounds">5</span> Runden</p>
             </div>
             <div class="winner-stats">
               <div class="stat-tile">

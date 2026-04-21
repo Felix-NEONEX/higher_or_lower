@@ -83,6 +83,8 @@ async function verifyNetworkFlow(): Promise<void> {
   const started = await once<{ state: PublicGameState }>(alice, "game_started");
   assert.equal(started.state.phase, "round_active");
   assert.equal(started.state.roundNumber, 1);
+  assert.equal(started.state.roundTurnNumber, 1);
+  assert.equal(started.state.roundPlayerCount, 2);
   assert.equal(started.state.activePlayerName, "Alice");
 
   bob.emit("submit_guess", { guess: "higher" });
@@ -103,6 +105,7 @@ async function verifyNetworkFlow(): Promise<void> {
   const chained = await once<{ state: PublicGameState }>(alice, "round_started");
   assert.equal(chained.state.phase, "round_active");
   assert.equal(chained.state.roundNumber, 1);
+  assert.equal(chained.state.roundTurnNumber, 1);
   assert.equal(chained.state.activePlayerName, "Alice");
   assert.equal(chained.state.currentTurnStreak, 1);
   assert.equal(chained.state.activeQuestion?.leftLabel, previousRightLabel);
@@ -114,13 +117,29 @@ async function verifyNetworkFlow(): Promise<void> {
   assert.equal(wrongReveal.state.revealResult?.reason, "wrong");
   assert.equal(wrongReveal.state.revealResult?.roundEnded, true);
 
+  const nextTurn = await once<{ state: PublicGameState }>(alice, "round_started");
+  assert.equal(nextTurn.state.phase, "round_active");
+  assert.equal(nextTurn.state.roundNumber, 1);
+  assert.equal(nextTurn.state.roundTurnNumber, 2);
+  assert.equal(nextTurn.state.roundPlayerCount, 2);
+  assert.equal(nextTurn.state.activePlayerName, "Bob");
+  assert.equal(nextTurn.state.pendingLateJoiners[0]?.name, "Charlie");
+
+  bob.emit("submit_guess", { guess: currentCorrectGuess(runtime.session) === "higher" ? "lower" : "higher" });
+  const bobWrongReveal = await once<{ state: PublicGameState }>(alice, "answer_revealed");
+  assert.equal(bobWrongReveal.state.revealResult?.reason, "wrong");
+  assert.equal(bobWrongReveal.state.revealResult?.roundEnded, true);
+
   const leaderboard = await once<{ state: PublicGameState }>(alice, "leaderboard_shown");
   assert.equal(leaderboard.state.phase, "leaderboard");
+  assert.equal(leaderboard.state.roundNumber, 1);
 
   alice.emit("continue_to_next_round");
   const nextRound = await once<{ state: PublicGameState }>(alice, "round_started");
   assert.equal(nextRound.state.roundNumber, 2);
-  assert.equal(nextRound.state.activePlayerName, "Bob");
+  assert.equal(nextRound.state.roundTurnNumber, 1);
+  assert.equal(nextRound.state.roundPlayerCount, 3);
+  assert.equal(nextRound.state.activePlayerName, "Charlie");
   assert(nextRound.state.players.some((player) => player.name === "Charlie"));
   assert.equal(nextRound.state.pendingLateJoiners.length, 0);
 

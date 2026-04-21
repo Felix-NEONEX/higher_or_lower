@@ -53,6 +53,8 @@ export interface PublicGameState {
   phase: GamePhase;
   roundNumber: number;
   maxRounds: number;
+  roundTurnNumber: number;
+  roundPlayerCount: number;
   players: PlayerView[];
   pendingLateJoiners: PlayerView[];
   activePlayerName: string | null;

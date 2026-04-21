@@ -66,9 +66,11 @@ or GitHub-connected auto-deploys from `main`.
 - Duplicate first names are blocked.
 - Late joiners are queued and activated at the next round boundary.
 - Exactly five rounds run per game.
-- Each round belongs to one active player only.
+- One round means every active person gets exactly one turn before the leaderboard appears.
 - The active player has 15 seconds per challenge.
 - If the active player is correct, the revealed right card stays on the board and the next challenger card is loaded automatically.
+- If one player's turn ends and the round is not complete yet, the next player starts automatically in the same round.
+- The final winner is the person with the most points collected across all five rounds.
 - If the active player reaches 7 correct answers in a row during one turn, the turn stops immediately with `Du Highperformer - lass auch mal andere ran!`.
 - Questions are loaded from `data/higher_lower_top150.json` at boot and the service fails fast if the dataset is missing or invalid.
 - The current dataset has 80 entries, and extending the JSON later does not require code changes as long as the schema stays the same.

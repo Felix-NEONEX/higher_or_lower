@@ -30,6 +30,8 @@ interface SessionState {
   phase: PublicGameState["phase"];
   roundNumber: number;
   maxRounds: number;
+  roundTurnNumber: number;
+  roundPlayerCount: number;
   players: PlayerRecord[];
   pendingLateJoiners: PlayerRecord[];
   activePlayerIndex: number;
@@ -39,7 +41,7 @@ interface SessionState {
   activeRightCard: QuestionCard | null;
   usedQuestionIds: string[];
   revealResult: RevealResult | null;
-  revealNextAction: "next_challenge" | "leaderboard" | "final" | null;
+  revealNextAction: "next_challenge" | "next_turn" | "leaderboard" | "final" | null;
   startedAt: string | null;
   updatedAt: string;
   roundDeadlineAt: string | null;
@@ -118,6 +120,8 @@ export class GameSession {
       phase: "lobby",
       roundNumber: 0,
       maxRounds: this.options.maxRounds,
+      roundTurnNumber: 0,
+      roundPlayerCount: 0,
       players: [],
       pendingLateJoiners: [],
       activePlayerIndex: -1,
@@ -260,6 +264,42 @@ export class GameSession {
     this.state.pendingLateJoiners = [];
   }
 
+  private canStartFreshTurn(): boolean {
+    return this.state.questionCursor + 2 <= this.state.questionDeck.length;
+  }
+
+  private nextActivePlayerIndex(): number {
+    if (this.state.players.length === 0) {
+      return -1;
+    }
+
+    if (this.state.activePlayerIndex < 0) {
+      return 0;
+    }
+
+    return (this.state.activePlayerIndex + 1 + this.state.players.length) % this.state.players.length;
+  }
+
+  private beginTurn(activePlayerIndex: number): PublicGameState {
+    const leftCard = this.drawNextCard();
+    const rightCard = this.drawNextCard();
+
+    if (!leftCard || !rightCard) {
+      throw this.error("DATASET_EXHAUSTED", "Nicht genug Fragen im Stapel, um einen weiteren Zug zu starten.");
+    }
+
+    this.state.activePlayerIndex = activePlayerIndex;
+    this.state.activeLeftCard = leftCard;
+    this.state.activeRightCard = rightCard;
+    this.state.currentTurnStreak = 0;
+    this.state.revealResult = null;
+    this.state.revealNextAction = null;
+    this.state.phase = "round_active";
+    this.setRoundDeadline();
+    this.touch();
+    return this.getPublicState();
+  }
+
   private ensureQuestionDeck(): void {
     if (this.state.questionDeck.length > 0) {
       return;
@@ -291,27 +331,17 @@ export class GameSession {
       throw this.error("INSUFFICIENT_PLAYERS", "Mindestens eine Person muss mitspielen.");
     }
 
-    const leftCard = this.drawNextCard();
-    const rightCard = this.drawNextCard();
-
-    if (!leftCard || !rightCard) {
+    if (!this.canStartFreshTurn()) {
       throw this.error("DATASET_EXHAUSTED", "Nicht genug Fragen im Stapel, um eine weitere Runde zu starten.");
     }
 
     this.state.roundNumber += 1;
-    this.state.activePlayerIndex = (this.state.activePlayerIndex + 1 + this.state.players.length) % this.state.players.length;
-    this.state.activeLeftCard = leftCard;
-    this.state.activeRightCard = rightCard;
-    this.state.currentTurnStreak = 0;
-    this.state.revealResult = null;
-    this.state.revealNextAction = null;
-    this.state.phase = "round_active";
-    this.setRoundDeadline();
-    this.touch();
-    return this.getPublicState();
+    this.state.roundPlayerCount = this.state.players.length;
+    this.state.roundTurnNumber = 1;
+    return this.beginTurn(this.nextActivePlayerIndex());
   }
 
-  private advanceWithinRound(): PublicGameState {
+  private advanceWithinTurn(): PublicGameState {
     const nextChallenger = this.drawNextCard();
     const carryOverCard = this.state.activeRightCard;
 
@@ -329,6 +359,19 @@ export class GameSession {
     return this.getPublicState();
   }
 
+  private advanceToNextPlayer(): PublicGameState {
+    if (this.state.roundTurnNumber >= this.state.roundPlayerCount) {
+      throw this.error("INVALID_PHASE", "In dieser Runde gibt es keine weitere aktive Person.");
+    }
+
+    if (!this.canStartFreshTurn()) {
+      throw this.error("DATASET_EXHAUSTED", "Nicht genug Fragen im Stapel, um den nächsten Zug zu starten.");
+    }
+
+    this.state.roundTurnNumber += 1;
+    return this.beginTurn(this.nextActivePlayerIndex());
+  }
+
   private endTurnReveal(
     guess: GuessDirection | null,
     wasCorrect: boolean,
@@ -341,6 +384,14 @@ export class GameSession {
     }
 
     const roundEnded = reason !== "correct";
+    const hasMorePlayersInRound = this.state.roundTurnNumber < this.state.roundPlayerCount;
+    const hasCardsForAnotherTurn = this.canStartFreshTurn();
+    let resolvedMessage = message;
+
+    if (roundEnded && !hasCardsForAnotherTurn && reason !== "deck_exhausted") {
+      resolvedMessage = `${message} Der Kartenstapel ist jetzt leer.`;
+    }
+
     this.state.revealResult = {
       playerName: activePlayer.name,
       guess,
@@ -351,13 +402,19 @@ export class GameSession {
       currentTurnStreak: this.state.currentTurnStreak,
       roundEnded,
       reason,
-      message
+      message: resolvedMessage
     };
-    this.state.revealNextAction = roundEnded
-      ? this.state.roundNumber >= this.state.maxRounds
-        ? "final"
-        : "leaderboard"
-      : "next_challenge";
+    if (!roundEnded) {
+      this.state.revealNextAction = "next_challenge";
+    } else if (reason === "deck_exhausted") {
+      this.state.revealNextAction = "final";
+    } else if (hasMorePlayersInRound && hasCardsForAnotherTurn) {
+      this.state.revealNextAction = "next_turn";
+    } else if (this.state.roundNumber >= this.state.maxRounds || !hasCardsForAnotherTurn) {
+      this.state.revealNextAction = "final";
+    } else {
+      this.state.revealNextAction = "leaderboard";
+    }
     this.state.phase = "reveal";
     this.clearRoundDeadline();
     this.touch();
@@ -382,6 +439,8 @@ export class GameSession {
       phase: this.state.phase,
       roundNumber: this.state.roundNumber,
       maxRounds: this.state.maxRounds,
+      roundTurnNumber: this.state.roundTurnNumber,
+      roundPlayerCount: this.state.roundPlayerCount,
       players: this.state.players.map(toPlayerView),
       pendingLateJoiners: this.state.pendingLateJoiners.map(toPlayerView),
       activePlayerName: this.getActivePlayer()?.name ?? null,
@@ -515,7 +574,11 @@ export class GameSession {
     }
 
     if (this.state.revealNextAction === "next_challenge") {
-      return this.advanceWithinRound();
+      return this.advanceWithinTurn();
+    }
+
+    if (this.state.revealNextAction === "next_turn") {
+      return this.advanceToNextPlayer();
     }
 
     if (this.state.revealNextAction === "leaderboard") {
@@ -536,6 +599,12 @@ export class GameSession {
   public continueToNextRound(): PublicGameState {
     if (this.state.phase !== "leaderboard") {
       throw this.error("INVALID_PHASE", "Die nächste Runde kann nur vom Zwischenstand aus gestartet werden.");
+    }
+
+    if (!this.canStartFreshTurn()) {
+      this.state.phase = "final";
+      this.touch();
+      return this.getPublicState();
     }
 
     return this.startNewRound();

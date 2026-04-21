@@ -26,7 +26,7 @@ const playersGrid = document.querySelector<HTMLElement>("#players-grid")!;
 const playersEmpty = document.querySelector<HTMLElement>("#players-empty")!;
 
 const playRoundText = document.querySelector<HTMLElement>("#play-round-text")!;
-const activePlayerText = document.querySelector<HTMLElement>("#active-player-text")!;
+const turnProgressText = document.querySelector<HTMLElement>("#turn-progress-text")!;
 const streakValue = document.querySelector<HTMLElement>("#streak-value")!;
 const turnBanner = document.querySelector<HTMLElement>("#turn-banner")!;
 const timerValue = document.querySelector<HTMLElement>("#timer-value")!;
@@ -53,6 +53,7 @@ const continueButton = document.querySelector<HTMLButtonElement>("#continue-butt
 const winnerAvatar = document.querySelector<HTMLElement>("#winner-avatar")!;
 const winnerName = document.querySelector<HTMLElement>("#winner-name")!;
 const winnerScore = document.querySelector<HTMLElement>("#winner-score")!;
+const playedRounds = document.querySelector<HTMLElement>("#played-rounds")!;
 const statPlayers = document.querySelector<HTMLElement>("#stat-players")!;
 const statTotal = document.querySelector<HTMLElement>("#stat-total")!;
 const statUsed = document.querySelector<HTMLElement>("#stat-used")!;
@@ -67,6 +68,9 @@ const drawerClose = document.querySelector<HTMLButtonElement>("#drawer-close")!;
 const lateNameInput = document.querySelector<HTMLInputElement>("#late-name-input")!;
 const lateJoinButton = document.querySelector<HTMLButtonElement>("#late-join-button")!;
 const confettiCanvas = document.querySelector<HTMLCanvasElement>("#confetti")!;
+const turnSpotlight = document.querySelector<HTMLElement>("#turn-spotlight")!;
+const turnSpotlightName = document.querySelector<HTMLElement>("#turn-spotlight-name")!;
+const turnSpotlightCopy = document.querySelector<HTMLElement>("#turn-spotlight-copy")!;
 
 const timerCircumference = 2 * Math.PI * 52;
 const clientIdKey = "higher-lower-client-id";
@@ -92,7 +96,9 @@ let toastHandle: number | null = null;
 let lastRevealAnimationKey = "";
 let lastFinalCelebrationKey = "";
 let lastRevealCelebrationKey = "";
+let lastTurnSpotlightKey = "";
 let pendingAutoStart = false;
+let spotlightHandle: number | null = null;
 
 const confettiContext = confettiCanvas.getContext("2d")!;
 let confettiPieces: Array<{
@@ -175,6 +181,14 @@ function phaseLabel(phase: PublicGameState["phase"]): string {
     default:
       return phase;
   }
+}
+
+function isLocalActivePlayer(state: PublicGameState): boolean {
+  return latestName.length > 0 && state.activePlayerName === latestName;
+}
+
+function activePlayerLabel(state: PublicGameState): string {
+  return state.activePlayerName ?? "Niemand";
 }
 
 function updateRoundDots(state: PublicGameState): void {
@@ -341,34 +355,88 @@ function renderQuestion(state: PublicGameState): void {
 }
 
 function renderTurnBanner(state: PublicGameState): void {
-  const isActivePlayer = latestName.length > 0 && state.activePlayerName === latestName;
+  const isActivePlayer = isLocalActivePlayer(state);
   turnBanner.classList.toggle("spectator", !isActivePlayer);
 
   if (state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap") {
-    turnBanner.innerHTML = '<span class="who">Du Highperformer – lass auch mal andere ran!</span>';
+    turnBanner.innerHTML = `
+      <span class="turn-banner__eyebrow">Zug beendet</span>
+      <strong class="turn-banner__name">Du Highperformer – lass auch mal andere ran!</strong>
+      <span class="turn-banner__copy">Sieben richtige Antworten in Folge reichen für diesen Zug.</span>`;
     return;
   }
 
   if (!state.activePlayerName) {
-    turnBanner.innerHTML = "<span>Die Runde startet.</span>";
+    turnBanner.innerHTML = `
+      <span class="turn-banner__eyebrow">Aktive Person</span>
+      <strong class="turn-banner__name">Die Runde startet.</strong>
+      <span class="turn-banner__copy">Gleich ist klar, wer als Nächstes dran ist.</span>`;
     return;
   }
 
   if (state.phase === "round_active") {
     turnBanner.innerHTML = isActivePlayer
-      ? `<span>Du bist am Zug – <span class="who">${escapeHtml(state.activePlayerName)}</span></span>`
-      : `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> ist am Zug · Zuschauermodus</span>`;
+      ? `
+        <span class="turn-banner__eyebrow">Jetzt bist du dran</span>
+        <strong class="turn-banner__name">${escapeHtml(state.activePlayerName)}</strong>
+        <span class="turn-banner__copy">Nur du kannst jetzt klicken und diese Challenge beantworten.</span>`
+      : `
+        <span class="turn-banner__eyebrow">Jetzt dran</span>
+        <strong class="turn-banner__name">${escapeHtml(state.activePlayerName)}</strong>
+        <span class="turn-banner__copy">Nur ${escapeHtml(state.activePlayerName)} kann jetzt antworten. Alle anderen sehen zu.</span>`;
     return;
   }
 
   turnBanner.innerHTML = state.revealResult?.roundEnded
-    ? `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> beendet diese Runde.</span>`
-    : `<span><span class="who">${escapeHtml(state.activePlayerName)}</span> bleibt dran.</span>`;
+    ? `
+      <span class="turn-banner__eyebrow">Zug beendet</span>
+      <strong class="turn-banner__name">${escapeHtml(state.activePlayerName)}</strong>
+      <span class="turn-banner__copy">Diese Person ist für diesen Zug fertig.</span>`
+    : `
+      <span class="turn-banner__eyebrow">Zug läuft weiter</span>
+      <strong class="turn-banner__name">${escapeHtml(state.activePlayerName)}</strong>
+      <span class="turn-banner__copy">Bei richtiger Antwort bleibt dieselbe Person direkt dran.</span>`;
+}
+
+function hideTurnSpotlight(): void {
+  turnSpotlight.classList.remove("is-visible");
+  if (spotlightHandle !== null) {
+    window.clearTimeout(spotlightHandle);
+    spotlightHandle = null;
+  }
+}
+
+function renderTurnSpotlight(state: PublicGameState): void {
+  if (state.phase !== "round_active" || !state.activePlayerName) {
+    hideTurnSpotlight();
+    return;
+  }
+
+  const spotlightKey = `${state.roundNumber}:${state.roundTurnNumber}:${state.activePlayerName}`;
+  if (spotlightKey === lastTurnSpotlightKey) {
+    return;
+  }
+
+  lastTurnSpotlightKey = spotlightKey;
+  turnSpotlightName.textContent = isLocalActivePlayer(state) ? "Du bist dran" : state.activePlayerName;
+  turnSpotlightCopy.textContent = isLocalActivePlayer(state)
+    ? `Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}. Nur du kannst jetzt antworten.`
+    : `${state.activePlayerName} ist jetzt dran. Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}.`;
+  turnSpotlight.classList.add("is-visible");
+
+  if (spotlightHandle !== null) {
+    window.clearTimeout(spotlightHandle);
+  }
+
+  spotlightHandle = window.setTimeout(() => {
+    turnSpotlight.classList.remove("is-visible");
+    spotlightHandle = null;
+  }, 2200);
 }
 
 function renderStatusCopy(state: PublicGameState): void {
   if (state.phase === "lobby") {
-    statusBanner.textContent = "Gib deinen Vornamen ein und tritt bei. Danach kannst du direkt mitspielen.";
+    statusBanner.textContent = "Eine Runde ist erst fertig, wenn jede aktive Person einmal dran war.";
     ownershipBanner.textContent = "Noch niemand ist am Zug.";
     return;
   }
@@ -376,24 +444,28 @@ function renderStatusCopy(state: PublicGameState): void {
   if (state.phase === "round_active") {
     statusBanner.textContent = "Ist rechts höher oder niedriger als links?";
     ownershipBanner.textContent =
-      latestName.length > 0 && state.activePlayerName === latestName
-        ? "Nur du kannst jetzt klicken."
-        : `Nur ${state.activePlayerName} kann jetzt antworten.`;
+      isLocalActivePlayer(state)
+        ? `Du spielst gerade Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}.`
+        : `Gerade läuft Zug ${state.roundTurnNumber} von ${state.roundPlayerCount}. Nur ${activePlayerLabel(state)} kann antworten.`;
     return;
   }
 
   if (state.phase === "reveal") {
     statusBanner.textContent = state.revealResult?.roundEnded
-      ? "Diese Runde endet jetzt automatisch."
+      ? state.roundTurnNumber < state.roundPlayerCount
+        ? "Der nächste Zug dieser Runde startet gleich automatisch."
+        : "Diese Runde ist abgeschlossen."
       : "Richtig geraten. Die nächste Karte wird direkt geladen.";
     ownershipBanner.textContent = state.revealResult?.roundEnded
-      ? "Danach geht es ins Leaderboard."
+      ? state.roundTurnNumber < state.roundPlayerCount
+        ? `Als Nächstes ist Zug ${state.roundTurnNumber + 1} von ${state.roundPlayerCount} dran.`
+        : "Danach geht es in den Zwischenstand."
       : "Die gleiche Person bleibt an der Reihe.";
     return;
   }
 
   if (state.phase === "leaderboard") {
-    interimCopy.textContent = "Die Runde ist abgeschlossen. Von hier aus startet die Gruppe die nächste Runde.";
+    interimCopy.textContent = `Runde ${state.roundNumber} ist abgeschlossen. Alle ${state.roundPlayerCount} aktiven Personen waren einmal dran. Die Gesamtwertung summiert alle Punkte über alle Runden.`;
     return;
   }
 }
@@ -530,22 +602,23 @@ function renderState(state: PublicGameState): void {
   switchScreen(nextScreen);
 
   phaseChip.textContent = phaseLabel(state.phase);
-  roundIndicator.textContent = `Runde ${state.roundNumber} von ${state.maxRounds}`;
+  roundIndicator.textContent = `Runde ${state.roundNumber} von ${state.maxRounds}, Zug ${state.roundTurnNumber} von ${state.roundPlayerCount}`;
   playRoundText.textContent = `${state.roundNumber} / ${state.maxRounds}`;
-  activePlayerText.textContent = state.activePlayerName ?? "-";
+  turnProgressText.textContent = state.roundPlayerCount > 0 ? `${state.roundTurnNumber} / ${state.roundPlayerCount}` : "-";
   streakValue.textContent = `${state.currentTurnStreak} / ${state.streakCap}`;
 
   renderLobbyPlayers(state.players);
   renderQuestion(state);
   renderReveal(state.revealResult);
   renderTurnBanner(state);
+  renderTurnSpotlight(state);
   renderStatusCopy(state);
   renderControls(state);
   updateRoundDots(state);
   restartCountdown(state);
 
   lobbyHelper.textContent = state.canStart
-    ? `${state.players.length} Person${state.players.length === 1 ? "" : "en"} bereit.`
+    ? `${state.players.length} Person${state.players.length === 1 ? "" : "en"} bereit. Eine Runde endet erst, wenn alle einmal dran waren.`
     : "Beim Start trittst du mit dem eingetragenen Namen automatisch selbst bei.";
 
   interimRound.textContent = `${state.roundNumber}`;
@@ -562,6 +635,7 @@ function renderState(state: PublicGameState): void {
     winnerName.textContent = "Niemand";
     winnerScore.textContent = "0";
   }
+  playedRounds.textContent = `${Math.max(state.roundNumber, 0)}`;
 
   statPlayers.textContent = `${state.players.length}`;
   statTotal.textContent = `${state.players.reduce((sum, player) => sum + player.score, 0)}`;
@@ -692,13 +766,15 @@ socket.on("player_added_late", ({ player }: { player: PlayerView }) => {
 
 socket.on("game_started", ({ state }: StateEnvelope) => {
   renderState(state);
-  setToast(`Runde ${state.roundNumber} gestartet.`);
+  setToast(`Runde ${state.roundNumber} gestartet. ${state.activePlayerName} eröffnet die Runde.`);
 });
 
 socket.on("round_started", ({ state }: StateEnvelope) => {
   renderState(state);
   if (state.currentTurnStreak > 0) {
     setToast(`${state.activePlayerName} bleibt dran.`);
+  } else if (state.roundTurnNumber > 1) {
+    setToast(`Nächster Zug: ${state.activePlayerName}.`);
   } else {
     setToast(`Runde ${state.roundNumber} gestartet.`);
   }

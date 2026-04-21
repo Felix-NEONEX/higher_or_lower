@@ -154,6 +154,7 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
           if (nextState.phase === "round_active") {
             logEvent("Challenge continued", {
               roundNumber: nextState.roundNumber,
+              roundTurnNumber: nextState.roundTurnNumber,
               activePlayerName: nextState.activePlayerName,
               streak: nextState.currentTurnStreak
             });
@@ -218,6 +219,7 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
         const state = session.startGame();
         logEvent("Game started", {
           roundNumber: state.roundNumber,
+          roundTurnNumber: state.roundTurnNumber,
           activePlayerName: state.activePlayerName,
           roundTimeLimitSeconds: state.roundTimeLimitSeconds
         });
@@ -255,11 +257,17 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
     socket.on("continue_to_next_round", () => {
       try {
         const state = session.continueToNextRound();
-        logEvent("Round started", {
-          roundNumber: state.roundNumber,
-          activePlayerName: state.activePlayerName
-        });
-        io.emit("round_started", { questionId: comparisonId(state), state });
+        if (state.phase === "round_active") {
+          logEvent("Round started", {
+            roundNumber: state.roundNumber,
+            roundTurnNumber: state.roundTurnNumber,
+            activePlayerName: state.activePlayerName
+          });
+          io.emit("round_started", { questionId: comparisonId(state), state });
+        } else if (state.phase === "final") {
+          logEvent("Game finished", { roundNumber: state.roundNumber });
+          io.emit("game_finished", { state });
+        }
         emitState();
         syncAutomations();
       } catch (error) {

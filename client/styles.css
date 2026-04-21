@@ -133,6 +133,66 @@ button:disabled {
   transform: none !important;
 }
 
+.turn-spotlight {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 84px 20px 20px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-28px);
+  transition: opacity 220ms ease, transform 260ms ease;
+  z-index: 45;
+}
+
+.turn-spotlight.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.turn-spotlight__panel {
+  width: min(860px, calc(100vw - 40px));
+  padding: 24px 28px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(255, 95, 80, 0.2), rgba(4, 40, 78, 0.92));
+  backdrop-filter: blur(16px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
+  text-align: center;
+}
+
+.turn-spotlight__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+}
+
+.turn-spotlight strong {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 7vw, 4.8rem);
+  line-height: 0.92;
+}
+
+.turn-spotlight p {
+  margin: 12px auto 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -632,6 +692,8 @@ button:disabled {
 }
 
 .turn-banner {
+  display: grid;
+  gap: 4px;
   margin-bottom: 18px;
   background: linear-gradient(135deg, rgba(255, 95, 80, 0.2), rgba(20, 90, 150, 0.14));
 }
@@ -640,9 +702,22 @@ button:disabled {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.turn-banner .who {
-  color: #ffd7d0;
-  font-weight: 800;
+.turn-banner__eyebrow {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.turn-banner__name {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+}
+
+.turn-banner__copy {
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .stage-shell--focus {
@@ -1185,6 +1260,14 @@ button:disabled {
 }
 
 @media (max-width: 760px) {
+  .turn-spotlight {
+    padding-top: 74px;
+  }
+
+  .turn-spotlight__panel {
+    padding: 18px 18px 20px;
+  }
+
   .topbar {
     padding: 16px;
   }
