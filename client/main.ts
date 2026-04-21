@@ -119,20 +119,26 @@ let confettiPieces: Array<{
 let confettiFrame: number | null = null;
 
 const lobbyAvatarSlots = [
-  { x: 12, lift: 6, scale: 0.76, z: 6 },
-  { x: 22, lift: 12, scale: 0.82, z: 7 },
-  { x: 32, lift: 18, scale: 0.88, z: 8 },
-  { x: 42, lift: 22, scale: 0.94, z: 9 },
-  { x: 50, lift: 24, scale: 1, z: 10 },
-  { x: 58, lift: 22, scale: 0.94, z: 9 },
-  { x: 68, lift: 18, scale: 0.88, z: 8 },
-  { x: 78, lift: 12, scale: 0.82, z: 7 },
-  { x: 88, lift: 6, scale: 0.76, z: 6 },
-  { x: 27, lift: 8, scale: 0.72, z: 6 },
-  { x: 73, lift: 8, scale: 0.72, z: 6 },
-  { x: 38, lift: 5, scale: 0.68, z: 5 },
-  { x: 62, lift: 5, scale: 0.68, z: 5 }
+  { x: 12, scale: 0.74, z: 6 },
+  { x: 22, scale: 0.8, z: 7 },
+  { x: 32, scale: 0.87, z: 8 },
+  { x: 42, scale: 0.94, z: 9 },
+  { x: 50, scale: 1, z: 10 },
+  { x: 58, scale: 0.94, z: 9 },
+  { x: 68, scale: 0.87, z: 8 },
+  { x: 78, scale: 0.8, z: 7 },
+  { x: 88, scale: 0.74, z: 6 },
+  { x: 27, scale: 0.76, z: 7 },
+  { x: 73, scale: 0.76, z: 7 },
+  { x: 38, scale: 0.84, z: 8 },
+  { x: 62, scale: 0.84, z: 8 }
 ] as const;
+
+function horizonLiftForPercent(x: number): number {
+  const normalizedDistance = Math.min(1, Math.abs(x - 50) / 38);
+  const curve = 1 - normalizedDistance ** 2;
+  return Math.round(4 + curve * 28);
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -313,7 +319,7 @@ function renderLobbyScene(players: PlayerView[]): void {
     const avatar = document.createElement("div");
     avatar.className = "lobby-avatar";
     avatar.style.left = `${slot.x}%`;
-    avatar.style.bottom = `${slot.lift}px`;
+    avatar.style.bottom = `${horizonLiftForPercent(slot.x)}px`;
     avatar.style.zIndex = `${slot.z}`;
     avatar.style.setProperty("--avatar-scale", `${slot.scale}`);
     avatar.style.setProperty("--avatar-delay", `${index * 90}ms`);

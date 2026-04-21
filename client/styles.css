@@ -458,9 +458,9 @@ button:disabled {
 .hero__glow {
   position: absolute;
   left: 50%;
-  bottom: 112px;
-  width: 340px;
-  height: 120px;
+  bottom: 126px;
+  width: 320px;
+  height: 110px;
   transform: translateX(-50%);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 95, 80, 0.18), rgba(255, 95, 80, 0.04) 46%, transparent 74%);
@@ -470,33 +470,33 @@ button:disabled {
 
 .hero__horizon {
   position: absolute;
-  left: 5%;
-  right: 5%;
-  bottom: 92px;
-  height: 96px;
+  left: 8%;
+  right: 8%;
+  bottom: 118px;
+  height: 72px;
   z-index: 4;
   pointer-events: none;
 }
 
 .hero__horizon-line {
   position: absolute;
-  left: 2%;
-  right: 2%;
+  left: 0;
+  right: 0;
   bottom: 0;
-  height: 28px;
+  height: 40px;
   border-top: 2px solid rgba(255, 255, 255, 0.34);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   box-shadow:
-    0 -8px 18px rgba(255, 255, 255, 0.08),
+    0 -10px 24px rgba(255, 255, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .hero__planet {
   position: absolute;
   left: 50%;
-  bottom: -44%;
-  width: 126%;
-  max-width: 620px;
+  bottom: -68%;
+  width: 148%;
+  max-width: 760px;
   aspect-ratio: 1 / 1;
   transform: translateX(-50%);
   z-index: 2;
@@ -551,19 +551,19 @@ button:disabled {
 }
 
 .hero__planet-ring--a {
-  top: 8%;
-  width: 82%;
-  height: 11%;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  opacity: 0.65;
+  top: 6%;
+  width: 78%;
+  height: 8%;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  opacity: 0.56;
 }
 
 .hero__planet-ring--b {
-  top: 14%;
-  width: 102%;
-  height: 16%;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  opacity: 0.5;
+  top: 10%;
+  width: 94%;
+  height: 10%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.38;
 }
 
 .hero__avatars {
@@ -598,13 +598,13 @@ button:disabled {
 .lobby-avatar__shadow {
   position: absolute;
   left: 50%;
-  bottom: 2px;
-  width: 28px;
-  height: 8px;
+  bottom: -1px;
+  width: 24px;
+  height: 6px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.18);
-  filter: blur(1.5px);
+  background: rgba(0, 0, 0, 0.16);
+  filter: blur(1px);
   animation: lobby-shadow-bob 3.2s ease-in-out infinite;
   animation-delay: calc(var(--avatar-delay) + 0.42s);
 }
