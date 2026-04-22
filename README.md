@@ -72,10 +72,10 @@ or GitHub-connected auto-deploys from `main`.
 - If one player's turn ends and the round is not complete yet, the next player starts automatically in the same round.
 - The final winner is the person with the most points collected across all five rounds.
 - A hard reset is available from the UI at all times and returns the session to an empty lobby.
-- If the active player reaches 7 correct answers in a row during one turn, the turn stops immediately with `Du Highperformer - lass auch mal andere ran!`.
+- If the active player reaches 7 correct answers in a row during one turn, the turn stops immediately with `Du Highperformer! Lass doch auch mal andere ran :)` and the round continues with the next player.
 - Questions are loaded from `data/higher_lower_top150.json` at boot and the service fails fast if the dataset is missing or invalid.
-- The current dataset has 114 entries, and extending the JSON later does not require code changes as long as the schema stays the same.
+- The current dataset has 110 entries, and extending the JSON later does not require code changes as long as the schema stays the same.
 - When a new game starts, the service continues with the next unused questions in the JSON order. After the full list has been consumed, it wraps back to question 1.
 - The loader accepts finite numeric values, including decimals and negative numbers, so the revised dataset shape is supported.
-- Restart resets the in-memory session and creates a new five-question deck.
+- Restart resets the in-memory session and creates a new question order from the next unused position in the dataset.
 - If the process restarts, the live game resets. This is expected for this one-time event tool.

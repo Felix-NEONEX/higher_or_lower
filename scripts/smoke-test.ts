@@ -196,7 +196,7 @@ function verifyHighperformerCap(): void {
   const session = new GameSession(buildSyntheticQuestions(20), "test-session", {
     maxRounds: 1,
     streakCap: 7,
-    roundTimeLimitMs: 7000
+    roundTimeLimitMs: 15000
   });
 
   session.joinLobby("Alice", "client-alice", "socket-alice");
@@ -215,7 +215,42 @@ function verifyHighperformerCap(): void {
     } else {
       assert.equal(state.revealResult?.reason, "highperformer_cap");
       assert.equal(state.revealResult?.roundEnded, true);
-      assert.equal(state.revealResult?.message, "Du Highperformer - lass auch mal andere ran!");
+      assert.equal(state.revealResult?.message, "Du Highperformer! Lass doch auch mal andere ran :)");
+    }
+  }
+}
+
+function verifyHighperformerPassesToNextPlayer(): void {
+  const session = new GameSession(buildSyntheticQuestions(40), "next-player-session", {
+    maxRounds: 1,
+    streakCap: 7,
+    roundTimeLimitMs: 15000
+  });
+
+  session.joinLobby("Alice", "client-alice", "socket-alice");
+  session.joinLobby("Bob", "client-bob", "socket-bob");
+  const started = session.startGame();
+  assert.equal(started.activePlayerName, "Alice");
+  assert.equal(started.roundTurnNumber, 1);
+  assert.equal(started.roundPlayerCount, 2);
+
+  for (let streak = 1; streak <= 7; streak += 1) {
+    const state = session.submitGuess(currentCorrectGuess(session), "client-alice");
+    assert.equal(state.phase, "reveal");
+
+    if (streak < 7) {
+      const resumed = session.continueAfterReveal();
+      assert.equal(resumed.phase, "round_active");
+      assert.equal(resumed.activePlayerName, "Alice");
+      assert.equal(resumed.roundTurnNumber, 1);
+    } else {
+      assert.equal(state.revealResult?.reason, "highperformer_cap");
+      const resumed = session.continueAfterReveal();
+      assert.equal(resumed.phase, "round_active");
+      assert.equal(resumed.activePlayerName, "Bob");
+      assert.equal(resumed.roundTurnNumber, 2);
+      assert.equal(resumed.roundPlayerCount, 2);
+      assert.equal(resumed.currentTurnStreak, 0);
     }
   }
 }
@@ -223,7 +258,7 @@ function verifyHighperformerCap(): void {
 function verifyQuestionCursorCarriesAcrossGames(): void {
   const session = new GameSession(buildSyntheticQuestions(4), "cursor-session", {
     maxRounds: 1,
-    roundTimeLimitMs: 7000
+    roundTimeLimitMs: 15000
   });
 
   session.joinLobby("Alice", "client-alice", "socket-alice");
@@ -241,11 +276,52 @@ function verifyQuestionCursorCarriesAcrossGames(): void {
   assert.deepEqual(thirdGame.questionOrder.slice(0, 4), ["q001", "q002", "q003", "q004"]);
 }
 
+function verifySixPlayerRoundCompletes(): void {
+  const session = new GameSession(buildSyntheticQuestions(80), "six-player-session", {
+    maxRounds: 5,
+    roundTimeLimitMs: 15000
+  });
+
+  const names = ["Alice", "Bob", "Carla", "David", "Elena", "Farid"];
+  names.forEach((name) => {
+    const slug = name.toLowerCase();
+    session.joinLobby(name, `client-${slug}`, `socket-${slug}`);
+  });
+
+  let state = session.startGame();
+  assert.equal(state.phase, "round_active");
+  assert.equal(state.roundNumber, 1);
+  assert.equal(state.roundPlayerCount, 6);
+
+  for (let turn = 1; turn <= 6; turn += 1) {
+    const activePlayerName = state.activePlayerName;
+    assert.equal(activePlayerName, names[turn - 1]);
+
+    const activeClientId = `client-${activePlayerName!.toLowerCase()}`;
+    const wrongGuess = currentCorrectGuess(session) === "higher" ? "lower" : "higher";
+    const revealed = session.submitGuess(wrongGuess, activeClientId);
+    assert.equal(revealed.phase, "reveal");
+    assert.equal(revealed.revealResult?.reason, "wrong");
+    assert.equal(revealed.roundTurnNumber, turn);
+
+    state = session.continueAfterReveal();
+    if (turn < 6) {
+      assert.equal(state.phase, "round_active");
+      assert.equal(state.roundTurnNumber, turn + 1);
+    } else {
+      assert.equal(state.phase, "leaderboard");
+      assert.equal(state.roundNumber, 1);
+    }
+  }
+}
+
 async function main(): Promise<void> {
   await verifyNetworkFlow();
   await verifyTimeout();
   verifyHighperformerCap();
+  verifyHighperformerPassesToNextPlayer();
   verifyQuestionCursorCarriesAcrossGames();
+  verifySixPlayerRoundCompletes();
   console.log("Smoke test passed");
 }
 

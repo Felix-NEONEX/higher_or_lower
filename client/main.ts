@@ -150,6 +150,24 @@ function initials(name: string): string {
   return name.trim().slice(0, 1).toUpperCase() || "?";
 }
 
+function formatQuestionValue(value: number): string {
+  const fractionDigits = Number.isInteger(value) ? 0 : 3;
+  return new Intl.NumberFormat("de-DE", {
+    maximumFractionDigits: fractionDigits
+  }).format(value);
+}
+
+function applyQuestionValueSizing(element: HTMLElement, value: number | string): void {
+  const displayValue = typeof value === "number" ? formatQuestionValue(value) : value;
+  const normalizedLength = displayValue.replace(/\s+/g, "").length;
+  element.classList.remove("q-value--compact", "q-value--tiny");
+  if (normalizedLength >= 14) {
+    element.classList.add("q-value--tiny");
+  } else if (normalizedLength >= 10) {
+    element.classList.add("q-value--compact");
+  }
+}
+
 function setToast(message: string): void {
   messageBox.textContent = message;
   if (toastHandle !== null) {
@@ -271,8 +289,9 @@ function restartCountdown(state: PublicGameState): void {
 
 function countUp(el: HTMLElement, target: number, duration = 800): void {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  applyQuestionValueSizing(el, target);
   if (reducedMotion) {
-    el.textContent = `${target}`;
+    el.textContent = formatQuestionValue(target);
     return;
   }
 
@@ -284,7 +303,7 @@ function countUp(el: HTMLElement, target: number, duration = 800): void {
     const eased = 1 - Math.pow(1 - t, 3);
     const current = startValue + (target - startValue) * eased;
     const rounded = Number.isInteger(target) ? Math.round(current) : Math.round(current * 10) / 10;
-    el.textContent = `${rounded}`;
+    el.textContent = formatQuestionValue(rounded);
     if (t < 1) {
       requestAnimationFrame(frame);
     }
@@ -379,18 +398,22 @@ function renderQuestion(state: PublicGameState): void {
   if (!question) {
     leftLabel.textContent = "Noch keine Karte";
     leftValue.textContent = "-";
+    applyQuestionValueSizing(leftValue, "-");
     rightLabel.textContent = "Die nächste Karte kommt gleich";
     rightValue.textContent = "???";
+    applyQuestionValueSizing(rightValue, "???");
     lastRevealAnimationKey = "";
     return;
   }
 
   leftLabel.textContent = question.leftLabel;
-  leftValue.textContent = `${question.leftValue}`;
+  leftValue.textContent = formatQuestionValue(question.leftValue);
+  applyQuestionValueSizing(leftValue, question.leftValue);
   rightLabel.textContent = question.rightLabel;
 
   if (question.rightValue === null) {
     rightValue.textContent = "???";
+    applyQuestionValueSizing(rightValue, "???");
     rightValue.classList.remove("pop");
     lastRevealAnimationKey = "";
     return;
@@ -402,7 +425,8 @@ function renderQuestion(state: PublicGameState): void {
     countUp(rightValue, question.rightValue);
     lastRevealAnimationKey = nextRevealKey;
   } else {
-    rightValue.textContent = `${question.rightValue}`;
+    rightValue.textContent = formatQuestionValue(question.rightValue);
+    applyQuestionValueSizing(rightValue, question.rightValue);
   }
 }
 
@@ -413,7 +437,7 @@ function renderTurnBanner(state: PublicGameState): void {
   if (state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap") {
     turnBanner.innerHTML = `
       <span class="turn-banner__eyebrow">Zug beendet</span>
-      <strong class="turn-banner__name">Du Highperformer – lass auch mal andere ran!</strong>
+      <strong class="turn-banner__name">Du Highperformer! Lass doch auch mal andere ran :)</strong>
       <span class="turn-banner__copy">Sieben richtige Antworten in Folge reichen für diesen Zug.</span>`;
     return;
   }

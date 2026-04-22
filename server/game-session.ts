@@ -523,7 +523,7 @@ export class GameSession {
       this.state.currentTurnStreak += 1;
 
       if (this.state.currentTurnStreak >= this.state.streakCap) {
-        return this.endTurnReveal(guess, true, "highperformer_cap", "Du Highperformer - lass auch mal andere ran!");
+        return this.endTurnReveal(guess, true, "highperformer_cap", "Du Highperformer! Lass doch auch mal andere ran :)");
       }
 
       if (this.state.questionCursor >= this.state.questionDeck.length) {

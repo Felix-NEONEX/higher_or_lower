@@ -1256,6 +1256,17 @@ button:disabled {
   font-size: clamp(3.4rem, 8vw, 5.4rem);
   line-height: 0.9;
   transform-origin: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.q-value--compact {
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+}
+
+.q-value--tiny {
+  font-size: clamp(2rem, 5vw, 3.3rem);
+  line-height: 0.95;
 }
 
 .q-value.pop {
