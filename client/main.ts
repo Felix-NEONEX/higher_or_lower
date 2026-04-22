@@ -530,7 +530,7 @@ function renderTurnSpotlight(state: PublicGameState): void {
     turnSpotlight.classList.remove("is-visible");
     turnSpotlight.classList.remove("turn-spotlight--highperformer");
     spotlightHandle = null;
-  }, state.phase === "reveal" ? 2600 : 2200);
+  }, state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap" ? 10000 : state.phase === "reveal" ? 2600 : 2200);
 }
 
 function renderStatusCopy(state: PublicGameState): void {
@@ -789,7 +789,7 @@ function nextPlayerNameInRound(state: PublicGameState): string | null {
 }
 
 function requestHardReset(): void {
-  const confirmed = window.confirm("Wirklich alles zurücksetzen und zur leeren Lobby zurückkehren?");
+  const confirmed = window.confirm("Willst Du echt für alle das Spiel zurücksetzen? Kann man machen, muss man aber nicht ...");
   if (!confirmed) {
     return;
   }

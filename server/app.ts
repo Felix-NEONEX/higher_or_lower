@@ -19,6 +19,8 @@ interface CreateGameServerOptions {
   streakCap?: number;
 }
 
+const HIGHPERFORMER_REVEAL_DELAY_MS = 10000;
+
 function readClientId(candidate: unknown): string | null {
   if (typeof candidate !== "string") {
     return null;
@@ -148,6 +150,7 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
     }
 
     if (state.phase === "reveal" && state.revealResult) {
+      const delayMs = state.revealResult.reason === "highperformer_cap" ? HIGHPERFORMER_REVEAL_DELAY_MS : revealDelayMs;
       revealTimer = setTimeout(() => {
         try {
           const nextState = session.continueAfterReveal();
@@ -171,7 +174,7 @@ export function createGameServer(options: CreateGameServerOptions = {}) {
         } catch (error) {
           logEvent("Reveal continuation failed", { error: error instanceof Error ? error.message : "unknown" });
         }
-      }, revealDelayMs);
+      }, delayMs);
     }
   }
 
