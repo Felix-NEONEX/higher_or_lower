@@ -963,6 +963,16 @@ button:disabled {
   font-size: 18px;
 }
 
+.btn--long-copy {
+  min-height: 76px;
+  height: auto;
+  padding: 14px 20px;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
 .player-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
