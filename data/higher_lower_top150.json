@@ -43,7 +43,7 @@
   },
   {
     "id": "q0007",
-    "left_label": "Jahre in Folge, in denen Finnland laut Text das glücklichste Land der Welt war",
+    "left_label": "Jahre in Folge, in denen Finnland das glücklichste Land der Welt war",
     "left_value": 6,
     "right_label": "Faktor, um den Grönland auf einer Mercator-Weltkarte größer wirken kann als in Wirklichkeit",
     "right_value": 14
@@ -246,9 +246,9 @@
   },
   {
     "id": "q0036",
-    "left_label": "Achsen, entlang derer Mars laut Text unterschiedlich groß ist",
+    "left_label": "Achsen, entlang derer Mars unterschiedlich groß ist",
     "left_value": 3,
-    "right_label": "Menschen, die laut Text in einem luziden Traum miteinander kommunizieren könnten",
+    "right_label": "Menschen, die in einem luziden Traum miteinander kommunizieren könnten",
     "right_value": 2
   },
   {
@@ -456,7 +456,7 @@
   },
   {
     "id": "q0066",
-    "left_label": "Fläche des Ozeanbodens, über den im Text gesprochen wird, in km²",
+    "left_label": "Fläche des Ozeanbodens in km²",
     "left_value": 335000000,
     "right_label": "Jahre, die laut Fossilbericht zwischen frühen Pflanzen und Samen lagen",
     "right_value": 150000000
@@ -533,9 +533,9 @@
   },
   {
     "id": "q0077",
-    "left_label": "Jahre, über die laut Text Fußballteams mit roten Trikots analysiert wurden",
+    "left_label": "Jahre, über die Fußballteams mit roten Trikots analysiert wurden",
     "left_value": 55,
-    "right_label": "Potenziell schädliche Bakterien, die man laut Text mit einem Atemzug einatmet",
+    "right_label": "Potenziell schädliche Bakterien, die man mit einem Atemzug einatmet",
     "right_value": 50
   },
   {

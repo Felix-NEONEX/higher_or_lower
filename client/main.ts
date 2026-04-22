@@ -376,6 +376,7 @@ function renderFullRanking(root: HTMLElement, players: PlayerView[]): void {
 function renderReveal(result: RevealResult | null): void {
   revealTag.className = "reveal-tag";
   rightCard.classList.remove("is-hit", "is-miss");
+  playMessage.classList.remove("is-highperformer");
 
   if (!result) {
     revealTag.textContent = "";
@@ -390,6 +391,9 @@ function renderReveal(result: RevealResult | null): void {
   revealTag.classList.add(result.wasCorrect ? "is-hit" : "is-miss");
   revealTag.innerHTML = `${icon}${result.wasCorrect ? "Richtig" : "Daneben"}`;
   rightCard.classList.add(result.wasCorrect ? "is-hit" : "is-miss");
+  if (result.reason === "highperformer_cap") {
+    playMessage.classList.add("is-highperformer");
+  }
   playMessage.textContent = result.message;
 }
 
@@ -476,6 +480,7 @@ function renderTurnBanner(state: PublicGameState): void {
 
 function hideTurnSpotlight(): void {
   turnSpotlight.classList.remove("is-visible");
+  turnSpotlight.classList.remove("turn-spotlight--highperformer");
   lastTurnSpotlightKey = "";
   if (spotlightHandle !== null) {
     window.clearTimeout(spotlightHandle);
@@ -484,21 +489,37 @@ function hideTurnSpotlight(): void {
 }
 
 function renderTurnSpotlight(state: PublicGameState): void {
-  if (state.phase !== "round_active" || !state.activePlayerName) {
+  if (!state.activePlayerName) {
     hideTurnSpotlight();
     return;
   }
 
-  const spotlightKey = `${state.roundNumber}:${state.roundTurnNumber}:${state.activePlayerName}`;
+  if (state.phase !== "round_active" && !(state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap")) {
+    hideTurnSpotlight();
+    return;
+  }
+
+  const spotlightKey = `${state.phase}:${state.roundNumber}:${state.roundTurnNumber}:${state.activePlayerName}:${state.revealResult?.reason ?? ""}`;
   if (spotlightKey === lastTurnSpotlightKey) {
     return;
   }
 
   lastTurnSpotlightKey = spotlightKey;
-  turnSpotlightName.textContent = isLocalActivePlayer(state) ? "Du bist dran" : state.activePlayerName;
-  turnSpotlightCopy.textContent = isLocalActivePlayer(state)
-    ? `Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}. Nur du kannst jetzt antworten.`
-    : `${state.activePlayerName} ist jetzt dran. Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}.`;
+  turnSpotlight.classList.remove("turn-spotlight--highperformer");
+
+  if (state.phase === "reveal" && state.revealResult?.reason === "highperformer_cap") {
+    const nextPlayerName = nextPlayerNameInRound(state);
+    turnSpotlight.classList.add("turn-spotlight--highperformer");
+    turnSpotlightName.textContent = "Du Highperformer!";
+    turnSpotlightCopy.textContent = nextPlayerName
+      ? `${state.activePlayerName} stoppt bei 7 Richtigen in Folge. ${nextPlayerName} ist jetzt als Nächstes dran.`
+      : `${state.activePlayerName} stoppt bei 7 Richtigen in Folge. Der Zug ist damit beendet.`;
+  } else {
+    turnSpotlightName.textContent = isLocalActivePlayer(state) ? "Du bist dran" : state.activePlayerName;
+    turnSpotlightCopy.textContent = isLocalActivePlayer(state)
+      ? `Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}. Nur du kannst jetzt antworten.`
+      : `${state.activePlayerName} ist jetzt dran. Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}.`;
+  }
   turnSpotlight.classList.add("is-visible");
 
   if (spotlightHandle !== null) {
@@ -507,8 +528,9 @@ function renderTurnSpotlight(state: PublicGameState): void {
 
   spotlightHandle = window.setTimeout(() => {
     turnSpotlight.classList.remove("is-visible");
+    turnSpotlight.classList.remove("turn-spotlight--highperformer");
     spotlightHandle = null;
-  }, 2200);
+  }, state.phase === "reveal" ? 2600 : 2200);
 }
 
 function renderStatusCopy(state: PublicGameState): void {
@@ -519,7 +541,9 @@ function renderStatusCopy(state: PublicGameState): void {
   }
 
   if (state.phase === "round_active") {
-    statusBanner.textContent = "Ist rechts höher oder niedriger als links?";
+    statusBanner.textContent = isLocalActivePlayer(state)
+      ? "Du hast genau einen Versuch. Danach läuft der Zug weiter oder wechselt."
+      : `Nur ${activePlayerLabel(state)} kann jetzt antworten.`;
     ownershipBanner.textContent =
       isLocalActivePlayer(state)
         ? `Du spielst gerade Zug ${state.roundTurnNumber} von ${state.roundPlayerCount} in Runde ${state.roundNumber}.`
@@ -528,12 +552,18 @@ function renderStatusCopy(state: PublicGameState): void {
   }
 
   if (state.phase === "reveal") {
-    statusBanner.textContent = state.revealResult?.roundEnded
+    statusBanner.textContent = state.revealResult?.reason === "highperformer_cap"
+      ? "Sieben Richtige in Folge. Dieser Zug endet jetzt automatisch."
+      : state.revealResult?.roundEnded
       ? state.roundTurnNumber < state.roundPlayerCount
         ? "Der nächste Zug dieser Runde startet gleich automatisch."
         : "Diese Runde ist abgeschlossen."
       : "Richtig geraten. Die nächste Karte wird direkt geladen.";
-    ownershipBanner.textContent = state.revealResult?.roundEnded
+    ownershipBanner.textContent = state.revealResult?.reason === "highperformer_cap"
+      ? nextPlayerNameInRound(state)
+        ? `${nextPlayerNameInRound(state)} übernimmt jetzt den nächsten Zug in derselben Runde.`
+        : "Danach geht es direkt weiter im Rundenfluss."
+      : state.revealResult?.roundEnded
       ? state.roundTurnNumber < state.roundPlayerCount
         ? `Als Nächstes ist Zug ${state.roundTurnNumber + 1} von ${state.roundPlayerCount} dran.`
         : "Danach geht es in den Zwischenstand."
@@ -743,6 +773,19 @@ function rememberName(input: HTMLInputElement): string | null {
 
 function localPlayerJoined(state: PublicGameState | null, candidateName: string): boolean {
   return Boolean(candidateName) && Boolean(state?.players.some((player) => player.name === candidateName));
+}
+
+function nextPlayerNameInRound(state: PublicGameState): string | null {
+  if (!state.activePlayerName || state.roundTurnNumber >= state.roundPlayerCount) {
+    return null;
+  }
+
+  const activePlayerIndex = state.players.findIndex((player) => player.name === state.activePlayerName);
+  if (activePlayerIndex < 0 || state.players.length === 0) {
+    return null;
+  }
+
+  return state.players[(activePlayerIndex + 1) % state.players.length]?.name ?? null;
 }
 
 function requestHardReset(): void {

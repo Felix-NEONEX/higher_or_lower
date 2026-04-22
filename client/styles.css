@@ -163,6 +163,16 @@ button:disabled {
   text-align: center;
 }
 
+.turn-spotlight--highperformer .turn-spotlight__panel {
+  background: linear-gradient(180deg, rgba(255, 95, 80, 0.34), rgba(74, 16, 20, 0.94));
+  border-color: rgba(255, 177, 153, 0.34);
+  box-shadow: 0 32px 120px rgba(0, 0, 0, 0.4);
+}
+
+.turn-spotlight--highperformer strong {
+  color: #fff4ea;
+}
+
 .turn-spotlight__eyebrow {
   display: inline-flex;
   align-items: center;
@@ -1383,6 +1393,12 @@ button:disabled {
   min-height: 64px;
   display: flex;
   align-items: center;
+}
+
+.next-row.is-highperformer {
+  background: linear-gradient(135deg, rgba(255, 95, 80, 0.24), rgba(84, 25, 30, 0.82));
+  border: 1px solid rgba(255, 177, 153, 0.24);
+  font-weight: 700;
 }
 
 .rank-wrap {
